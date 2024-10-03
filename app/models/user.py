@@ -9,12 +9,17 @@ class User(db.Model, UserMixin):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
+
     id = db.Column(db.Integer, primary_key=True)
     firstName = db.Column(db.String(255))
     lastName = db.Column(db.String(255))
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+
+
+    anime = db.relationship("Anime", back_populates="user", cascade="all, delete")
+
 
     @property
     def password(self):
@@ -33,5 +38,7 @@ class User(db.Model, UserMixin):
             'firstName': self.firstName,
             'lastName': self.lastName,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+
+            "Posted Anime": [oneAnime.to_dict() for oneAnime in self.anime]
         }
