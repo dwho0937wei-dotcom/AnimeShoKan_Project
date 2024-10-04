@@ -9,7 +9,7 @@ from app.models import Anime, db
 anime_routes = Blueprint('anime', __name__)
 
 
-@anime_routes.route('/')
+@anime_routes.route('')
 def getAllAnime():
     allAnime = Anime.query.all()
     animeCatalog = {}
@@ -24,14 +24,14 @@ def getAllAnime():
     for alphabet in animeCatalog.keys():
         animeCatalog[alphabet] = animeCatalog[alphabet].sort(key=lambda a : a.title)
 
-    return {animeCatalog}
+    return animeCatalog
 
 
 @anime_routes.route('/<int:animeId>')
 def getSpecificAnime(animeId):
     anime = Anime.query.get(animeId)
     if not anime:
-        return {'errors': "Anime not found or no longer exists"}, 404
+        return {'error': "Anime not found or no longer exists!"}, 404
     return anime.to_dict()
 
 
