@@ -3,7 +3,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
 class Episode(db.Model):
-    __table__ = 'episodes'
+    __tablename__ = 'episodes'
 
     if environment == 'production':
         __table_args__ = {'schema': SCHEMA}
