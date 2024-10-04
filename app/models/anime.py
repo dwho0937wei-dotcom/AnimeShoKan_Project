@@ -25,12 +25,15 @@ class Anime(db.Model):
     user = db.relationship("User", back_populates="anime")
 
 
-    def to_dict(self):
+    def to_dict_basic(self):
         return {
             "id": self.id,
             "title": self.title,
             "synopsis": self.synopsis,
             "episodeNum": self.episodeNum,
-
-            "Host Editor": self.user.to_dict()
+        }
+    def to_dict(self):
+        return {
+            **self.to_dict_basic(),
+            "Host Editor": self.user.to_dict_basic()
         }

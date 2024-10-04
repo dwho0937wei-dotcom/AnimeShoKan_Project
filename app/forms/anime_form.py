@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 from app.api.s3_helper import ALLOWED_EXTENSIONS
 
 class AnimeForm(FlaskForm):
-    title = StringField('title', validators=[DataRequired()])
-    synopsis = StringField('synopsis', validators=[DataRequired()])
-    previewImage = FileField('preview image file', validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
+    title = StringField('Title', validators=[DataRequired()])
+    synopsis = StringField('Synopsis', validators=[DataRequired()])
+    previewImage = FileField('Preview Image', validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     submit = SubmitField("Post Anime")

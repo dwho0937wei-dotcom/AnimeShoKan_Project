@@ -35,14 +35,14 @@ def getSpecificAnime(animeId):
     return anime.to_dict()
 
 
-@anime_routes.route('/new')
+@anime_routes.route('/new', methods=['POST'])
 @login_required
 def postNewAnime():
     animeForm = AnimeForm()
-    animeForm['csrf_token'].data = request.cookies('csrf_token')
+    animeForm['csrf_token'].data = request.cookies['csrf_token']
 
     if animeForm.validate_on_submit():
-        previewImage = animeForm.data["preview image file"] if animeForm.data["preview image file"] else None
+        previewImage = animeForm.data["previewImage"] if animeForm.data["previewImage"] else None
         if previewImage:
             previewImage.filename = get_unique_filename(previewImage.filename)
         upload = upload_file_to_s3(previewImage) if previewImage else None
@@ -56,7 +56,7 @@ def postNewAnime():
             title=animeForm.data["title"],
             synopsis=animeForm.data["synopsis"],
             episodeNum=0,
-            hostEditor_id=current_user.id,
+            hostEditorId=current_user.id,
             previewImage=url
         )
 

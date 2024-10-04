@@ -32,13 +32,16 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    def to_dict(self):
+    def to_dict_basic(self):
         return {
             'id': self.id,
             'firstName': self.firstName,
             'lastName': self.lastName,
             'username': self.username,
             'email': self.email,
-
-            "Posted Anime": [oneAnime.to_dict() for oneAnime in self.anime]
+        }
+    def to_dict(self):
+        return {
+            **self.to_dict_basic(),
+            "Posted Anime": [oneAnime.to_dict_basic() for oneAnime in self.anime]
         }
