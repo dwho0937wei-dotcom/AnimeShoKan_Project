@@ -75,6 +75,10 @@ def updateAnime(animeId):
     animeForm['csrf_token'].data = request.cookies['csrf_token']
 
     animeToUpdate = Anime.query.get(animeId)
+
+    if animeToUpdate.hostEditorId != current_user.id:
+        return {"error": "Current user does NOT have the editing privilege for this anime!"}, 500
+
     animeToUpdate.title = animeForm.data["title"]
     animeToUpdate.synopsis = animeForm.data["synopsis"]
 
