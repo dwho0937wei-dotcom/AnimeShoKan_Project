@@ -97,3 +97,17 @@ def updateAnime(animeId):
     db.session.commit()
 
     return animeToUpdate.to_dict()
+
+
+@anime_routes.route('/<int:animeId>', methods=['DELETE'])
+@login_required
+def deleteAnime(animeId):
+    animeToDelete = Anime.query.get(animeId)
+    if animeToDelete.hostEditorId != current_user.id:
+        return {"error": "Current user has no right to delete this anime!"}, 500
+    
+    remove_file_from_s3(animeToDelete.previewImage)
+    db.session.delete(animeToDelete)
+    db.session.commit()
+
+    return {"message": "Anime successfully deleted!"}
