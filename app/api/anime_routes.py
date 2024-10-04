@@ -91,7 +91,8 @@ def updateAnime(animeId):
             print("Url not found in upload for editing Anime with new preview image!")
             return animeForm.errors, 500
         
-        remove_file_from_s3(animeToUpdate.previewImage)
+        if animeToUpdate.previewImage:
+            remove_file_from_s3(animeToUpdate.previewImage)
         animeToUpdate.previewImage = upload["url"]
 
     db.session.commit()
@@ -106,7 +107,8 @@ def deleteAnime(animeId):
     if animeToDelete.hostEditorId != current_user.id:
         return {"error": "Current user has no right to delete this anime!"}, 500
     
-    remove_file_from_s3(animeToDelete.previewImage)
+    if animeToDelete.previewImage:
+        remove_file_from_s3(animeToDelete.previewImage)
     db.session.delete(animeToDelete)
     db.session.commit()
 

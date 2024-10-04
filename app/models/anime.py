@@ -23,6 +23,7 @@ class Anime(db.Model):
 
 
     user = db.relationship("User", back_populates="anime")
+    episodes = db.relationship("Episode", back_populates="anime")
 
 
     def to_dict_basic(self):
@@ -32,9 +33,11 @@ class Anime(db.Model):
             "synopsis": self.synopsis,
             "episodeNum": self.episodeNum,
             "previewImage": self.previewImage,
+            "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Host Editor": self.user.to_dict_basic()
+            "Host Editor": self.user.to_dict_basic(),
+            "Episodes": [episode.to_dict_basic() for episode in self.episodes].sort(key=lambda ep: ep.order)
         }
