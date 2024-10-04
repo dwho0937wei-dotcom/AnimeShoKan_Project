@@ -31,6 +31,7 @@ class Anime(db.Model):
             "title": self.title,
             "synopsis": self.synopsis,
             "episodeNum": self.episodeNum,
+            "previewImage": self.previewImage,
         }
     def to_dict(self):
         return {

@@ -48,7 +48,7 @@ def postNewAnime():
         upload = upload_file_to_s3(previewImage) if previewImage else None
 
         if upload is not None and "url" not in upload:
-            print("Url not found in upload!")
+            print("Url not found in upload when posting new Anime!")
             return animeForm.errors, 500
         
         url = upload["url"] if upload else None
@@ -66,3 +66,30 @@ def postNewAnime():
         return newAnime.to_dict()
     
     return {"errors": animeForm.errors}, 400
+
+
+@anime_routes.route('/<int:animeId>', methods=['PUT'])
+@login_required
+def updateAnime(animeId):
+    animeForm = AnimeForm()
+    animeForm['csrf_token'].data = request.cookies['csrf_token']
+
+    animeToUpdate = Anime.query.get(animeId)
+    animeToUpdate.title = animeForm.data["title"]
+    animeToUpdate.synopsis = animeForm.data["synopsis"]
+
+    newPreviewImage = animeForm.data["previewImage"]
+    if newPreviewImage:
+        newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
+        upload = upload_file_to_s3(newPreviewImage)
+
+        if "url" not in upload:
+            print("Url not found in upload for editing Anime with new preview image!")
+            return animeForm.errors, 500
+        
+        remove_file_from_s3(animeToUpdate.previewImage)
+        animeToUpdate.previewImage = upload["url"]
+
+    db.session.commit()
+
+    return animeToUpdate.to_dict()
