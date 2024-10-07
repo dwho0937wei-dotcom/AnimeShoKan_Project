@@ -6,7 +6,10 @@ class Episode(db.Model):
     __tablename__ = 'episodes'
 
     if environment == 'production':
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = (
+            db.UniqueConstraint('order', 'animeId', name='unique_anime_episode_number'),
+            {'schema': SCHEMA}
+        )
 
     
     id = db.Column(db.Integer, primary_key=True)
