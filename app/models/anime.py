@@ -38,6 +38,6 @@ class Anime(db.Model):
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Host Editor": self.user.to_dict_basic(),
+            # "Host Editor": self.user.to_dict_basic(),
             "Episodes": [episode.to_dict_basic() for episode in self.episodes].sort(key=lambda ep: ep.episodeNum)
         }

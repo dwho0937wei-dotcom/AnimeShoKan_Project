@@ -16,13 +16,14 @@ def getAllAnime():
 
     for anime in allAnime:
         anime_dict = anime.to_dict()
-        firstInitial = anime_dict.title[0].upper()
-        if animeCatalog[firstInitial]:
+        firstInitial = anime_dict.get('title')[0].upper()
+        if animeCatalog.get(firstInitial):
             animeCatalog[firstInitial].append(anime_dict)
         else:
             animeCatalog[firstInitial] = [anime_dict]
+
     for alphabet in animeCatalog.keys():
-        animeCatalog[alphabet] = animeCatalog[alphabet].sort(key=lambda a : a.title)
+        animeCatalog[alphabet].sort(key=lambda a : a.get('title'))
 
     return animeCatalog
 
