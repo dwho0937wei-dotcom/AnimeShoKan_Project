@@ -169,6 +169,7 @@ def updateEpisode(animeId, episodeId):
 
     episodeToUpdate.title = episodeForm.data['title']
     episodeToUpdate.plot = episodeForm.data['plot']
+    episodeToUpdate.episodeNum = episodeForm.data['episodeNum']
     episodeToUpdate.airDate = episodeForm.data['airDate']
 
     newPreviewImage = episodeForm.data['previewImage']
