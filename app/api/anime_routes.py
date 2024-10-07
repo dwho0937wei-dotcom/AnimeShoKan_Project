@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.api.s3_helper import (
     upload_file_to_s3, get_unique_filename, remove_file_from_s3
 )
-from app.forms import AnimeForm, EpisodeForm
+from app.forms import AnimeForm, AnimeUpdateForm, EpisodeForm, EpisodeUpdateForm
 from app.models import Anime, db, Episode
 
 anime_routes = Blueprint('anime', __name__)
@@ -72,25 +72,25 @@ def postNewAnime():
 @anime_routes.route('/<int:animeId>', methods=['PUT'])
 @login_required
 def updateAnime(animeId):
-    animeForm = AnimeForm()
-    animeForm['csrf_token'].data = request.cookies['csrf_token']
+    animeUpdateForm = AnimeUpdateForm()
+    animeUpdateForm['csrf_token'].data = request.cookies['csrf_token']
 
     animeToUpdate = Anime.query.get(animeId)
 
     if animeToUpdate.hostEditorId != current_user.id:
         return {"error": "Current user does NOT have the editing privilege for this anime!"}, 500
 
-    animeToUpdate.title = animeForm.data["title"]
-    animeToUpdate.synopsis = animeForm.data["synopsis"]
+    animeToUpdate.title = animeUpdateForm.data["title"]
+    animeToUpdate.synopsis = animeUpdateForm.data["synopsis"]
 
-    newPreviewImage = animeForm.data["previewImage"]
+    newPreviewImage = animeUpdateForm.data["previewImage"]
     if newPreviewImage:
         newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
         upload = upload_file_to_s3(newPreviewImage)
 
         if "url" not in upload:
             print("Url not found in upload for editing Anime with new preview image!")
-            return animeForm.errors, 500
+            return animeUpdateForm.errors, 500
         
         if animeToUpdate.previewImage:
             remove_file_from_s3(animeToUpdate.previewImage)
@@ -159,8 +159,8 @@ def addNewEpisode(animeId):
 @anime_routes.route('/<int:animeId>/episode/<int:episodeId>', methods=['PUT'])
 @login_required
 def updateEpisode(animeId, episodeId):
-    episodeForm = EpisodeForm()
-    episodeForm['csrf_token'].data = request.cookies['csrf_token']
+    episodeUpdateForm = EpisodeUpdateForm()
+    episodeUpdateForm['csrf_token'].data = request.cookies['csrf_token']
 
     animeToEditEpisode = Anime.query.get(animeId)
     if animeToEditEpisode.hostEditorId != current_user.id:
@@ -168,19 +168,19 @@ def updateEpisode(animeId, episodeId):
     
     episodeToUpdate = Episode.query.get(episodeId)
 
-    episodeToUpdate.title = episodeForm.data['title']
-    episodeToUpdate.plot = episodeForm.data['plot']
-    episodeToUpdate.episodeNum = episodeForm.data['episodeNum']
-    episodeToUpdate.airDate = episodeForm.data['airDate']
+    episodeToUpdate.title = episodeUpdateForm.data['title']
+    episodeToUpdate.plot = episodeUpdateForm.data['plot']
+    episodeToUpdate.episodeNum = episodeUpdateForm.data['episodeNum']
+    episodeToUpdate.airDate = episodeUpdateForm.data['airDate']
 
-    newPreviewImage = episodeForm.data['previewImage']
+    newPreviewImage = episodeUpdateForm.data['previewImage']
     if newPreviewImage:
         newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
         upload = upload_file_to_s3(newPreviewImage)
 
         if 'url' not in upload:
             print("Url not found in upload when editing an episode for this anime!")
-            return episodeForm.errors, 500
+            return episodeUpdateForm.errors, 500
         
         if episodeToUpdate.previewImage:
             remove_file_from_s3(episodeToUpdate.previewImage)
