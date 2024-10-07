@@ -8,7 +8,7 @@ from app.api.s3_helper import ALLOWED_EXTENSIONS
 class EpisodeForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     plot = StringField('Plot', validators=[DataRequired()])
-    order = IntegerField('Episode #', validators=[DataRequired()])
+    episodeNum = IntegerField('Episode #', validators=[DataRequired()])
     airDate = DateField('Aired Date', validators=[DataRequired()])
     previewImage = FileField('Preview Image', validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     submit = SubmitField('Add Episode')

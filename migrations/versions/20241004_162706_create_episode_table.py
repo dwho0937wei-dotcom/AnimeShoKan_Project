@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('plot', sa.String(length=255), nullable=False),
-    sa.Column('order', sa.Integer(), nullable=False),
+    sa.Column('episodeNum', sa.Integer(), nullable=False),
     sa.Column('airDate', sa.DateTime(), nullable=False),
     sa.Column('previewImage', sa.String(), nullable=True),
     sa.Column('animeId', sa.Integer(), nullable=False),

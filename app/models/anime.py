@@ -12,7 +12,7 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     synopsis = db.Column(db.String(255), nullable=False)
-    episodeNum = db.Column(db.Integer, nullable=False)
+    numOfEpisode = db.Column(db.Integer, nullable=False)
     hostEditorId = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),
         nullable=False
@@ -31,7 +31,7 @@ class Anime(db.Model):
             "id": self.id,
             "title": self.title,
             "synopsis": self.synopsis,
-            "episodeNum": self.episodeNum,
+            "numOfEpisode": self.numOfEpisode,
             "previewImage": self.previewImage,
             "hostEditorId": self.hostEditorId,
         }
@@ -39,5 +39,5 @@ class Anime(db.Model):
         return {
             **self.to_dict_basic(),
             "Host Editor": self.user.to_dict_basic(),
-            "Episodes": [episode.to_dict_basic() for episode in self.episodes].sort(key=lambda ep: ep.order)
+            "Episodes": [episode.to_dict_basic() for episode in self.episodes].sort(key=lambda ep: ep.episodeNum)
         }

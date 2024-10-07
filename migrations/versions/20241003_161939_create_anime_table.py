@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=255), nullable=False),
     sa.Column('synopsis', sa.String(length=255), nullable=False),
-    sa.Column('episodeNum', sa.Integer(), nullable=False),
+    sa.Column('numOfEpisode', sa.Integer(), nullable=False),
     sa.Column('hostEditorId', sa.Integer(), nullable=False),
     sa.Column('previewImage', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),

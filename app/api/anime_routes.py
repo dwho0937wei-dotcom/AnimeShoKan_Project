@@ -55,7 +55,7 @@ def postNewAnime():
         newAnime = Anime(
             title=animeForm.data["title"],
             synopsis=animeForm.data["synopsis"],
-            episodeNum=0,
+            numOfEpisode=0,
             hostEditorId=current_user.id,
             previewImage=url
         )
@@ -136,7 +136,7 @@ def addNewEpisode(animeId):
         newEpisode = Episode(
             title=episodeForm.data['title'],
             plot=episodeForm.data['plot'],
-            order=episodeForm.data['title'],
+            episodeNum=episodeForm.data['episodeNum'],
             airDate=episodeForm.data['airDate'],
             previewImage=url,
             animeId=animeId,
