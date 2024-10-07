@@ -26,8 +26,8 @@ def upgrade():
     sa.Column('airDate', sa.DateTime(), nullable=False),
     sa.Column('previewImage', sa.String(), nullable=True),
     sa.Column('animeId', sa.Integer(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('createdAt', sa.DateTime(), nullable=True),
+    sa.Column('updatedAt', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['animeId'], ['anime.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

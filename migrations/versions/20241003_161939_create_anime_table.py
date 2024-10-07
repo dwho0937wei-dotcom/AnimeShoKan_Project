@@ -25,8 +25,8 @@ def upgrade():
     sa.Column('numOfEpisode', sa.Integer(), nullable=False),
     sa.Column('hostEditorId', sa.Integer(), nullable=False),
     sa.Column('previewImage', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('createdAt', sa.DateTime(), nullable=True),
+    sa.Column('updatedAt', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['hostEditorId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

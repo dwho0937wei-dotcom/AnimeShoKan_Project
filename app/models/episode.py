@@ -22,8 +22,8 @@ class Episode(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("anime.id")),
         nullable=False
     )
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    createdAt = db.Column(db.DateTime, default=datetime.utcnow)
+    updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
     anime = db.relationship("Anime", back_populates="episodes")
