@@ -1,0 +1,17 @@
+.welcome {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lists {
+    display: flex;
+    flex-direction: row;
+    column-gap: 50px;
+}
+
+.list {
+    ul {
+        list-style-type: none;
+    }
+}
