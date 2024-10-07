@@ -3,8 +3,8 @@ from flask_login import login_required, current_user
 from app.api.s3_helper import (
     upload_file_to_s3, get_unique_filename, remove_file_from_s3
 )
-from app.forms import AnimeForm
-from app.models import Anime, db
+from app.forms import AnimeForm, EpisodeForm
+from app.models import Anime, db, Episode
 
 anime_routes = Blueprint('anime', __name__)
 
@@ -113,3 +113,38 @@ def deleteAnime(animeId):
     db.session.commit()
 
     return {"message": "Anime successfully deleted!"}
+
+
+#! Episodes
+@anime_routes.route('/<int:animeId>/episode', methods=['POST'])
+@login_required
+def addNewEpisode(animeId):
+    episodeForm = EpisodeForm()
+    episodeForm['csrf_token'].data = request.cookies['csrf_token']
+
+    if episodeForm.validate_on_submit():
+        previewImage = episodeForm.data["previewImage"] if episodeForm.data["previewImage"] else None
+        if previewImage:
+            previewImage.filename = get_unique_filename(previewImage.filename)
+        upload = upload_file_to_s3(previewImage) if previewImage else None
+
+        if upload is not None and "url" not in upload:
+            print("Url not found in upload when posting new Anime!")
+            return episodeForm.errors, 500
+        
+        url = upload["url"] if upload else None
+        newEpisode = Episode(
+            title=episodeForm.data['title'],
+            plot=episodeForm.data['plot'],
+            order=episodeForm.data['title'],
+            airDate=episodeForm.data['airDate'],
+            previewImage=url,
+            animeId=animeId,
+        )
+
+        db.session.add(newEpisode)
+        db.session.commit()
+
+        return newEpisode.to_dict()
+    
+    return {"errors": episodeForm.errors}, 400
