@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import './HomePage.css'
 
 function HomePage() {
@@ -21,7 +22,7 @@ function HomePage() {
                                 {animeCatalog[alphabet].map(anime => {
                                     return (
                                         <li key={anime.id}>
-                                            {anime.title}
+                                            <NavLink to={`/anime/${anime.id}`}>{anime.title}</NavLink>
                                         </li>
                                     )
                                 })}
