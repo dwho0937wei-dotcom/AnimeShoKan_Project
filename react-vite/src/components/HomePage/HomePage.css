@@ -8,6 +8,10 @@
     display: flex;
     flex-direction: row;
     column-gap: 50px;
+
+    NavLink {
+        text-decoration: none;
+    }
 }
 
 .list {

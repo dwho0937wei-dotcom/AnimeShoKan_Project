@@ -26,10 +26,14 @@ class Anime(db.Model):
     episodes = db.relationship("Episode", back_populates="anime")
 
 
-    def to_dict_basic(self):
+    def to_dict_catalog(self):
         return {
             "id": self.id,
             "title": self.title,
+        }
+    def to_dict_basic(self):
+        return {
+            **self.to_dict_catalog(),
             "synopsis": self.synopsis,
             "numOfEpisode": self.numOfEpisode,
             "previewImage": self.previewImage,

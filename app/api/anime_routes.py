@@ -9,18 +9,37 @@ from app.models import Anime, db, Episode
 anime_routes = Blueprint('anime', __name__)
 
 
-@anime_routes.route('')
-def getAllAnime():
+# @anime_routes.route('')
+# def getAllAnime():
+#     allAnime = Anime.query.all()
+#     animeCatalog = {}
+
+#     for anime in allAnime:
+#         anime_dict = anime.to_dict()
+#         firstInitial = anime_dict.get('title')[0].upper()
+#         if animeCatalog.get(firstInitial):
+#             animeCatalog[firstInitial].append(anime_dict)
+#         else:
+#             animeCatalog[firstInitial] = [anime_dict]
+
+#     for alphabet in animeCatalog.keys():
+#         animeCatalog[alphabet].sort(key=lambda a : a.get('title'))
+
+#     return animeCatalog
+
+
+@anime_routes.route('/catalog')
+def getAnimeCatalog():
     allAnime = Anime.query.all()
     animeCatalog = {}
 
     for anime in allAnime:
-        anime_dict = anime.to_dict()
-        firstInitial = anime_dict.get('title')[0].upper()
+        catalog = anime.to_dict_catalog()
+        firstInitial = catalog.get('title')[0].upper()
         if animeCatalog.get(firstInitial):
-            animeCatalog[firstInitial].append(anime_dict)
+            animeCatalog[firstInitial].append(catalog)
         else:
-            animeCatalog[firstInitial] = [anime_dict]
+            animeCatalog[firstInitial] = [catalog]
 
     for alphabet in animeCatalog.keys():
         animeCatalog[alphabet].sort(key=lambda a : a.get('title'))

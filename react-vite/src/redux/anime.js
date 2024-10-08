@@ -1,24 +1,40 @@
-const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
+// const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
+const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
 
-const allAnimeLoad = (animeCatalog) => ({
-    type: ALL_ANIME_LOAD,
+// const allAnimeLoad = (animeCatalog) => ({
+//     type: ALL_ANIME_LOAD,
+//     payload: animeCatalog
+// });
+const animeCatalog = (animeCatalog) => ({
+    type: ANIME_CATALOG,
     payload: animeCatalog
-});
+})
 const animeIdLoad = (currentAnime) => ({
     type: ANIME_ID_LOAD,
     payload: currentAnime
 })
 
-export const thunkAllAnimeLoad = () => async (dispatch) => {
-    const response = await fetch("/api/anime");
+// export const thunkAllAnimeLoad = () => async (dispatch) => {
+//     const response = await fetch("/api/anime");
+//     if (response.ok) {
+//         const data = await response.json()
+//         if (data.errors) {
+//             return;
+//         }
+
+//         dispatch(allAnimeLoad(data));
+//     }
+// }
+export const thunkAnimeCatalog = () => async (dispatch) => {
+    const response = await fetch("/api/anime/catalog");
     if (response.ok) {
         const data = await response.json()
         if (data.errors) {
             return;
         }
 
-        dispatch(allAnimeLoad(data));
+        dispatch(animeCatalog(data));
     }
 }
 export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
@@ -35,7 +51,9 @@ export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
 
 function animeReducer(state={}, action) {
     switch (action.type) {
-        case ALL_ANIME_LOAD:
+        // case ALL_ANIME_LOAD:
+        //     return { ...state, animeCatalog: action.payload };
+        case ANIME_CATALOG:
             return { ...state, animeCatalog: action.payload };
         case ANIME_ID_LOAD:
             return { ...state, currentAnime: action.payload };

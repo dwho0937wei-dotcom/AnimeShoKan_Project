@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
-import { thunkAllAnimeLoad } from "../redux/anime";
+import { thunkAnimeCatalog } from "../redux/anime";
 import Navigation from "../components/Navigation/Navigation";
 
 export default function Layout() {
@@ -14,7 +14,7 @@ export default function Layout() {
     //! User Authentication
     dispatch(thunkAuthenticate())
       //! All Anime Loading
-      .then(() => dispatch(thunkAllAnimeLoad()))
+      .then(() => dispatch(thunkAnimeCatalog()))
       //! Done Loading
       .then(() => setIsLoaded(true));
 
