@@ -1,10 +1,22 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./CreateAnimeFormPage.css"
 
 const CreateAnimeFormPage = () => {
     const [title, setTitle] = useState('');
     const [synopsis, setSynopsis] = useState('')
     const [image, setImage] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const animeData = new FormData();
+        animeData.append("title", title);
+        animeData.append("synopsis", synopsis);
+        animeData.append("image", image);
+
+        const serverResponse = null;
+    }
 
     return (
         <div>
