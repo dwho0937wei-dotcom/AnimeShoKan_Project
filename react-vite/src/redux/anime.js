@@ -56,7 +56,7 @@ function animeReducer(state={}, action) {
         case ANIME_CATALOG:
             return { ...state, animeCatalog: action.payload };
         case ANIME_ID_LOAD:
-            return { ...state, currentAnime: action.payload };
+            return { ...state, animeList: { ...state.animeList, [action.payload.id]: action.payload } };
         default:
             return state
     }

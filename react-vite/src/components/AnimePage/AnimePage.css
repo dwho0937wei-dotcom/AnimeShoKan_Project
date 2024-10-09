@@ -1,0 +1,42 @@
+.title-and-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    button {
+        height: 30px;
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.subcontainer {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    column-gap: 50px;
+}
+
+.syn-img {
+    background-color: lightblue;
+    width: 80%;
+
+    img {
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 500px;
+        height: auto;
+        float: inline-end;
+    }
+}
+
+.episodes {
+    background-color: lightgray;
+    border-radius: 15px;
+    width: 20%;
+    display: flex;
+    padding-left: 15px;
+}
