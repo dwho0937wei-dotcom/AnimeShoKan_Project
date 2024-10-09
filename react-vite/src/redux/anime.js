@@ -15,10 +15,12 @@ const animeIdLoad = (currentAnime) => ({
     type: ANIME_ID_LOAD,
     payload: currentAnime
 })
-const newAnime = (newAnime) => {
+const newAnime = (listEle, catalogEle, firstInitial) => ({
     type: NEW_ANIME,
-    payload: newAnime
-}
+    listEle,
+    catalogEle,
+    firstInitial
+})
 
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
@@ -53,14 +55,27 @@ export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
         dispatch(animeIdLoad(data))
     }
 }
-export const thunkNewAnime = (animeData) = async (dispatch) => {
+export const thunkNewAnime = (animeData) => async (dispatch) => {
     const response = await fetch(`/api/anime/new`, {
         method: "POST",
-        
-    })
+        body: animeData
+    });
+    const dataLstEle = await response.json();
+
+    if (response.ok) {
+        const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
+        const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
+        dispatch(newAnime(dataLstEle, dataCatalogEle, dataFirstInitial))
+        //! Return the id assigned to the posted anime so that the user will later be redirected to its page after submitting
+        return dataLstEle.id
+    } else {
+        //! In this case, the data must be an error so we're returning an error.
+        const errors = dataLstEle;
+        return errors;
+    }
 }
 
-function animeReducer(state={}, action) {
+function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
     switch (action.type) {
         // case ALL_ANIME_LOAD:
         //     return { ...state, animeCatalog: action.payload };
@@ -68,6 +83,18 @@ function animeReducer(state={}, action) {
             return { ...state, animeCatalog: action.payload };
         case ANIME_ID_LOAD:
             return { ...state, animeList: { ...state.animeList, [action.payload.id]: action.payload } };
+        case NEW_ANIME: {
+            let firstInitialGroup = state.animeCatalog[action.firstInitial];
+            if (firstInitialGroup) {
+                firstInitialGroup = [...firstInitialGroup, action.catalogEle].sort((anime1, anime2) => anime1.title.localeCompare(anime2.title));
+            }
+            else {
+                firstInitialGroup = [action.catalogEle];
+            }
+            return { ...state, 
+                     animeCatalog: { ...state.animeCatalog, [action.firstInitial]: firstInitialGroup }, 
+                     animeList: { ...state.animeList, [action.listEle.id]: action.listEle } }
+        }
         default:
             return state
     }

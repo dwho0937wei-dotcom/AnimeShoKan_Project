@@ -1,26 +1,35 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { thunkNewAnime } from "../../redux/anime";
 import "./CreateAnimeFormPage.css"
 
 const CreateAnimeFormPage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [previewImage, setPreviewImage] = useState(null);
+    const [synopsis, setSynopsis] = useState('');
     const [title, setTitle] = useState('');
-    const [synopsis, setSynopsis] = useState('')
-    const [image, setImage] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const animeData = new FormData();
         animeData.append("title", title);
         animeData.append("synopsis", synopsis);
-        animeData.append("image", image);
-
-        const serverResponse = null;
+        animeData.append("previewImage", previewImage);
+        const serverResponse = await dispatch(thunkNewAnime(animeData));
+        if (typeof serverResponse !== "object") {
+            const newAnimeId = serverResponse;
+            return navigate(`/anime/${newAnimeId}`);
+        }
+        else {
+            return serverResponse.errors;
+        }
     }
 
     return (
         <div>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <label>
                     Title
                     <textarea 
@@ -44,7 +53,7 @@ const CreateAnimeFormPage = () => {
                     <input 
                         type="file"
                         accept="image/*"
-                        onChange={(e) => setImage(e.target.files[0])} 
+                        onChange={(e) => setPreviewImage(e.target.files[0])} 
                     />
                 </label>
                 <div className="submitContainer">

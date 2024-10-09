@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 import './HomePage.css'
 
 function HomePage() {
-    const animeCatalog = useSelector(state => state.anime.animeCatalog)
-    const alphabetList = Object.keys(animeCatalog)
+    const animeCatalog = useSelector(state => state.anime.animeCatalog);
+    const alphabetList = Object.keys(animeCatalog).sort();
 
     return (
         <>
