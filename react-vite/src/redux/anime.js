@@ -1,6 +1,7 @@
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
+const NEW_ANIME = 'anime/newAnime';
 
 // const allAnimeLoad = (animeCatalog) => ({
 //     type: ALL_ANIME_LOAD,
@@ -14,6 +15,10 @@ const animeIdLoad = (currentAnime) => ({
     type: ANIME_ID_LOAD,
     payload: currentAnime
 })
+const newAnime = (newAnime) => {
+    type: NEW_ANIME,
+    payload: newAnime
+}
 
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
@@ -47,6 +52,12 @@ export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
 
         dispatch(animeIdLoad(data))
     }
+}
+export const thunkNewAnime = (animeData) = async (dispatch) => {
+    const response = await fetch(`/api/anime/new`, {
+        method: "POST",
+        
+    })
 }
 
 function animeReducer(state={}, action) {
