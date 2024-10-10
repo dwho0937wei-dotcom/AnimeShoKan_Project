@@ -3,8 +3,8 @@ import AnimePage from '../components/AnimePage/AnimePage';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
-import HomePage from '../components/HomePage/HomePage';
-import CreateAnimeFormPage from '../components/CreateAnimeFormPage/CreateAnimeFormPage';
+import HomePage from '../components/HomePage';
+import { CreateAnimeFormPage, UpdateAnimeFormPage } from '../components/AnimeFormPage';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "anime/new",
         element: <CreateAnimeFormPage />
+      },
+      {
+        path: "anime/:animeId/edit",
+        element: <UpdateAnimeFormPage />
       },
       {
         path: "login",

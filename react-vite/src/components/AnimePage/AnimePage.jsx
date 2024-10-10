@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { thunkAnimeIdLoad } from '../../redux/anime';
 import './AnimePage.css'
 
 function AnimePage() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [ isLoaded, setIsLoaded ] = useState(false);
     let { animeId } = useParams();
     animeId = parseInt(animeId);
-    const [ isLoaded, setIsLoaded ] = useState(false);
-    const dispatch = useDispatch();
 
     const animeList = useSelector(state => state.anime.animeList)
     useEffect(() => {
@@ -34,7 +35,7 @@ function AnimePage() {
                             ?
                         <div></div>
                             :
-                        <button>Edit</button>
+                        <button onClick={() => navigate(`/anime/${animeId}/edit`)}>Edit</button>
                     }
                 </div>
                 <div className='container'>

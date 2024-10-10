@@ -95,10 +95,10 @@ def updateAnime(animeId):
     animeUpdateForm['csrf_token'].data = request.cookies['csrf_token']
 
     animeToUpdate = Anime.query.get(animeId)
-
     if animeToUpdate.hostEditorId != current_user.id:
         return {"error": "Current user does NOT have the editing privilege for this anime!"}, 500
-
+    #! Need the old title before changing for finding and deleting the old one in animeCatalog in Redux
+    oldTitle = animeToUpdate.title
     animeToUpdate.title = animeUpdateForm.data["title"]
     animeToUpdate.synopsis = animeUpdateForm.data["synopsis"]
 
@@ -116,8 +116,7 @@ def updateAnime(animeId):
         animeToUpdate.previewImage = upload["url"]
 
     db.session.commit()
-
-    return animeToUpdate.to_dict()
+    return { 'oldTitle': oldTitle, 'updated': animeToUpdate.to_dict() }
 
 
 @anime_routes.route('/<int:animeId>', methods=['DELETE'])
