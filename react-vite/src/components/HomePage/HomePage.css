@@ -5,7 +5,11 @@
 }
 
 .lists {
+    height: calc(100dvh - 222px);
     display: flex;
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
     flex-direction: row;
     column-gap: 50px;
 
