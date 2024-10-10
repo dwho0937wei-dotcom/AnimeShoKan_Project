@@ -18,8 +18,8 @@ def seed_anime():
         previewImage="https://animeshokanbucket.s3.us-east-2.amazonaws.com/2a9477ceb71f41918a39ed558fe75d87.png"
     )
     controlTheMoneySoulPossibility = Anime(
-        title='''Control: The Money and Soul of Possibility (Please Do NOT Delete)',
-        synopsis='Set in a near-future world where the economy is manipulated by a mysterious organization known as the "Financial District," C – Control follows the story of a young man named Kimimaro Yoga. After being approached by a strange figure, he is drawn into the Financial District, where individuals can gamble their futures for wealth and power. Here, he must confront the ethical dilemmas of using money as a means to achieve one's desires while battling other "Entrepreneurs" who are also vying for success. As Kimimaro navigates this high-stakes environment, he grapples with the implications of his choices on his life and those around him, exploring themes of ambition, morality, and the true value of wealth.''',
+        title='Control: The Money and Soul of Possibility (Please Do NOT Delete)',
+        synopsis='''Set in a near-future world where the economy is manipulated by a mysterious organization known as the "Financial District," C – Control follows the story of a young man named Kimimaro Yoga. After being approached by a strange figure, he is drawn into the Financial District, where individuals can gamble their futures for wealth and power. Here, he must confront the ethical dilemmas of using money as a means to achieve one's desires while battling other "Entrepreneurs" who are also vying for success. As Kimimaro navigates this high-stakes environment, he grapples with the implications of his choices on his life and those around him, exploring themes of ambition, morality, and the true value of wealth.''',
         numOfEpisode=0,
         hostEditorId=3,
         previewImage="http://animeshokanbucket.s3.amazonaws.com/d08aa6cffdaa46eabeeb23aee9219cdf.png"
@@ -61,7 +61,7 @@ def seed_anime():
     )
     steinGate = Anime(
         title='Steins;Gate (Please Do NOT Delete)',
-        synopsis='"Steins;Gate" follows the story of Rintarou Okabe, a self-proclaimed mad scientist who, along with his friends, discovers a method to send text messages to the past using a modified microwave. As they experiment with this newfound power, they inadvertently attract the attention of a mysterious organization and begin to face dire consequences. The series intricately weaves themes of time travel, friendship, and the impact of choices, leading to intense emotional moments and thought-provoking dilemmas. The blend of science fiction with rich character development makes "Steins;Gate" a critically acclaimed series in the anime community.',
+        synopsis='''"Steins;Gate" follows the story of Rintarou Okabe, a self-proclaimed mad scientist who, along with his friends, discovers a method to send text messages to the past using a modified microwave. As they experiment with this newfound power, they inadvertently attract the attention of a mysterious organization and begin to face dire consequences. The series intricately weaves themes of time travel, friendship, and the impact of choices, leading to intense emotional moments and thought-provoking dilemmas. The blend of science fiction with rich character development makes "Steins;Gate" a critically acclaimed series in the anime community.''',
         numOfEpisode=1,
         hostEditorId=3,
         previewImage="http://animeshokanbucket.s3.amazonaws.com/3f34e37a281f4223805e1039ef2b49e1.png"
