@@ -5,7 +5,7 @@ import './HomePage.css'
 function HomePage() {
     const animeCatalog = useSelector(state => state.anime.animeCatalog);
     const alphabetList = Object.keys(animeCatalog).sort();
-
+    
     return (
         <>
             <div className='welcome'>

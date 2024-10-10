@@ -5,6 +5,7 @@ const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
 const NEW_ANIME = 'anime/newAnime';
 const UPDATE_ANIME = 'anime/updateAnime';
+const DELETE_ANIME = 'anime/deleteAnime';
 
 // const allAnimeLoad = (animeCatalog) => ({
 //     type: ALL_ANIME_LOAD,
@@ -32,6 +33,11 @@ const updateAnime = (listEle, catalogEle, newFirstInitial, oldTitle, oldFirstIni
     oldTitle,
     oldFirstInitial
 })
+const deleteAnime = (animeId, firstInitial) => ({
+    type: DELETE_ANIME,
+    animeId,
+    firstInitial,
+}) 
 
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
@@ -111,6 +117,21 @@ export const thunkUpdateAnime = (animeId, animeData) => async (dispatch) => {
         return errors;
     }
 }
+export const thunkDeleteAnime = (animeId) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}`, {
+        method: "DELETE",
+    });
+    if (response.ok) {
+        const { firstInitial, message } = await response.json();
+        //! Remove the anime from 
+            //! the animeCatalog (firstInitial is needed to find it) 
+            //! and the animeList
+        dispatch(deleteAnime(parseInt(animeId), firstInitial));
+        dispatch(thunkAuthenticate());
+        return message;
+    }
+    return;
+}
 
 function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
     switch (action.type) {
@@ -160,6 +181,20 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             //! Updating the updated anime in the animeList
             newState.animeList[action.listEle.id] = action.listEle
             return newState
+        }
+        case DELETE_ANIME: {
+            const newState = { ...state };
+            //! Remove the anime from animeCatalog
+            newState.animeCatalog[action.firstInitial] = newState.animeCatalog[action.firstInitial].filter(anime => anime.id !== action.animeId);
+                //! If that makes the catalog empty, then delete it
+            if (newState.animeCatalog[action.firstInitial].length === 0) {
+                delete newState.animeCatalog[action.firstInitial];
+            }
+            //! Remove the anime from animeList
+            if (newState.animeList[action.animeId]) {
+                delete newState.animeList[action.animeId];
+            }
+            return newState;
         }
         default:
             return state

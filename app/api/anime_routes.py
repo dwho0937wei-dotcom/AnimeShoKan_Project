@@ -123,6 +123,7 @@ def updateAnime(animeId):
 @login_required
 def deleteAnime(animeId):
     animeToDelete = Anime.query.get(animeId)
+    firstInitial = animeToDelete.title[0].upper()
     if animeToDelete.hostEditorId != current_user.id:
         return {"error": "Current user has no right to delete this anime!"}, 500
     
@@ -131,7 +132,7 @@ def deleteAnime(animeId):
     db.session.delete(animeToDelete)
     db.session.commit()
 
-    return {"message": "Anime successfully deleted!"}
+    return {"firstInitial": firstInitial, "message": "Anime successfully deleted!"}
 
 
 #! Episodes
