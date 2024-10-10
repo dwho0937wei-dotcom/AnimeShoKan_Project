@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom';
 import { thunkAnimeIdLoad } from '../../redux/anime';
+import { MdDeleteForever } from "react-icons/md"
+import { FaEdit } from "react-icons/fa"
 import './AnimePage.css'
 
 function AnimePage() {
@@ -35,7 +37,10 @@ function AnimePage() {
                             ?
                         <div></div>
                             :
-                        <button onClick={() => navigate(`/anime/${animeId}/edit`)}>Edit</button>
+                        <div className='edit-delete'>
+                            <button onClick={() => navigate(`/anime/${animeId}/edit`)}><FaEdit /></button>
+                            <button><MdDeleteForever /></button>
+                        </div>
                     }
                 </div>
                 <div className='container'>

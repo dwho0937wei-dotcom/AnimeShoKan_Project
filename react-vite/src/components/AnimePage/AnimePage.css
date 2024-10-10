@@ -33,6 +33,12 @@
     }
 }
 
+.edit-delete {
+    width: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .episodes {
     background-color: lightgray;
     border-radius: 15px;
