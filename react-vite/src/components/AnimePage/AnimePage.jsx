@@ -28,7 +28,7 @@ function AnimePage() {
             <div>
                 <div className='title-and-edit'>
                     <div></div>
-                    {<h1>{anime.title}</h1>}
+                    <h1>{anime.title}</h1>
                     {
                         !user || user.id !== anime.hostEditorId
                             ?
