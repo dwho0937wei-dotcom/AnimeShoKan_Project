@@ -1,3 +1,5 @@
+import { thunkAuthenticate } from "./session";
+
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
@@ -65,7 +67,10 @@ export const thunkNewAnime = (animeData) => async (dispatch) => {
     if (response.ok) {
         const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
         const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
+        //! For adding the anime into the animeCatalog and animeList in Redux
         dispatch(newAnime(dataLstEle, dataCatalogEle, dataFirstInitial))
+        //! Needed for updating the Posted Anime in user in Redux
+        dispatch(thunkAuthenticate())
         //! Return the id assigned to the posted anime so that the user will later be redirected to its page after submitting
         return dataLstEle.id
     } else {
@@ -91,9 +96,11 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             else {
                 firstInitialGroup = [action.catalogEle];
             }
-            return { ...state, 
-                     animeCatalog: { ...state.animeCatalog, [action.firstInitial]: firstInitialGroup }, 
-                     animeList: { ...state.animeList, [action.listEle.id]: action.listEle } }
+            return { 
+                ...state, 
+                animeList: { ...state.animeList, [action.listEle.id]: action.listEle },
+                animeCatalog: { ...state.animeCatalog, [action.firstInitial]: firstInitialGroup }
+            }
         }
         default:
             return state

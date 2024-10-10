@@ -6,7 +6,7 @@ function Navigation() {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" style={{ 'textDecoration': 'none', 'color': 'blue' }}>Home</NavLink>
       </li>
 
       <li>
