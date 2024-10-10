@@ -7,7 +7,6 @@ import './AnimePage.css'
 function AnimePage() {
     let { animeId } = useParams();
     animeId = parseInt(animeId);
-
     const [ isLoaded, setIsLoaded ] = useState(false);
     const dispatch = useDispatch();
 
@@ -22,13 +21,21 @@ function AnimePage() {
     }, [])
     const anime = isLoaded && animeList[animeId]
 
+    const user = useSelector(state => state.session.user)
+
     return (
         anime ?
             <div>
                 <div className='title-and-edit'>
                     <div></div>
                     {<h1>{anime.title}</h1>}
-                    <button>Edit</button>
+                    {
+                        !user || user.id !== anime.hostEditorId
+                            ?
+                        <div></div>
+                            :
+                        <button>Edit</button>
+                    }
                 </div>
                 <div className='container'>
                     <div className='subcontainer'>
