@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { thunkAnimeIdLoad } from '../../redux/anime';
 import { MdDeleteForever } from "react-icons/md"
 import { FaEdit } from "react-icons/fa"
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteAnimeModal from '../DeleteAnimeModal/DeleteAnimeModal';
 import './AnimePage.css'
 
 function AnimePage() {
@@ -39,7 +41,10 @@ function AnimePage() {
                             :
                         <div className='edit-delete'>
                             <button onClick={() => navigate(`/anime/${animeId}/edit`)}><FaEdit /></button>
-                            <button><MdDeleteForever /></button>
+                            <OpenModalButton
+                                buttonText={<MdDeleteForever />}
+                                modalComponent={<DeleteAnimeModal />}
+                            />
                         </div>
                     }
                 </div>
