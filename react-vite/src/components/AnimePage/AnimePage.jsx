@@ -57,13 +57,16 @@ function AnimePage() {
                         </div>
                         <div className='episodeSection'>
                             <ul className='episodes'>
-                                {episodes.map(episode => {
-                                    return (
-                                        <li key={episode.id}>
-                                            <NavLink to={`/anime/${animeId}/episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
-                                        </li>
-                                    )
-                                })}
+                                {episodes.length > 0 ? 
+                                    episodes.map(episode => {
+                                        return (
+                                            <li key={episode.id}>
+                                                <NavLink to={`/anime/${animeId}/episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
+                                            </li>
+                                        )  
+                                    })
+                                :
+                                   "No episodes yet! Stay tuned!"}
                             </ul>
                             {
                                 //! Only the host editor can add episodes!

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { thunkAddEpisode } from "../../redux/anime";
+import { thunkAddEpisode, thunkAnimeIdLoad } from "../../redux/anime";
 import "./CreateEpisodeFormPage.css"
 
 function formatDate(date) {
@@ -21,6 +21,13 @@ function CreateEpisodeFormPage() {
     const [airDate, setAirDate] = useState(formatDate(new Date()))
     const [previewImage, setPreviewImage] = useState(null);
     const [submit, setSubmit] = useState(false);
+
+    const anime = useSelector(state => state.anime.animeList[animeId]);
+    useEffect(() => {
+        if (!anime) {
+            dispatch(thunkAnimeIdLoad(animeId))
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
