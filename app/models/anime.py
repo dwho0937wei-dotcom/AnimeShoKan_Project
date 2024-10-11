@@ -21,7 +21,7 @@ class Anime(db.Model):
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-
+    
     user = db.relationship("User", back_populates="anime")
     episodes = db.relationship("Episode", back_populates="anime")
 
