@@ -4,6 +4,8 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { thunkAnimeIdLoad } from '../../redux/anime';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteEpisodeModal from '../DeleteEpisodeModal/DeleteEpisodeModal';
 import './EpisodePage.css'
 
 function EpisodePage() {
@@ -12,6 +14,7 @@ function EpisodePage() {
     let { animeId, episodeId } = useParams();
     episodeId = parseInt(episodeId)
 
+    const user = useSelector(state => state.session.user);
     const anime = useSelector(state => state.anime.animeList[animeId]);
     useEffect(() => {
         if (!anime) {
@@ -29,10 +32,18 @@ function EpisodePage() {
                     <div className='episodePageTop'>
                         <NavLink to={`/anime/${animeId}`}>Anime</NavLink>
                         <h1>Episode {episode.episodeNum}: {episode.title}</h1>
-                        <div className='ep-edit-delete'>
-                            <button><FaEdit /></button>
-                            <button><MdDeleteForever /></button>
-                        </div>
+                        {
+                            user && anime.hostEditorId === user.id ? 
+                                <div className='ep-edit-delete'>
+                                    <button><FaEdit /></button>
+                                    <OpenModalButton
+                                        buttonText={<MdDeleteForever />}
+                                        modalComponent={<DeleteEpisodeModal />}
+                            />
+                                </div>
+                            :
+                                <div></div>
+                        }
                     </div>
                     <div className='ep-plot-img-container'>
                         <div className='ep-plot-img'>
@@ -46,7 +57,6 @@ function EpisodePage() {
                             <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex-1].id}`)}>prev</button> : <div></div>}
                         {currentEpisodeIndex < episodeList.length - 1 ?
                             <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex+1].id}`)}>next</button> : <div></div>}
-                        
                     </div>
                 </div>
             </div>

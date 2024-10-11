@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkDeleteEpisode } from "../../redux/anime";
-import './DeleteAnimeModal.css'
+import './DeleteEpisodeModal.css'
 
 function DeleteEpisodeModal() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { closeModal } = useModal();
-    const { animeId, episodeId } = useParams();
+    let { animeId, episodeId } = useParams();
+    animeId = parseInt(animeId);
+    episodeId = parseInt(episodeId);
     const episodeList = useSelector(state => state.anime.animeList[animeId].Episodes);
     const episodeIndex = episodeList.findIndex((episode) => episode.id === episodeId);
 
@@ -23,10 +25,10 @@ function DeleteEpisodeModal() {
     }
 
     return (
-        <div className="deleteModal">
-            <h1>Sure you want to permanently delete your anime post?</h1>
-            <div className="container">
-                <div className="twoBtns">
+        <div className="deleteEpisodeModal">
+            <h1>Sure you want to permanently delete this episode?</h1>
+            <div className="deleteEpisodeContainer">
+                <div className="deleteEpisodeTwoBtns">
                     <button onClick={handleDelete}>Confirm Delete</button>
                     <button onClick={handleCancel}>Nevermind</button>
                 </div>

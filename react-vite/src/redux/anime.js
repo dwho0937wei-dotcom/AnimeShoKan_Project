@@ -258,7 +258,7 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
         }
         case DELETE_EPISODE: {
             const newState = { ...state };
-            delete newState.animeList[action.animeId].Episodes[action.episodeIndex]
+            newState.animeList[action.animeId].Episodes.splice(action.episodeIndex, 1);
             newState.animeList[action.animeId].numOfEpisode -= 1;
             return newState;
         }
