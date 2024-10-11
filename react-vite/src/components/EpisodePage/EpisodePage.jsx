@@ -35,11 +35,11 @@ function EpisodePage() {
                         {
                             user && anime.hostEditorId === user.id ? 
                                 <div className='ep-edit-delete'>
-                                    <button><FaEdit /></button>
+                                    <button onClick={() => navigate(`edit`)}><FaEdit /></button>
                                     <OpenModalButton
                                         buttonText={<MdDeleteForever />}
                                         modalComponent={<DeleteEpisodeModal />}
-                            />
+                                    />
                                 </div>
                             :
                                 <div></div>

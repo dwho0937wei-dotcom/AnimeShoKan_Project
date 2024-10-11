@@ -40,7 +40,7 @@ function AnimePage() {
                         <div></div>
                             :
                         <div className='edit-delete'>
-                            <button onClick={() => navigate(`/anime/${animeId}/edit`)}><FaEdit /></button>
+                            <button onClick={() => navigate(`edit`)}><FaEdit /></button>
                             <OpenModalButton
                                 buttonText={<MdDeleteForever />}
                                 modalComponent={<DeleteAnimeModal />}
@@ -61,7 +61,7 @@ function AnimePage() {
                                     episodes.map(episode => {
                                         return (
                                             <li key={episode.id}>
-                                                <NavLink to={`/anime/${animeId}/episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
+                                                <NavLink to={`episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
                                             </li>
                                         )  
                                     })
@@ -72,7 +72,7 @@ function AnimePage() {
                                 //! Only the host editor can add episodes!
                                 user && anime.hostEditorId === user.id && 
                                     <div className='addEpisodeBtnSection'>
-                                        <button className='addEpisodeBtn' onClick={() => navigate(`/anime/${animeId}/episode/new`)}>Add new episode!</button>
+                                        <button className='addEpisodeBtn' onClick={() => navigate(`episode/new`)}>Add new episode!</button>
                                     </div>
                             }
                         </div>

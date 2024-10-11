@@ -9,6 +9,7 @@ const UPDATE_ANIME = 'anime/updateAnime';
 const DELETE_ANIME = 'anime/deleteAnime';
     //! Episodes
 const ADD_EPISODE = 'episode/addEpisode'
+const UPDATE_EPISODE = 'episode/updateEpisode'
 const DELETE_EPISODE = 'episode/deleteEpisode'
 
 
@@ -50,6 +51,12 @@ const addEpisode = (animeId, newEpisode) => ({
     animeId,
     newEpisode
 })
+const updateEpisode = (animeId, episodeIndex, updatedEpisode) => ({
+    type: UPDATE_EPISODE,
+    animeId,
+    episodeIndex,
+    updatedEpisode
+})
 const deleteEpisode = (animeId, episodeIndex) => ({
     type: DELETE_EPISODE,
     animeId,
@@ -87,7 +94,6 @@ export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
         if (data.errors) {
             return;
         }
-
         dispatch(animeIdLoad(data))
     }
 }
@@ -97,7 +103,6 @@ export const thunkNewAnime = (animeData) => async (dispatch) => {
         body: animeData
     });
     const dataLstEle = await response.json();
-
     if (response.ok) {
         const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
         const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
@@ -120,7 +125,6 @@ export const thunkUpdateAnime = (animeId, animeData) => async (dispatch) => {
     });
     const { oldTitle, updated: dataLstEle } = await response.json();
     const oldFirstInitial = oldTitle[0].toUpperCase();
-
     if (response.ok) {
         const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
         const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
@@ -158,13 +162,27 @@ export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
         body: episodeData
     })
     const newEpisode = await response.json();
-
     if (response.ok) {
         dispatch(addEpisode(animeId, newEpisode));
         return newEpisode;
     }
     else {
         const errors = newEpisode;
+        return errors;
+    }
+}
+export const thunkUpdateEpisode = (animeId, episodeId, episodeIndex, episodeData) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/episode/${episodeId}`, {
+        method: 'PUT',
+        body: episodeData
+    })
+    const updatedEpisode = await response.json();
+    if (response.ok) {
+        dispatch(updateEpisode(animeId, episodeIndex, updatedEpisode));
+        return updatedEpisode
+    }
+    else {
+        const errors = updatedEpisode;
         return errors;
     }
 }
@@ -254,6 +272,11 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
                 newState.animeList[action.animeId].Episodes.sort((ep1, ep2) => ep1.episodeNum - ep2.episodeNum);
             }
             newState.animeList[action.animeId].numOfEpisode += 1;
+            return newState;
+        }
+        case UPDATE_EPISODE: {
+            const newState = { ...state };
+            newState.animeList[action.animeId].Episodes[action.episodeIndex] = action.updatedEpisode;
             return newState;
         }
         case DELETE_EPISODE: {
