@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { thunkUpdateAnime } from "../../redux/anime";
+import { thunkAnimeIdLoad, thunkUpdateAnime } from "../../redux/anime";
 import "./UpdateAnimeFormPage.css"
 
 const UpdateAnimeFormPage = () => {
@@ -9,9 +9,20 @@ const UpdateAnimeFormPage = () => {
     const navigate = useNavigate();
     const { animeId } = useParams();
     const animeToUpdate = useSelector(state => state.anime.animeList[animeId]);
+    useEffect(() => {
+        if (!animeToUpdate) {
+            dispatch(thunkAnimeIdLoad(animeId))
+        }
+    }, [])
+    useEffect(() => {
+        if (animeToUpdate) {
+            setTitle(animeToUpdate.title);
+            setSynopsis(animeToUpdate.synopsis);
+        }
+    }, [animeToUpdate])
     const [previewImage, setPreviewImage] = useState(null);
-    const [synopsis, setSynopsis] = useState(animeToUpdate.synopsis);
-    const [title, setTitle] = useState(animeToUpdate.title);
+    const [title, setTitle] = useState('');
+    const [synopsis, setSynopsis] = useState('');
     const [submit, setSubmit] = useState(false);
 
     const handleSubmit = async (e) => {
