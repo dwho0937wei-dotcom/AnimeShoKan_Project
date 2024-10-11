@@ -63,9 +63,13 @@ function AnimePage() {
                                     )
                                 })}
                             </ul>
-                            <div className='addEpisodeBtnSection'>
-                                <button className='addEpisodeBtn'>Add new episode!</button>
-                            </div>
+                            {
+                                //! Only the host editor can add episodes!
+                                user && anime.hostEditorId === user.id && 
+                                    <div className='addEpisodeBtnSection'>
+                                        <button className='addEpisodeBtn'>Add new episode!</button>
+                                    </div>
+                            }
                         </div>
                     </div>  
                 </div>
