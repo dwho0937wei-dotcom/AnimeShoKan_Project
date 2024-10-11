@@ -1,0 +1,41 @@
+.episodeEntirePage {
+    display: flex;
+    align-items: center;
+    height: calc(100dvh - 100px);
+}
+
+.episodePageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.episodePageTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ep-plot-img-container {
+    display: flex;
+    justify-content: center;
+}
+
+.ep-plot-img {
+    background-color: lightblue;
+    width: 50%;
+
+    img {
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 500px;
+        height: auto;
+        float: inline-end;
+    }
+}
+
+.ep-prev-next-btns {
+    display: flex;
+    justify-content: space-between;
+}

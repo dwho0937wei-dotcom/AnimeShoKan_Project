@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { thunkAnimeIdLoad } from '../../redux/anime';
 import { MdDeleteForever } from "react-icons/md"
 import { FaEdit } from "react-icons/fa"
@@ -59,7 +59,9 @@ function AnimePage() {
                             <ul className='episodes'>
                                 {episodes.map(episode => {
                                     return (
-                                        <li key={episode.id}>Episode {episode.episodeNum}: {episode.title}</li>
+                                        <li key={episode.id}>
+                                            <NavLink to={`/anime/${animeId}/episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
+                                        </li>
                                     )
                                 })}
                             </ul>
@@ -67,7 +69,7 @@ function AnimePage() {
                                 //! Only the host editor can add episodes!
                                 user && anime.hostEditorId === user.id && 
                                     <div className='addEpisodeBtnSection'>
-                                        <button className='addEpisodeBtn'>Add new episode!</button>
+                                        <button className='addEpisodeBtn' onClick={() => navigate(`/anime/${animeId}/episode/new`)}>Add new episode!</button>
                                     </div>
                             }
                         </div>
