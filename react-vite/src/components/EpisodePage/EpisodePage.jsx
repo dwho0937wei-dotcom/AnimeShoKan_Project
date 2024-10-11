@@ -13,7 +13,6 @@ function EpisodePage() {
 
     const episodeList = useSelector(state => state.anime.animeList[animeId].Episodes);
     const currentEpisodeIndex = episodeList.findIndex(episode => episode.id === episodeId);
-    console.log('Episode Index: ', currentEpisodeIndex)
     const episode = episodeList[currentEpisodeIndex];
 
     return(

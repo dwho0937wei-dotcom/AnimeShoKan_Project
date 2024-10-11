@@ -1,0 +1,32 @@
+.createEpisodeForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+
+.createEpisodeLabels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    textarea {
+        height: 100px;
+        width: 500px;
+    }
+}
+
+.createEpisodeUploadImage {
+    display: flex;
+    flex-direction: column;
+}
+
+.createEpisodeImage {
+    display: flex;
+    justify-content: center;
+    margin-left: 75px;
+    column-gap: 10px;
+}
+
+.createEpisodeErrors {
+    color: red;
+}
