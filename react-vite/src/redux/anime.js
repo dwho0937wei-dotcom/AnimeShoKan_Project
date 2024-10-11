@@ -9,6 +9,7 @@ const UPDATE_ANIME = 'anime/updateAnime';
 const DELETE_ANIME = 'anime/deleteAnime';
     //! Episodes
 const ADD_EPISODE = 'episode/addEpisode'
+const DELETE_EPISODE = 'episode/deleteEpisode'
 
 
 //! Action Creator
@@ -48,6 +49,11 @@ const addEpisode = (animeId, newEpisode) => ({
     type: ADD_EPISODE,
     animeId,
     newEpisode
+})
+const deleteEpisode = (animeId, episodeIndex) => ({
+    type: DELETE_EPISODE,
+    animeId,
+    episodeIndex
 })
 
 
@@ -162,6 +168,20 @@ export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
         return errors;
     }
 }
+export const thunkDeleteEpisode = (animeId, episodeId, episodeIndex) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/episode/${episodeId}`, {
+        method: 'DELETE'
+    })
+    const result = await response.json();
+    if (response.ok) {
+        await dispatch(deleteEpisode(animeId, episodeIndex));
+        return result;
+    }
+    else {
+        const errors = result;
+        return errors;
+    }
+}
 
 
 function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
@@ -233,6 +253,13 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
                 newState.animeList[action.animeId].Episodes.push(action.newEpisode);
                 newState.animeList[action.animeId].Episodes.sort((ep1, ep2) => ep1.episodeNum - ep2.episodeNum);
             }
+            newState.animeList[action.animeId].numOfEpisode += 1;
+            return newState;
+        }
+        case DELETE_EPISODE: {
+            const newState = { ...state };
+            delete newState.animeList[action.animeId].Episodes[action.episodeIndex]
+            newState.animeList[action.animeId].numOfEpisode -= 1;
             return newState;
         }
         default:
