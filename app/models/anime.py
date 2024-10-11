@@ -21,7 +21,7 @@ class Anime(db.Model):
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    
+
     user = db.relationship("User", back_populates="anime")
     episodes = db.relationship("Episode", back_populates="anime")
 
@@ -43,5 +43,6 @@ class Anime(db.Model):
         return {
             **self.to_dict_basic(),
             # "Host Editor": self.user.to_dict_basic(),
-            "Episodes": [episode.to_dict_basic() for episode in self.episodes].sort(key=lambda ep: ep.get('episodeNum'))
+            "Episodes": sorted([episode.to_dict_basic() for episode in self.episodes], key=lambda ep: ep.get('episodeNum')),
+            # "Episodes": [episode.to_dict_basic() for episode in self.episodes]
         }
