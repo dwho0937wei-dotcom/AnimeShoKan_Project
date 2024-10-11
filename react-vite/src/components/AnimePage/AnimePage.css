@@ -49,6 +49,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.episodes {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
 .addEpisodeBtnSection {
     display: flex;
     justify-content: center;
