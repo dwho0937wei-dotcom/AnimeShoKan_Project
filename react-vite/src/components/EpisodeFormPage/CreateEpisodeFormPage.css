@@ -30,3 +30,12 @@
 .createEpisodeErrors {
     color: red;
 }
+
+.createEpisodeSubmitContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.createEpisodeSubmitBtn {
+    width: 75px;
+}

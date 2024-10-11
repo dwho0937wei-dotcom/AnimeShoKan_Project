@@ -1,12 +1,17 @@
 import { thunkAuthenticate } from "./session";
 
+//! Action
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
 const NEW_ANIME = 'anime/newAnime';
 const UPDATE_ANIME = 'anime/updateAnime';
 const DELETE_ANIME = 'anime/deleteAnime';
+    //! Episodes
+const ADD_EPISODE = 'episode/addEpisode'
 
+
+//! Action Creator
 // const allAnimeLoad = (animeCatalog) => ({
 //     type: ALL_ANIME_LOAD,
 //     payload: animeCatalog
@@ -38,7 +43,15 @@ const deleteAnime = (animeId, firstInitial) => ({
     animeId,
     firstInitial,
 }) 
+    //! Episodes
+const addEpisode = (animeId, newEpisode) => ({
+    type: ADD_EPISODE,
+    animeId,
+    newEpisode
+})
 
+
+//! Thunk Action
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
 //     if (response.ok) {
@@ -132,6 +145,24 @@ export const thunkDeleteAnime = (animeId) => async (dispatch) => {
     }
     return;
 }
+    //! Episodes
+export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/episode`, {
+        method: 'POST',
+        body: episodeData
+    })
+    const newEpisode = await response.json();
+
+    if (response.ok) {
+        dispatch(addEpisode(animeId, newEpisode));
+        return newEpisode;
+    }
+    else {
+        const errors = newEpisode;
+        return errors;
+    }
+}
+
 
 function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
     switch (action.type) {
@@ -193,6 +224,14 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             //! Remove the anime from animeList
             if (newState.animeList[action.animeId]) {
                 delete newState.animeList[action.animeId];
+            }
+            return newState;
+        }
+        case ADD_EPISODE: {
+            const newState = { ...state };
+            if (newState.animeList[action.animeId]) {
+                newState.animeList[action.animeId].Episodes.push(action.newEpisode);
+                newState.animeList[action.animeId].Episodes.sort((ep1, ep2) => ep1.episodeNum - ep2.episodeNum);
             }
             return newState;
         }

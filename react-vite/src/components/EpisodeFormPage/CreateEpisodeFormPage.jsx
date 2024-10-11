@@ -1,23 +1,50 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { thunkNewAnime } from "../../redux/anime";
+import { useNavigate, useParams } from "react-router-dom";
+import { thunkAddEpisode } from "../../redux/anime";
 import "./CreateEpisodeFormPage.css"
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 function CreateEpisodeFormPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { animeId } = useParams();
     const [title, setTitle] = useState('');
     const [plot, setPlot] = useState('');
     const [episodeNum, setEpisodeNum] = useState(0);
-    const [airDate, setAirDate] = useState(new Date())
+    const [airDate, setAirDate] = useState(formatDate(new Date()))
     const [previewImage, setPreviewImage] = useState(null);
     const [submit, setSubmit] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmit(true);
+        const episodeData = new FormData();
+        episodeData.append("title", title);
+        episodeData.append("plot", plot);
+        episodeData.append("episodeNum", episodeNum);
+        episodeData.append("airDate", airDate);
+        episodeData.append("previewImage", previewImage);
+        const newEpisode = await dispatch(thunkAddEpisode(animeId, episodeData))
+        if (newEpisode.errors) {
+            console.log(newEpisode.errors);
+        }
+        else {
+            return navigate(`/anime/${animeId}`);
+        }
+    }
 
     return (
         <>
             <h1>Welcome to the Form Page for adding a new episode!</h1>
-            <form className="createEpisodeForm">
+            <form onSubmit={handleSubmit}
+            className="createEpisodeForm">
                 <label className="createEpisodeLabels">
                     Title
                     <textarea 
@@ -61,11 +88,14 @@ function CreateEpisodeFormPage() {
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => setPreviewImage(e.target.value)} 
+                            onChange={(e) => setPreviewImage(e.target.files[0])} 
                         />
                     </div>
                     <p className="createEpisodeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
                 </label>
+                <div className="createEpisodeSubmitContainer">
+                    <input className="createEpisodeSubmitBtn" type="submit" value="Submit" />
+                </div>
             </form>
         </>
     )

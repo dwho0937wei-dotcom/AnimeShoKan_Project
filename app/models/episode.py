@@ -16,7 +16,7 @@ class Episode(db.Model):
     title = db.Column(db.String(255), nullable=False)
     plot = db.Column(db.String(255), nullable=False)
     episodeNum = db.Column(db.Integer, nullable=False)
-    airDate = db.Column(db.DateTime, nullable=False)
+    airDate = db.Column(db.Date, nullable=False)
     previewImage = db.Column(db.String, nullable=True)
     animeId = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("anime.id")),
