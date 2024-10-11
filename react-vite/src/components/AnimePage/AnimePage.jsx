@@ -25,7 +25,7 @@ function AnimePage() {
         }
     }, [])
     const anime = isLoaded && animeList[animeId]
-
+    const episodes = isLoaded && anime.Episodes
     const user = useSelector(state => state.session.user)
 
     return (
@@ -55,8 +55,17 @@ function AnimePage() {
                             <h2>Synopsis</h2>
                             {anime.synopsis}
                         </div>
-                        <div className='episodes'>
-                            Episodes are here!
+                        <div className='episodeSection'>
+                            <ul className='episodes'>
+                                {episodes.map(episode => {
+                                    return (
+                                        <li key={episode.id}>Episode {episode.episodeNum}: {episode.title}</li>
+                                    )
+                                })}
+                            </ul>
+                            <div className='addEpisodeBtnSection'>
+                                <button className='addEpisodeBtn'>Add new episode!</button>
+                            </div>
                         </div>
                     </div>  
                 </div>
