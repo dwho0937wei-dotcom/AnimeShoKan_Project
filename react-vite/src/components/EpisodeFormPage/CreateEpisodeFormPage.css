@@ -1,3 +1,11 @@
+.createEpisodePage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
 .createEpisodeForm {
     display: flex;
     flex-direction: column;
@@ -29,13 +37,16 @@
 
 .createEpisodeErrors {
     color: red;
+    display: flex;
+    justify-content: center;
 }
 
 .createEpisodeSubmitContainer {
     display: flex;
     justify-content: center;
+    column-gap: 20px;
 }
 
-.createEpisodeSubmitBtn {
-    width: 75px;
+.createEpisodeBtn {
+    font-size: 20px;
 }

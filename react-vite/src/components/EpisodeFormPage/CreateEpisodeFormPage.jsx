@@ -48,8 +48,9 @@ function CreateEpisodeFormPage() {
     }
 
     return (
-        <>
-            <h1>Welcome to the Form Page for adding a new episode!</h1>
+        <div className="createEpisodePage">
+            <h1>Add a new episode for</h1>
+            <h1>{anime && `"${anime.title}"`}!</h1>
             <form onSubmit={handleSubmit}
             className="createEpisodeForm">
                 <label className="createEpisodeLabels">
@@ -96,15 +97,17 @@ function CreateEpisodeFormPage() {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPreviewImage(e.target.files[0])} 
+                            className="createEpisodeBtn"
                         />
                     </div>
                     <p className="createEpisodeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
                 </label>
                 <div className="createEpisodeSubmitContainer">
-                    <input className="createEpisodeSubmitBtn" type="submit" value="Submit" />
+                    <input className="createEpisodeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || plot.length === 0 || episodeNum < 0 || !previewImage)}/>
+                    <button type="button" onClick={() => navigate(`/anime/${animeId}`)} className="createEpisodeBtn">Cancel</button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 

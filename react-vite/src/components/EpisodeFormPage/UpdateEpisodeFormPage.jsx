@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { thunkUpdateEpisode, thunkAnimeIdLoad } from "../../redux/anime";
-import "./CreateEpisodeFormPage.css"
+import "./UpdateEpisodeFormPage.css"
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -42,6 +42,12 @@ function UpdateEpisodeFormPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmit(true);
+        if (title.length === 0 ||
+            plot.length === 0 ||
+            episodeNum < 0
+        ) {
+            return;
+        }
         const episodeData = new FormData();
         episodeData.append("title", title);
         episodeData.append("plot", plot);
@@ -59,11 +65,14 @@ function UpdateEpisodeFormPage() {
 
     return (
         episode ?
-            <div>
-                <h1>Welcome to the Form Page for updating the current episode!</h1>
+            <div className="updateEpisodePage">
+                <h1>Update episode</h1>
+                <h1>{`"${episode.title}"`}</h1>
+                <h1>from anime </h1>
+                <h1>{`"${anime.title}"`}!</h1>
                 <form onSubmit={handleSubmit}
-                className="createEpisodeForm">
-                    <label className="createEpisodeLabels">
+                className="updateEpisodeForm">
+                    <label className="updateEpisodeLabels">
                         Title
                         <textarea 
                             type="text"
@@ -71,9 +80,9 @@ function UpdateEpisodeFormPage() {
                             onChange={(e) => setTitle(e.target.value)} 
                             placeholder="Every episode must have a title!"
                         />
-                        <p className="createEpisodeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
+                        <p className="updateEpisodeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
                     </label>
-                    <label className="createEpisodeLabels">
+                    <label className="updateEpisodeLabels">
                         Plot
                         <textarea 
                             type="text"
@@ -81,18 +90,18 @@ function UpdateEpisodeFormPage() {
                             onChange={(e) => setPlot(e.target.value)} 
                             placeholder="There must be something happening in the episode!"
                         />
-                        <p className="createEpisodeErrors">{submit && plot.length == 0 && `Don't leave the plot box empty!`}</p>
+                        <p className="updateEpisodeErrors">{submit && plot.length == 0 && `Don't leave the plot box empty!`}</p>
                     </label>
-                    <label className="createEpisodeLabels">
+                    <label className="updateEpisodeLabels">
                         Episode #
                         <input
                             type="number"
                             value={episodeNum}
                             onChange={(e) => setEpisodeNum(e.target.value)} 
                         />
-                        <p className="createEpisodeErrors">{submit && episodeNum < 0 && `Negative episode numbers don't exist! Funny enough, episode 0 can!`}</p>
+                        <p className="updateEpisodeErrors">{submit && episodeNum < 0 && `Negative episode numbers don't exist! Funny enough, episode 0 can!`}</p>
                     </label>
-                    <label className="createEpisodeLabels">
+                    <label className="updateEpisodeLabels">
                         Aired Date
                         <input
                             type="date"
@@ -100,19 +109,20 @@ function UpdateEpisodeFormPage() {
                             onChange={(e) => setAirDate(e.target.value)} 
                         />
                     </label>
-                    <label className="createEpisodeUploadImage">
-                        <div className="createEpisodeImage">
+                    <label className="updateEpisodeUploadImage">
+                        <div className="updateEpisodeImage">
                             Preview Image
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setPreviewImage(e.target.files[0])} 
+                                className="updateEpisodeBtn"
                             />
                         </div>
-                        <p className="createEpisodeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
                     </label>
-                    <div className="createEpisodeSubmitContainer">
-                        <input className="createEpisodeSubmitBtn" type="submit" value="Submit" />
+                    <div className="updateEpisodeSubmitContainer">
+                        <input className="updateEpisodeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || plot.length === 0 || episodeNum < 0)}/>
+                        <button type="button" onClick={() => navigate(`/anime/${animeId}/episode/${episodeId}`)} className="updateEpisodeBtn">Cancel</button>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,33 @@
+#modal-content {
+    height: fit-content;
+    width: fit-content;
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.LoginModal {
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 15px;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        input {
+            width: 200px;
+        }
+    }
+    button {
+        width: 100px;
+    }
+}

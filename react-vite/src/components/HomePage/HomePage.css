@@ -5,7 +5,7 @@
 }
 
 .lists {
-    height: calc(100dvh - 222px);
+    height: calc(100dvh - 259px);
     display: flex;
     overflow-x: auto;
     overflow-y: auto;

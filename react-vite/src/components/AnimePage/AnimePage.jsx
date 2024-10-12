@@ -31,22 +31,24 @@ function AnimePage() {
     return (
         anime ?
             <div>
-                <div className='title-and-edit'>
-                    <div></div>
-                    <h1>{anime.title}</h1>
+                <div className='anime-edit-delete-container'>
                     {
-                        !user || user.id !== anime.hostEditorId
-                            ?
-                        <div></div>
-                            :
-                        <div className='edit-delete'>
-                            <button onClick={() => navigate(`edit`)}><FaEdit /></button>
-                            <OpenModalButton
-                                buttonText={<MdDeleteForever />}
-                                modalComponent={<DeleteAnimeModal />}
-                            />
-                        </div>
+                            !user || user.id !== anime.hostEditorId
+                                ?
+                            <div></div>
+                                :
+                            <div className='anime-edit-delete'>
+                                <button onClick={() => navigate(`edit`)}><FaEdit className='animeBtn'/></button>
+                                <OpenModalButton
+                                    buttonText={<MdDeleteForever className='animeBtn'/>}
+                                    modalComponent={<DeleteAnimeModal />}
+                                />
+                            </div>
                     }
+                </div>
+                <div className='title-editor'>
+                    <h1>{anime.title}</h1>
+                    <h2>Posted by {anime['Host Editor'].firstName} {anime['Host Editor'].lastName}</h2>
                 </div>
                 <div className='container'>
                     <div className='subcontainer'>
@@ -60,7 +62,7 @@ function AnimePage() {
                                 {episodes.length > 0 ? 
                                     episodes.map(episode => {
                                         return (
-                                            <li key={episode.id}>
+                                            <li key={episode.id} className='ep-li'>
                                                 <NavLink to={`episode/${episode.id}`}>Episode {episode.episodeNum}: {episode.title}</NavLink>
                                             </li>
                                         )  

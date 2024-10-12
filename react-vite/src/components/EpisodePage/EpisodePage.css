@@ -11,16 +11,31 @@
     width: calc(100dvw - 16px)
 }
 
-.episodePageTop {
+.episodeNav {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: blue;
+        font-size: 20px;
+    }
 }
 
 .ep-edit-delete {
     display: flex;
+    justify-content: center;
     column-gap: 10px;
+}
+
+.ep-edit-delete-buttons {
+    font-size: 25px;
+}
+
+.episodePageTitle {
+    display: flex;
+    justify-content: center;
 }
 
 .ep-plot-img-container {

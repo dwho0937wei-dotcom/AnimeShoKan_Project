@@ -29,7 +29,7 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div className="LoginModal">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -40,8 +40,8 @@ function LoginFormModal() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+          {errors.email && <p>{errors.email}</p>}
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
           Password
           <input
@@ -50,11 +50,11 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {errors.password && <p>{errors.password}</p>}
         </label>
-        {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -1,3 +1,12 @@
+.createAnimePage {
+    height: calc(100dvh - 99px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
 .createAnimeForm {
     display: flex;
     flex-direction: column;
@@ -29,13 +38,17 @@
 
 .createAnimeErrors {
     color: red;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .createAnimeSubmitContainer {
     display: flex;
     justify-content: center;
+    column-gap: 20px;
 }
 
-.createAnimeSubmitBtn {
-    width: 75px;
+.createAnimeBtn {
+    font-size: 20px;
 }

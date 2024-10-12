@@ -83,7 +83,6 @@ export const thunkAnimeCatalog = () => async (dispatch) => {
         if (data.errors) {
             return;
         }
-
         dispatch(animeCatalog(data));
     }
 }

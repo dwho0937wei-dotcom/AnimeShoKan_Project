@@ -11,9 +11,26 @@ ul {
   justify-content: space-between;
 }
 
+.FaHome {
+	font-size: 50px;
+}
+
+.FaUserCircle {
+	font-size: 50px;
+}
+
 .profile-dropdown {
+	li {
+		font-size: 25px;
+	}
+	button {
+		font-size: 25px;
+	}
+	display: flex;
+	row-gap: 15px;
+
 	position: absolute;
-	top: 40px;
+	top: 75px;
 	right: 7px;
 	display: flex;
 	flex-direction: column;

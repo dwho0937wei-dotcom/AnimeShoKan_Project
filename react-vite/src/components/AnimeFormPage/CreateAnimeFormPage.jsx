@@ -30,7 +30,8 @@ const CreateAnimeFormPage = () => {
     }
 
     return (
-        <div>
+        <div className="createAnimePage">
+            <h1>Post a new anime!</h1>
             <form onSubmit={handleSubmit} className="createAnimeForm">
                 <label className="createAnimeLabels">
                     Title
@@ -59,12 +60,14 @@ const CreateAnimeFormPage = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPreviewImage(e.target.files[0])} 
+                            className="createAnimeBtn"
                         />
                     </div>
                     <p className="createAnimeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
                 </label>
                 <div className="createAnimeSubmitContainer">
-                    <input className="createAnimeSubmitBtn" type="submit" value="Submit" />
+                    <input className="createAnimeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || synopsis.length === 0 || !previewImage)}/>
+                    <button type="button" onClick={() => navigate(`/`)} className="createAnimeBtn">Cancel</button>
                 </div>
             </form>
         </div>

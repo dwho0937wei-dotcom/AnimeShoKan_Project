@@ -46,7 +46,9 @@ const UpdateAnimeFormPage = () => {
     }
 
     return (
-        <div>
+        <div className="updateAnimePage">
+            <h1>Update the anime</h1>
+            <h1>{animeToUpdate && `"${animeToUpdate.title}"`}!</h1>
             <form onSubmit={handleSubmit} className="updateAnimeForm">
                 <label className="updateAnimeLabels">
                     Title
@@ -75,11 +77,13 @@ const UpdateAnimeFormPage = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPreviewImage(e.target.files[0])} 
+                            className="updateAnimeBtn"
                         />
                     </div>
                 </label>
                 <div className="updateAnimeSubmitContainer">
-                    <input className="updateAnimeSubmitBtn" type="submit" value="Submit" />
+                    <input className="updateAnimeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || synopsis.length === 0)}/>
+                    <button type="button" onClick={() => navigate(`/anime/${animeId}`)} className="updateAnimeBtn">Cancel</button>
                 </div>
             </form>
         </div>

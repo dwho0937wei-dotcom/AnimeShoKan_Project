@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
+import { FaArrowLeft, FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { thunkAnimeIdLoad } from '../../redux/anime';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -29,21 +29,23 @@ function EpisodePage() {
         episode ?
             <div className='episodeEntirePage'>
                 <div className='episodePageContainer'>
-                    <div className='episodePageTop'>
-                        <NavLink to={`/anime/${animeId}`}>Anime</NavLink>
-                        <h1>Episode {episode.episodeNum}: {episode.title}</h1>
+                    <div className='episodeNav'>
+                        <NavLink to={`/anime/${animeId}`}><FaArrowLeft />{`${anime.title}`}</NavLink>
                         {
                             user && anime.hostEditorId === user.id ? 
                                 <div className='ep-edit-delete'>
-                                    <button onClick={() => navigate(`edit`)}><FaEdit /></button>
+                                    <button onClick={() => navigate(`edit`)}><FaEdit className='ep-edit-delete-buttons'/></button>
                                     <OpenModalButton
-                                        buttonText={<MdDeleteForever />}
+                                        buttonText={<MdDeleteForever className='ep-edit-delete-buttons'/>}
                                         modalComponent={<DeleteEpisodeModal />}
                                     />
                                 </div>
                             :
                                 <div></div>
                         }
+                    </div>
+                    <div className='episodePageTitle'>
+                        <h1>Episode {episode.episodeNum}: {episode.title}</h1>
                     </div>
                     <div className='ep-plot-img-container'>
                         <div className='ep-plot-img'>
