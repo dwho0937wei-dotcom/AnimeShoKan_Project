@@ -18,10 +18,7 @@ class Episode(db.Model):
     episodeNum = db.Column(db.Integer, nullable=False)
     airDate = db.Column(db.Date, nullable=False)
     previewImage = db.Column(db.String, nullable=True)
-    animeId = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("anime.id")),
-        nullable=False
-    )
+    animeId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("anime.id")), nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

@@ -23,7 +23,7 @@ class Anime(db.Model):
 
 
     user = db.relationship("User", back_populates="anime")
-    episodes = db.relationship("Episode", back_populates="anime")
+    episodes = db.relationship("Episode", back_populates="anime", cascade="all, delete")
 
 
     def to_dict_catalog(self):

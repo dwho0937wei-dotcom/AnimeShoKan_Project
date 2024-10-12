@@ -8,7 +8,8 @@ function DeleteAnimeModal() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { closeModal } = useModal();
-    const { animeId } = useParams();
+    let { animeId } = useParams();
+    animeId = parseInt(animeId);
 
     const handleDelete = () => {
         // console.log("Anime confirming to be deleted!")
