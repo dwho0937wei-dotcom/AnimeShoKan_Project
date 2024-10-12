@@ -56,7 +56,7 @@ function UpdateEpisodeFormPage() {
         episodeData.append("previewImage", previewImage);
         const newEpisode = await dispatch(thunkUpdateEpisode(animeId, episodeId, currentEpisodeIndex, episodeData))
         if (newEpisode.errors) {
-            console.log(newEpisode.errors);
+            // console.log(newEpisode.errors);
         }
         else {
             return navigate(`/anime/${animeId}/episode/${episodeId}`);

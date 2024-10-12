@@ -68,7 +68,7 @@ def postNewAnime():
         upload = upload_file_to_s3(previewImage) if previewImage else None
 
         if upload is not None and "url" not in upload:
-            print("Url not found in upload when posting new Anime!")
+            # print("Url not found in upload when posting new Anime!")
             return animeForm.errors, 500
         
         url = upload["url"] if upload else None
@@ -108,7 +108,7 @@ def updateAnime(animeId):
         upload = upload_file_to_s3(newPreviewImage)
 
         if "url" not in upload:
-            print("Url not found in upload for editing Anime with new preview image!")
+            # print("Url not found in upload for editing Anime with new preview image!")
             return animeUpdateForm.errors, 500
         
         if animeToUpdate.previewImage:
@@ -153,7 +153,7 @@ def addNewEpisode(animeId):
         upload = upload_file_to_s3(previewImage) if previewImage else None
 
         if upload is not None and "url" not in upload:
-            print("Url not found in upload when adding new episode for this anime!")
+            # print("Url not found in upload when adding new episode for this anime!")
             return episodeForm.errors, 500
         
         url = upload["url"] if upload else None
@@ -198,7 +198,7 @@ def updateEpisode(animeId, episodeId):
         upload = upload_file_to_s3(newPreviewImage)
 
         if 'url' not in upload:
-            print("Url not found in upload when editing an episode for this anime!")
+            # print("Url not found in upload when editing an episode for this anime!")
             return episodeUpdateForm.errors, 500
         
         if episodeToUpdate.previewImage:
