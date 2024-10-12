@@ -40,7 +40,7 @@ function CreateEpisodeFormPage() {
         episodeData.append("previewImage", previewImage);
         const newEpisode = await dispatch(thunkAddEpisode(animeId, episodeData))
         if (newEpisode.errors) {
-            console.log(newEpisode.errors);
+            // console.log(newEpisode.errors);
         }
         else {
             return navigate(`/anime/${animeId}`);
