@@ -88,7 +88,7 @@ const CreateAnimeFormPage = () => {
                     {errors.previewImage && <p className="createAnimeErrors">{errors.previewImage}</p>}
                 </label>
                 <div className="createAnimeSubmitContainer">
-                    <input className="createAnimeBtn" type="submit" value="Submit" disabled={false}/>
+                    <input className="createAnimeBtn" type="submit" value="Submit" disabled={errors.title || errors.synopsis || errors.previewImage}/>
                     <button type="button" onClick={() => navigate(`/`)} className="createAnimeBtn">Cancel</button>
                 </div>
             </form>
