@@ -57,6 +57,9 @@ const UpdateAnimeFormPage = () => {
             if (synopsis.length === 0) {
                 newErrors.synopsis = "All anime has a synopsis! Please give one!";
             }
+            else if (synopsis.length > 255) {
+                newErrors.synopsis = "Sorry, but not even the synopsis can have more than 255 characters because of the database's varchar limit!";
+            }
             setErrors(newErrors);
         }
     }, [submit, title, synopsis])

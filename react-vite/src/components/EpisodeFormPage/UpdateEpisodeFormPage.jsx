@@ -75,6 +75,9 @@ function UpdateEpisodeFormPage() {
             if (plot.length === 0) {
                 newErrors.plot = "Don't leave the plot box empty!";
             }
+            else if (plot.length > 255) {
+                newErrors.plot = "Sorry, but not even the plot can have more than 255 characters because of the database's varchar limit!";
+            }
             if (episodeNum < 0) {
                 newErrors.episodeNum = "Negative episode numbers don't exist! Funny enough, episode 0 can!";
             }

@@ -12,7 +12,8 @@ class AnimeUpdateForm(FlaskForm):
                             Length(max=255, message="Title cannot have more than 255 characters!")])
     synopsis = StringField('Synopsis', 
                            validators=[
-                               DataRequired(message="All anime has a synopsis! Please give one!")])
+                               DataRequired(message="All anime has a synopsis! Please give one!"),
+                               Length(max=255, message="Sorry, but not even the synopsis can have more than 255 characters because of the database's varchar limit!")])
     previewImage = FileField('Preview Image', 
                              validators=[
                                  FileAllowed(list(ALLOWED_EXTENSIONS))])
