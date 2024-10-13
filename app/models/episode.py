@@ -14,7 +14,7 @@ class Episode(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
-    plot = db.Column(db.String(255), nullable=False)
+    plot = db.Column(db.Text, nullable=False)
     episodeNum = db.Column(db.Integer, nullable=False)
     airDate = db.Column(db.Date, nullable=False)
     previewImage = db.Column(db.String, nullable=True)

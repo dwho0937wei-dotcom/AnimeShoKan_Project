@@ -9,6 +9,9 @@ const UpdateAnimeFormPage = () => {
     const navigate = useNavigate();
     const { animeId } = useParams();
     const animeToUpdate = useSelector(state => state.anime.animeList[animeId]);
+    const [previewImage, setPreviewImage] = useState(null);
+    const [title, setTitle] = useState('');
+    const [synopsis, setSynopsis] = useState('');
     useEffect(() => {
         if (!animeToUpdate) {
             dispatch(thunkAnimeIdLoad(animeId))
@@ -20,11 +23,9 @@ const UpdateAnimeFormPage = () => {
             setSynopsis(animeToUpdate.synopsis);
         }
     }, [animeToUpdate])
-    const [previewImage, setPreviewImage] = useState(null);
-    const [title, setTitle] = useState('');
-    const [synopsis, setSynopsis] = useState('');
-    const [submit, setSubmit] = useState(false);
 
+    const [submit, setSubmit] = useState(false);
+    const [errors, setErrors] = useState({});
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmit(true);
@@ -44,6 +45,21 @@ const UpdateAnimeFormPage = () => {
             return serverResponse.errors;
         }
     }
+    useEffect(() => {
+        if (submit) {
+            const newErrors = {};
+            if (title.length === 0) {
+                newErrors.title = "A title is needed!";
+            }
+            else if (title.length > 255) {
+                newErrors.title = "Title cannot have more than 255 characters!";
+            }
+            if (synopsis.length === 0) {
+                newErrors.synopsis = "All anime has a synopsis! Please give one!";
+            }
+            setErrors(newErrors);
+        }
+    }, [submit, title, synopsis])
 
     return (
         <div className="updateAnimePage">
@@ -58,7 +74,7 @@ const UpdateAnimeFormPage = () => {
                         onChange={(e) => setTitle(e.target.value)} 
                         placeholder="Yes, it's in textarea because some anime titles are just SUPER long!!!"
                     />
-                    <p className="updateAnimeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
+                    {errors.title && <p className="updateAnimeErrors">{errors.title}</p>}
                 </label>
                 <label className="updateAnimeLabels">
                     Synopsis
@@ -68,7 +84,7 @@ const UpdateAnimeFormPage = () => {
                         onChange={(e) => setSynopsis(e.target.value)} 
                         placeholder="Give a brief summary of what's the anime about?"
                     />
-                    <p className="updateAnimeErrors">{submit && synopsis.length == 0 && `All anime has a synopsis! Please give one!`}</p>
+                    {errors.synopsis && <p className="updateAnimeErrors">{errors.synopsis}</p>}
                 </label>
                 <label className="updateAnimeUploadImage">
                     <div className="updateAnimeImage">
@@ -82,7 +98,7 @@ const UpdateAnimeFormPage = () => {
                     </div>
                 </label>
                 <div className="updateAnimeSubmitContainer">
-                    <input className="updateAnimeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || synopsis.length === 0)}/>
+                    <input className="updateAnimeBtn" type="submit" value="Submit" disabled={errors.title || errors.synopsis}/>
                     <button type="button" onClick={() => navigate(`/anime/${animeId}`)} className="updateAnimeBtn">Cancel</button>
                 </div>
             </form>

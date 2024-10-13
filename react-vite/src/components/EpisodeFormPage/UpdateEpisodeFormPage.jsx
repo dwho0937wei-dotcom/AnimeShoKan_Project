@@ -7,7 +7,7 @@ import "./UpdateEpisodeFormPage.css"
 function formatDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const day = String(date.getDate() + 1).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 
@@ -62,6 +62,28 @@ function UpdateEpisodeFormPage() {
             return navigate(`/anime/${animeId}/episode/${episodeId}`);
         }
     }
+    const [errors, setErrors] = useState({});
+    useEffect(() => {
+        if (submit) {
+            const newErrors = {};
+            if (title.length === 0) {
+                newErrors.title = "A title is needed!";
+            }
+            else if (title.length > 255) {
+                newErrors.title = "Title cannot have more than 255 characters!";
+            }
+            if (plot.length === 0) {
+                newErrors.plot = "Don't leave the plot box empty!";
+            }
+            if (episodeNum < 0) {
+                newErrors.episodeNum = "Negative episode numbers don't exist! Funny enough, episode 0 can!";
+            }
+            if (!airDate) {
+                newErrors.airDate = "The anime has to be aired on a particular day, right?";
+            }
+            setErrors(newErrors);
+        }
+    }, [submit, title, plot, episodeNum, airDate, previewImage])
 
     return (
         episode ?
@@ -80,7 +102,7 @@ function UpdateEpisodeFormPage() {
                             onChange={(e) => setTitle(e.target.value)} 
                             placeholder="Every episode must have a title!"
                         />
-                        <p className="updateEpisodeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
+                        {errors.title && <p className="updateEpisodeErrors">{errors.title}</p>}
                     </label>
                     <label className="updateEpisodeLabels">
                         Plot
@@ -90,7 +112,7 @@ function UpdateEpisodeFormPage() {
                             onChange={(e) => setPlot(e.target.value)} 
                             placeholder="There must be something happening in the episode!"
                         />
-                        <p className="updateEpisodeErrors">{submit && plot.length == 0 && `Don't leave the plot box empty!`}</p>
+                        {errors.plot && <p className="updateEpisodeErrors">{errors.plot}</p>}
                     </label>
                     <label className="updateEpisodeLabels">
                         Episode #
@@ -99,7 +121,7 @@ function UpdateEpisodeFormPage() {
                             value={episodeNum}
                             onChange={(e) => setEpisodeNum(e.target.value)} 
                         />
-                        <p className="updateEpisodeErrors">{submit && episodeNum < 0 && `Negative episode numbers don't exist! Funny enough, episode 0 can!`}</p>
+                        {errors.episodeNum && <p className="updateEpisodeErrors">{errors.episodeNum}</p>}
                     </label>
                     <label className="updateEpisodeLabels">
                         Aired Date
@@ -108,6 +130,7 @@ function UpdateEpisodeFormPage() {
                             value={airDate}
                             onChange={(e) => setAirDate(e.target.value)} 
                         />
+                        {errors.airDate && <p className="updateEpisodeErrors">{errors.airDate}</p>}
                     </label>
                     <label className="updateEpisodeUploadImage">
                         <div className="updateEpisodeImage">

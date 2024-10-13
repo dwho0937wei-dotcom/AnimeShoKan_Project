@@ -97,26 +97,30 @@ def updateAnime(animeId):
     animeToUpdate = Anime.query.get(animeId)
     if animeToUpdate.hostEditorId != current_user.id:
         return {"error": "Current user does NOT have the editing privilege for this anime!"}, 500
-    #! Need the old title before changing for finding and deleting the old one in animeCatalog in Redux
-    oldTitle = animeToUpdate.title
-    animeToUpdate.title = animeUpdateForm.data["title"]
-    animeToUpdate.synopsis = animeUpdateForm.data["synopsis"]
+    
+    if animeUpdateForm.validate_on_submit():
+        #! Need the old title before changing for finding and deleting the old one in animeCatalog in Redux
+        oldTitle = animeToUpdate.title
+        animeToUpdate.title = animeUpdateForm.data["title"]
+        animeToUpdate.synopsis = animeUpdateForm.data["synopsis"]
 
-    newPreviewImage = animeUpdateForm.data["previewImage"]
-    if newPreviewImage:
-        newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
-        upload = upload_file_to_s3(newPreviewImage)
+        newPreviewImage = animeUpdateForm.data["previewImage"]
+        if newPreviewImage:
+            newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
+            upload = upload_file_to_s3(newPreviewImage)
 
-        if "url" not in upload:
-            # print("Url not found in upload for editing Anime with new preview image!")
-            return animeUpdateForm.errors, 500
-        
-        if animeToUpdate.previewImage:
-            remove_file_from_s3(animeToUpdate.previewImage)
-        animeToUpdate.previewImage = upload["url"]
+            if "url" not in upload:
+                # print("Url not found in upload for editing Anime with new preview image!")
+                return animeUpdateForm.errors, 500
+            
+            if animeToUpdate.previewImage:
+                remove_file_from_s3(animeToUpdate.previewImage)
+            animeToUpdate.previewImage = upload["url"]
 
-    db.session.commit()
-    return { 'oldTitle': oldTitle, 'updated': animeToUpdate.to_dict() }
+        db.session.commit()
+        return { 'oldTitle': oldTitle, 'updated': animeToUpdate.to_dict() }
+    
+    return {"errors": animeUpdateForm.errors}, 400
 
 
 @anime_routes.route('/<int:animeId>', methods=['DELETE'])
@@ -185,29 +189,32 @@ def updateEpisode(animeId, episodeId):
     if animeToEditEpisode.hostEditorId != current_user.id:
         return {"error": "Current user does NOT have the privilege to edit any episode in this anime!"}, 500
     
-    episodeToUpdate = Episode.query.get(episodeId)
+    if episodeUpdateForm.validate_on_submit():
+        episodeToUpdate = Episode.query.get(episodeId)
 
-    episodeToUpdate.title = episodeUpdateForm.data['title']
-    episodeToUpdate.plot = episodeUpdateForm.data['plot']
-    episodeToUpdate.episodeNum = episodeUpdateForm.data['episodeNum']
-    episodeToUpdate.airDate = episodeUpdateForm.data['airDate']
+        episodeToUpdate.title = episodeUpdateForm.data['title']
+        episodeToUpdate.plot = episodeUpdateForm.data['plot']
+        episodeToUpdate.episodeNum = episodeUpdateForm.data['episodeNum']
+        episodeToUpdate.airDate = episodeUpdateForm.data['airDate']
 
-    newPreviewImage = episodeUpdateForm.data['previewImage']
-    if newPreviewImage:
-        newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
-        upload = upload_file_to_s3(newPreviewImage)
+        newPreviewImage = episodeUpdateForm.data['previewImage']
+        if newPreviewImage:
+            newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
+            upload = upload_file_to_s3(newPreviewImage)
 
-        if 'url' not in upload:
-            # print("Url not found in upload when editing an episode for this anime!")
-            return episodeUpdateForm.errors, 500
-        
-        if episodeToUpdate.previewImage:
-            remove_file_from_s3(episodeToUpdate.previewImage)
-        episodeToUpdate.previewImage = upload['url']
+            if 'url' not in upload:
+                # print("Url not found in upload when editing an episode for this anime!")
+                return episodeUpdateForm.errors, 500
+            
+            if episodeToUpdate.previewImage:
+                remove_file_from_s3(episodeToUpdate.previewImage)
+            episodeToUpdate.previewImage = upload['url']
 
-    db.session.commit()
+        db.session.commit()
 
-    return episodeToUpdate.to_dict()
+        return episodeToUpdate.to_dict()
+    
+    return {"errors": episodeUpdateForm.errors}, 400
 
 
 @anime_routes.route('/<int:animeId>/episode/<int:episodeId>', methods=['DELETE'])

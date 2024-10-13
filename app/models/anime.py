@@ -11,7 +11,7 @@ class Anime(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
-    synopsis = db.Column(db.String(255), nullable=False)
+    synopsis = db.Column(db.Text, nullable=False)
     numOfEpisode = db.Column(db.Integer, nullable=False)
     hostEditorId = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),

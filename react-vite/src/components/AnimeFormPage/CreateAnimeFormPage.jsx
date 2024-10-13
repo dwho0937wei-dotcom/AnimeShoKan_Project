@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { thunkNewAnime } from "../../redux/anime";
@@ -8,9 +8,10 @@ const CreateAnimeFormPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [previewImage, setPreviewImage] = useState(null);
-    const [synopsis, setSynopsis] = useState('');
     const [title, setTitle] = useState('');
+    const [synopsis, setSynopsis] = useState('');
     const [submit, setSubmit] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,6 +29,24 @@ const CreateAnimeFormPage = () => {
             return serverResponse.errors;
         }
     }
+    useEffect(() => {
+        if (submit) {
+            const newErrors = {};
+            if (title.length === 0) {
+                newErrors.title = "A title is needed!";
+            }
+            else if (title.length > 255) {
+                newErrors.title = "Title cannot have more than 255 characters!";
+            }
+            if (synopsis.length === 0) {
+                newErrors.synopsis = "All anime has a synopsis! Please give one!";
+            }
+            if (!previewImage) {
+                newErrors.previewImage = "This anime needs a preview image! :(";
+            }
+            setErrors(newErrors);
+        }
+    }, [submit, title, synopsis, previewImage])
 
     return (
         <div className="createAnimePage">
@@ -41,7 +60,7 @@ const CreateAnimeFormPage = () => {
                         onChange={(e) => setTitle(e.target.value)} 
                         placeholder="Yes, it's in textarea because some anime titles are just SUPER long!!!"
                     />
-                    <p className="createAnimeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
+                    {errors.title && <p className="createAnimeErrors">{errors.title}</p>}
                 </label>
                 <label className="createAnimeLabels">
                     Synopsis
@@ -51,7 +70,7 @@ const CreateAnimeFormPage = () => {
                         onChange={(e) => setSynopsis(e.target.value)} 
                         placeholder="Give a brief summary of what's the anime about?"
                     />
-                    <p className="createAnimeErrors">{submit && synopsis.length === 0 && `All anime has a synopsis! Please give one!`}</p>
+                    {errors.synopsis && <p className="createAnimeErrors">{errors.synopsis}</p>}
                 </label>
                 <label className="createAnimeUploadImage">
                     <div className="createAnimeImage">
@@ -63,10 +82,10 @@ const CreateAnimeFormPage = () => {
                             className="createAnimeBtn"
                         />
                     </div>
-                    <p className="createAnimeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
+                    {errors.previewImage && <p className="createAnimeErrors">{errors.previewImage}</p>}
                 </label>
                 <div className="createAnimeSubmitContainer">
-                    <input className="createAnimeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || synopsis.length === 0 || !previewImage)}/>
+                    <input className="createAnimeBtn" type="submit" value="Submit" disabled={false}/>
                     <button type="button" onClick={() => navigate(`/`)} className="createAnimeBtn">Cancel</button>
                 </div>
             </form>

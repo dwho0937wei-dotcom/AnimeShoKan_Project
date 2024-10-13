@@ -46,6 +46,31 @@ function CreateEpisodeFormPage() {
             return navigate(`/anime/${animeId}`);
         }
     }
+    const [errors, setErrors] = useState({});
+    useEffect(() => {
+        if (submit) {
+            const newErrors = {};
+            if (title.length === 0) {
+                newErrors.title = "A title is needed!";
+            }
+            else if (title.length > 255) {
+                newErrors.title = "Title cannot have more than 255 characters!";
+            }
+            if (plot.length === 0) {
+                newErrors.plot = "Don't leave the plot box empty!";
+            }
+            if (episodeNum < 0) {
+                newErrors.episodeNum = "Negative episode numbers don't exist! Funny enough, episode 0 can!";
+            }
+            if (!airDate) {
+                newErrors.airDate = "The anime has to be aired on a particular day, right?";
+            }
+            if (!previewImage) {
+                newErrors.previewImage = "This episode needs a preview image! :("
+            }
+            setErrors(newErrors);
+        }
+    }, [submit, title, plot, episodeNum, airDate, previewImage])
 
     return (
         <div className="createEpisodePage">
@@ -61,7 +86,7 @@ function CreateEpisodeFormPage() {
                         onChange={(e) => setTitle(e.target.value)} 
                         placeholder="Every episode must have a title!"
                     />
-                    <p className="createEpisodeErrors">{submit && title.length == 0 && `A title is needed!`}</p>
+                    {errors.title && <p className="createEpisodeErrors">{errors.title}</p>}
                 </label>
                 <label className="createEpisodeLabels">
                     Plot
@@ -71,7 +96,7 @@ function CreateEpisodeFormPage() {
                         onChange={(e) => setPlot(e.target.value)} 
                         placeholder="There must be something happening in the episode!"
                     />
-                    <p className="createEpisodeErrors">{submit && plot.length == 0 && `Don't leave the plot box empty!`}</p>
+                    {errors.plot && <p className="createEpisodeErrors">{errors.plot}</p>}
                 </label>
                 <label className="createEpisodeLabels">
                     Episode #
@@ -80,7 +105,7 @@ function CreateEpisodeFormPage() {
                         value={episodeNum}
                         onChange={(e) => setEpisodeNum(e.target.value)} 
                     />
-                    <p className="createEpisodeErrors">{submit && episodeNum < 0 && `Negative episode numbers don't exist! Funny enough, episode 0 can!`}</p>
+                    {errors.episodeNum && <p className="createEpisodeErrors">{errors.episodeNum}</p>}
                 </label>
                 <label className="createEpisodeLabels">
                     Aired Date
@@ -89,6 +114,7 @@ function CreateEpisodeFormPage() {
                         value={airDate}
                         onChange={(e) => setAirDate(e.target.value)} 
                     />
+                    {errors.airDate && <p className="createEpisodeErrors">{errors.airDate}</p>}
                 </label>
                 <label className="createEpisodeUploadImage">
                     <div className="createEpisodeImage">
@@ -100,10 +126,10 @@ function CreateEpisodeFormPage() {
                             className="createEpisodeBtn"
                         />
                     </div>
-                    <p className="createEpisodeErrors">{submit && !previewImage && `Need to upload an image!`}</p>
+                    {errors.previewImage && <p className="createEpisodeErrors">{errors.previewImage}</p>}
                 </label>
                 <div className="createEpisodeSubmitContainer">
-                    <input className="createEpisodeBtn" type="submit" value="Submit" disabled={submit && (title.length === 0 || plot.length === 0 || episodeNum < 0 || !previewImage)}/>
+                    <input className="createEpisodeBtn" type="submit" value="Submit" disabled={errors.title || errors.plot || errors.episodeNum || errors.airDate || errors.previewImage}/>
                     <button type="button" onClick={() => navigate(`/anime/${animeId}`)} className="createEpisodeBtn">Cancel</button>
                 </div>
             </form>

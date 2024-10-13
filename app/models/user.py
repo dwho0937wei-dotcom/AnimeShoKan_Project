@@ -14,7 +14,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstName = db.Column(db.String(255))
     lastName = db.Column(db.String(255))
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    # That's the username's max length limit implemented on YouTube. I'll do the same!
+    username = db.Column(db.String(50), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashedPassword = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
