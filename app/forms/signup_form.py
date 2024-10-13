@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired, Email, Length, ValidationError
+from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import User
 
 
@@ -36,8 +36,7 @@ class SignUpForm(FlaskForm):
             Length(max=50, message="YouTube says no more than 50 characters for username so AnimeShoKan shall say the same!")])
     email = StringField('email', 
                         validators=[
-                            DataRequired("Email cannot be empty!"), user_exists, 
-                            Email(message="This is not a valid email!"),
+                            DataRequired("Email cannot be empty!"), user_exists,
                             Length(max=255, message="Email cannot have more than 255 characters including space!")])
     password = StringField('password', 
                            validators=[
