@@ -54,11 +54,13 @@ function EpisodePage() {
                             {episode.plot}
                         </div>
                     </div>
-                    <div className='ep-prev-next-btns'>
-                        {currentEpisodeIndex > 0 ? 
-                            <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex-1].id}`)}>prev</button> : <div></div>}
-                        {currentEpisodeIndex < episodeList.length - 1 ?
-                            <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex+1].id}`)}>next</button> : <div></div>}
+                    <div className='ep-prev-next-container'>
+                        <div className='ep-prev-next-btns'>
+                            {currentEpisodeIndex > 0 ? 
+                                <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex-1].id}`)}>prev</button> : <div></div>}
+                            {currentEpisodeIndex < episodeList.length - 1 ?
+                                <button onClick={() => navigate(`/anime/${animeId}/episode/${episodeList[currentEpisodeIndex+1].id}`)}>next</button> : <div></div>}
+                        </div>
                     </div>
                 </div>
             </div>
