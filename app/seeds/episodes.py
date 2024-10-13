@@ -5,8 +5,8 @@ from datetime import datetime
 
 def seed_episodes():
     steinGateEp1 = Episode(
-        title='Turning Point',
-        plot='In this episode, Rintaro Okabe, a self-proclaimed "mad scientist," attends a seminar on time travel in Akihabara. There, he meets Kurisu Makise, a neuroscience researcher. After a strange series of events, including finding Kurisu apparently dead, Okabe sends a text message about the incident to his friend Itaru "Daru" Hashida. However, he later discovers that Kurisu is alive and that his message arrived before he actually sent it. This leads to the revelation that the microwave oven they are developing can send messages back in time, setting off a chain of events that will alter their lives dramatically.',
+        title='''Turning Point''',
+        plot='''Okabe Rintaro and his friend Mayuri attend a conference. Okabe discovers a bloodied Makise Kurisu but, in a panic, sends a message about her death. He then experiences a bizarre phenomenon where time seems to shift, leading him to question reality.''',
         episodeNum=1,
         airDate=datetime(2011, 4, 5),
         previewImage='http://animeshokanbucket.s3.amazonaws.com/f123aed01a67467fbdda8cf29b2d0a73.png',
