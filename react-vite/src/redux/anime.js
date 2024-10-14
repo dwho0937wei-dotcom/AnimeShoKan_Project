@@ -276,6 +276,7 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
         case UPDATE_EPISODE: {
             const newState = { ...state };
             newState.animeList[action.animeId].Episodes[action.episodeIndex] = action.updatedEpisode;
+            newState.animeList[action.animeId].Episodes.sort((episode1, episode2) => episode1.episodeNum - episode2.episodeNum);
             return newState;
         }
         case DELETE_EPISODE: {
