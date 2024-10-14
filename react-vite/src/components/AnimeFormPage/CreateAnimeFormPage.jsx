@@ -82,7 +82,7 @@ const CreateAnimeFormPage = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPreviewImage(e.target.files[0])} 
-                            className="createAnimeBtn"
+                            className="createAnimeUploadBtn"
                         />
                     </div>
                     {errors.previewImage && <p className="createAnimeErrors">{errors.previewImage}</p>}

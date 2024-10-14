@@ -126,7 +126,7 @@ function CreateEpisodeFormPage() {
                             type="file"
                             accept="image/*"
                             onChange={(e) => setPreviewImage(e.target.files[0])} 
-                            className="createEpisodeBtn"
+                            className="createEpisodeUploadBtn"
                         />
                     </div>
                     {errors.previewImage && <p className="createEpisodeErrors">{errors.previewImage}</p>}

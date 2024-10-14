@@ -142,7 +142,7 @@ function UpdateEpisodeFormPage() {
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setPreviewImage(e.target.files[0])} 
-                                className="updateEpisodeBtn"
+                                className="updateEpisodeUploadBtn"
                             />
                         </div>
                     </label>

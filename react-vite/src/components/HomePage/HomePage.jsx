@@ -22,7 +22,9 @@ function HomePage() {
                                 {animeCatalog[alphabet].map(anime => {
                                     return (
                                         <li key={anime.id}>
-                                            <NavLink to={`/anime/${anime.id}`} style={{ textDecoration: 'none', color: 'blue' }}>{anime.title}</NavLink>
+                                            <NavLink to={`/anime/${anime.id}`} 
+                                            // style={{ textDecoration: 'none', color: '#CBC3E3' }}
+                                            >{anime.title}</NavLink>
                                         </li>
                                     )
                                 })}

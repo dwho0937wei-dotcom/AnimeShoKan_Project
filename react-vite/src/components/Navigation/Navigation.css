@@ -2,7 +2,7 @@
   position: absolute;
 }
 
-ul {
+.NavList {
   list-style-type: none;
   padding: 0px;
 
@@ -15,15 +15,28 @@ ul {
 	font-size: 50px;
 }
 
+#FaUserCircleBtn {
+	border-color: #ffbade;
+	border-radius: 15px;
+	background-color: #5a2e98;
+}
 .FaUserCircle {
 	font-size: 50px;
+	background-color: #5a2e98;
+	color: #CBC3E3
 }
 
 .profile-dropdown {
 	li {
 		font-size: 25px;
 	}
+	.OpenModalMenuText {
+		color: black;
+	}
 	button {
+		border-radius: 15px;
+		background-color: #5a2e98;
+		color: white;
 		font-size: 25px;
 	}
 	display: flex;

@@ -1,4 +1,5 @@
 #modal-content {
+    background-color: #ffbade;
     height: fit-content;
     width: fit-content;
     margin: 50px;
@@ -8,6 +9,7 @@
 }
 
 .LoginModal {
+    color: black;
     h1 {
         display: flex;
         justify-content: center;
@@ -28,6 +30,9 @@
         }
     }
     button {
+        background-color: #5a2e98;
+		color: white;
+        border-radius: 15px;
         width: 100px;
     }
 }

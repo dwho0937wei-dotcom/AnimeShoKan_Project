@@ -43,7 +43,7 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
+      <button onClick={toggleMenu} id="FaUserCircleBtn">
         <FaUserCircle className="FaUserCircle"/>
       </button>
       {showMenu && (

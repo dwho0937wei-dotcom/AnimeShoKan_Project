@@ -5,9 +5,9 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
-    <ul>
+    <ul className="NavList">
       <li>
-        <NavLink to="/" style={{ 'textDecoration': 'none', 'color': 'blue' }}><FaHome className="FaHome"/></NavLink>
+        <NavLink to="/" style={{ 'textDecoration': 'none', 'color': '#CBC3E3' }}><FaHome className="FaHome"/></NavLink>
       </li>
 
       <li>

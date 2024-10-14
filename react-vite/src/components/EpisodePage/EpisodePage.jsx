@@ -8,6 +8,14 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteEpisodeModal from '../DeleteEpisodeModal/DeleteEpisodeModal';
 import './EpisodePage.css'
 
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = monthNames[date.getMonth() + 1]
+    const day = String(date.getDate() + 1).padStart(2, '0');
+    return `${month} ${day}, ${year}`;
+}
+
 function EpisodePage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -44,8 +52,9 @@ function EpisodePage() {
                                 <div></div>
                         }
                     </div>
-                    <div className='episodePageTitle'>
+                    <div className='episodePageTitleDate'>
                         <h1>Episode {episode.episodeNum}: {episode.title}</h1>
+                        <h2>Aired on {formatDate(new Date(episode.airDate))}</h2>
                     </div>
                     <div className='ep-plot-img-container'>
                         <div className='ep-plot-img'>

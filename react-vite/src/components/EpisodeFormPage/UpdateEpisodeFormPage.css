@@ -54,6 +54,13 @@
     column-gap: 20px;
 }
 
+.updateEpisodeUploadBtn {
+    font-size: 20px;
+}
+
 .updateEpisodeBtn {
+    border-radius: 15px;
+    background-color: #5a2e98;
+    color: white;
     font-size: 20px;
 }

@@ -39,8 +39,10 @@
 }
 
 .syn-img {
-    background-color: lightblue;
+    background-color: #5a2e98;
     width: 80%;
+    padding: 20px;
+    border-radius: 15px;
 
     img {
         margin-left: 20px;
@@ -52,7 +54,7 @@
 }
 
 .episodeSection {
-    background-color: lightgray;
+    background-color: #343a40;
     border-radius: 15px;
     width: 20%;
     padding-left: 15px;
@@ -64,12 +66,17 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    padding-left: 0;
 }
 .ep-li {
+    list-style-type: none;
     a {
-        color: blue;
+        color: #ababab;
         text-decoration: none;
         font-size: 20px;
+    }
+    a:hover {
+        color: white;
     }
 }
 .addEpisodeBtnSection {
@@ -78,6 +85,8 @@
 }
 .addEpisodeBtn {
     border-radius: 15px;
+    background-color: #5a2e98;
+    color: white;
     margin-bottom: 5px;
     margin-right: 15px;
     font-size: 20px;

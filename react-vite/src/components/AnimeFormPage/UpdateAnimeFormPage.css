@@ -50,6 +50,13 @@
     column-gap: 20px;
 }
 
+.updateAnimeUploadBtn {
+    font-size: 20px;
+}
+
 .updateAnimeBtn {
+    border-radius: 15px;
+    background-color: #5a2e98;
+    color: white;
     font-size: 20px;
 }
