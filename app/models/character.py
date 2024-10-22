@@ -4,7 +4,7 @@ from .join_tables import anime_character_table
 
 
 class Character(db.Model):
-    __table_args__ = 'characters'
+    __tablename__ = 'characters'
 
     if environment == 'production':
         __table_args__ = {'schema': SCHEMA}
