@@ -15,6 +15,7 @@ class Character(db.Model):
     introduction = db.Column(db.Text, nullable=False)
     appearance = db.Column(db.Text, nullable=False)
     personality = db.Column(db.Text, nullable=False)
+    previewImage = db.Column(db.String, nullable=True)
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
