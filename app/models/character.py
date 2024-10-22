@@ -19,7 +19,7 @@ class Character(db.Model):
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table)
+    anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table, cascade="all, delete")
 
 
     def to_dict_basic(self):
