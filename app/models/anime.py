@@ -1,5 +1,6 @@
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .join_tables import anime_character_table
 
 
 class Anime(db.Model):
@@ -22,8 +23,9 @@ class Anime(db.Model):
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    user = db.relationship("User", back_populates="anime")
+    characters = db.relationship("Character", back_populates="anime", secondary=anime_character_table)
     episodes = db.relationship("Episode", back_populates="anime", cascade="all, delete")
+    user = db.relationship("User", back_populates="anime")
 
 
     def to_dict_catalog(self):
@@ -34,14 +36,15 @@ class Anime(db.Model):
     def to_dict_basic(self):
         return {
             **self.to_dict_catalog(),
-            "synopsis": self.synopsis,
+            "hostEditorId": self.hostEditorId,
             "numOfEpisode": self.numOfEpisode,
             "previewImage": self.previewImage,
-            "hostEditorId": self.hostEditorId,
+            "synopsis": self.synopsis,
         }
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Host Editor": self.user.to_dict_basic(),
+            "Characters": sorted([character.to_dict_basic() for character in self.characters], key=lambda char: char.get('fullName')),
             "Episodes": sorted([episode.to_dict_basic() for episode in self.episodes], key=lambda ep: ep.get('episodeNum')),
+            "Host Editor": self.user.to_dict_basic(),
         }
