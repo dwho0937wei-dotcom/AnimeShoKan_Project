@@ -29,9 +29,14 @@ class Character(db.Model):
     user = db.relationship("User", back_populates="characters")
 
 
+    def to_dict_catalog(self):
+        return {
+            "id": self.id,
+            "fullName": self.fullName,
+        }
     def to_dict_basic(self):
         return {
-            "fullName": self.fullName,
+            **self.to_dict_catalog(),
             "introduction": self.introduction,
             "appearance": self.appearance,
             "personality": self.personality,

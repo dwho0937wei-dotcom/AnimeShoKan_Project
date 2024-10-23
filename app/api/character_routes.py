@@ -9,6 +9,25 @@ from app.models import Character, db
 character_routes = Blueprint('character', __name__)
 
 
+@character_routes.route('/catalog')
+def getCharacterCatalog():
+    allCharacters = Character.query.all()
+    characterCatalog = {}
+
+    for character in allCharacters:
+        catalog = character.to_dict_catalog()
+        firstInitial = catalog.get('fullName')[0].upper()
+        if characterCatalog.get(firstInitial):
+            characterCatalog[firstInitial].append(catalog)
+        else:
+            characterCatalog[firstInitial] = [catalog]
+
+    for alphabet in characterCatalog.keys():
+        characterCatalog[alphabet].sort(key=lambda a : a.get('fullName'))
+
+    return characterCatalog
+
+
 @character_routes.route('', methods=['POST'])
 @login_required
 def postNewCharacter():

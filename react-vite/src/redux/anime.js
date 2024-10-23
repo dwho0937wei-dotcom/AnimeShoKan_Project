@@ -1,5 +1,6 @@
 import { thunkAuthenticate } from "./session";
 
+
 //! Action
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
