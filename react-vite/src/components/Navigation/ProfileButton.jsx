@@ -57,6 +57,11 @@ function ProfileButton() {
                 </button>
               </li>
               <li>
+                <button onClick={() => navigate("/character/new")}>
+                  Create Character
+                </button>
+              </li>
+              <li>
                 <button onClick={logout}>Log Out</button>
               </li>
             </>
