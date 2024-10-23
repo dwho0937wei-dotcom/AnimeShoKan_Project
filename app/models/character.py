@@ -16,11 +16,17 @@ class Character(db.Model):
     appearance = db.Column(db.Text, nullable=False)
     personality = db.Column(db.Text, nullable=False)
     previewImage = db.Column(db.String, nullable=True)
+    hostEditorId = db.Column(
+        db.Integer, 
+        db.ForeignKey(add_prefix_for_prod("users.id")),
+        nullable=False
+    )
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
     anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table, cascade="all, delete")
+    user = db.relationship("User", back_populates="characters")
 
 
     def to_dict_basic(self):
@@ -29,9 +35,11 @@ class Character(db.Model):
             "introduction": self.introduction,
             "appearance": self.appearance,
             "personality": self.personality,
+            "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Anime": sorted([oneAnime.to_dict_catalog() for oneAnime in self.anime], key=lambda ani: ani.get('title'))
+            "Anime": sorted([oneAnime.to_dict_catalog() for oneAnime in self.anime], key=lambda ani: ani.get('title')),
+            "Host Editor": self.user.to_dict_basic(),
         }

@@ -15,7 +15,8 @@ class Anime(db.Model):
     synopsis = db.Column(db.Text, nullable=False)
     numOfEpisode = db.Column(db.Integer, nullable=False)
     hostEditorId = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),
+        db.Integer, 
+        db.ForeignKey(add_prefix_for_prod("users.id")),
         nullable=False
     )
     previewImage = db.Column(db.String, nullable=True)

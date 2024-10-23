@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
 
 
     anime = db.relationship("Anime", back_populates="user", cascade="all, delete")
+    characters = db.relationship("Character", back_populates="user")
 
 
     @property
@@ -47,5 +48,6 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Posted Anime": [oneAnime.to_dict_basic() for oneAnime in self.anime]
+            "Posted Anime": [oneAnime.to_dict_basic() for oneAnime in self.anime],
+            "Posted Characters": [character.to_dict_basic() for character in self.characters]
         }

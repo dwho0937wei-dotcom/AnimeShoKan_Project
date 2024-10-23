@@ -30,7 +30,8 @@ def postNewCharacter():
             introduction=characterForm.data["introduction"],
             appearance=characterForm.data["appearance"],
             personality=characterForm.data["personality"],
-            previewImage=url
+            previewImage=url,
+            hostEditorId=current_user.id,
         )
 
         db.session.add(newCharacter)
