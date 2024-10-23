@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { thunkAnimeIdLoad } from '../../redux/anime';
 import { MdDeleteForever } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
+import { FaArrowLeft, FaEdit } from "react-icons/fa"
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteAnimeModal from '../DeleteAnimeModal/DeleteAnimeModal';
 import './AnimePage.css'
@@ -31,7 +31,8 @@ function AnimePage() {
     return (
         anime ?
             <div>
-                <div className='anime-edit-delete-container'>
+                <div className='anime-nav-edit-delete-container'>
+                    <NavLink to={`/anime`}><FaArrowLeft />Back to the Anime Catalog!</NavLink>
                     {
                             !user || user.id !== anime.hostEditorId
                                 ?
