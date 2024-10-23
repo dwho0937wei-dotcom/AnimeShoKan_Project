@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AnimePage from '../components/AnimePage/AnimePage';
 import { CreateAnimeFormPage, UpdateAnimeFormPage } from '../components/AnimeFormPage';
+import { CreateCharacterFormPage } from '../components/CharacterFormPage'
 import EpisodePage from '../components/EpisodePage';
 import { CreateEpisodeFormPage, UpdateEpisodeFormPage } from '../components/EpisodeFormPage';
 import LoginFormPage from '../components/LoginFormPage';
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "anime/:animeId/episode/:episodeId/edit",
         element: <UpdateEpisodeFormPage />
+      },
+      {
+        path: "character/new",
+        element: <CreateCharacterFormPage />
       },
       {
         path: "login",
