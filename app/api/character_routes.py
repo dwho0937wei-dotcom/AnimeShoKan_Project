@@ -6,7 +6,7 @@ from app.api.s3_helper import (
 from app.forms import CharacterForm, CharacterUpdateForm
 from app.models import Character, db
 
-character_routes = Blueprint('character', __name__)
+character_routes = Blueprint('characters', __name__)
 
 
 @character_routes.route('/catalog')
@@ -26,6 +26,14 @@ def getCharacterCatalog():
         characterCatalog[alphabet].sort(key=lambda a : a.get('fullName'))
 
     return characterCatalog
+
+
+@character_routes.route('/<int:characterId>')
+def getSpecificCharacter(characterId):
+    character = Character.query.get(characterId)
+    if not character:
+        return {'error': "Character not found or no longer exists!"}, 404
+    return character.to_dict()
 
 
 @character_routes.route('', methods=['POST'])

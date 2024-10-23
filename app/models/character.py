@@ -1,6 +1,9 @@
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .join_tables import anime_character_table
+from .anime import Anime
+from sqlalchemy import select
+from sqlalchemy.orm import aliased
 
 
 class Character(db.Model):
@@ -40,6 +43,7 @@ class Character(db.Model):
             "introduction": self.introduction,
             "appearance": self.appearance,
             "personality": self.personality,
+            "previewImage": self.previewImage,
             "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):
