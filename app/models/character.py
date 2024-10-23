@@ -19,7 +19,7 @@ class Character(db.Model):
     hostEditorId = db.Column(
         db.Integer, 
         db.ForeignKey(add_prefix_for_prod("users.id")),
-        nullable=False
+        nullable=False,
     )
     createdAt = db.Column(db.DateTime, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
