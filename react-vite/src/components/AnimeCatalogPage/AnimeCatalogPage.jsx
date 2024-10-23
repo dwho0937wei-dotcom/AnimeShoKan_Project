@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import './HomePage.css'
+import { NavLink } from "react-router-dom"
+import './AnimeCatalogPage.css'
 
-function HomePage() {
+function AnimeCatalogPage() {
     const animeCatalog = useSelector(state => state.anime.animeCatalog);
     const alphabetList = Object.keys(animeCatalog).sort();
     
@@ -10,13 +10,17 @@ function HomePage() {
         <>
             <div className='welcome'>
                 <h1>Welcome to the AnimeShoKan!</h1>
+                <div id="navCatalogs">
+                    <NavLink className="navCatalog" to="/anime"><h1>Anime</h1></NavLink>
+                    <NavLink className="navCatalog" to="/character"><h1>Character</h1></NavLink>
+                </div>
                 <h1>Search for your favorite anime here!</h1>
             </div>
 
-            <div className='lists'>
+            <div className='animeCatalogs'>
                 {alphabetList.map(alphabet => {
                     return (
-                        <div key={alphabet} className='list'>
+                        <div key={alphabet} className='animeCatalog'>
                             <h2>{alphabet}</h2>
                             <ul>
                                 {animeCatalog[alphabet].map(anime => {
@@ -37,4 +41,4 @@ function HomePage() {
     )
 }
 
-export default HomePage;
+export default AnimeCatalogPage;

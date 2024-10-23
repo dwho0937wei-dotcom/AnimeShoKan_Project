@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import AnimePage from '../components/AnimePage/AnimePage';
 import { CreateAnimeFormPage, UpdateAnimeFormPage } from '../components/AnimeFormPage';
 import { CreateCharacterFormPage } from '../components/CharacterFormPage'
@@ -8,7 +8,8 @@ import { CreateEpisodeFormPage, UpdateEpisodeFormPage } from '../components/Epis
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
-import HomePage from '../components/HomePage';
+import AnimeCatalogPage from '../components/AnimeCatalogPage';
+import CharacterCatalogPage from '../components/CharacterCatalogPage';
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <Navigate to="/anime" replace />,
+      },
+      {
+        path: "/anime",
+        element: <AnimeCatalogPage />
       },
       {
         path: "anime/:animeId",
@@ -41,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "anime/:animeId/episode/:episodeId/edit",
         element: <UpdateEpisodeFormPage />
+      },
+      {
+        path: "/character",
+        element: <CharacterCatalogPage />
       },
       {
         path: "character/:characterId",

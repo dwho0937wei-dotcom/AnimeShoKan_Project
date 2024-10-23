@@ -1,15 +1,10 @@
-body {
-    background-color: black;
-    color: white;
-}
-
 .welcome {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.lists {
+.characterCatalogs {
     height: calc(100dvh - 259px);
     display: flex;
     overflow-x: auto;
@@ -19,7 +14,7 @@ body {
     column-gap: 50px;
 }
 
-.list {
+.characterCatalog {
     ul {
         list-style-type: none;
         display: flex;
@@ -35,3 +30,26 @@ body {
         }
     }
 }
+
+/* They're already in the AnimeCatalogPage.css */
+/* #navCatalogs {
+    display: flex;
+    flex-direction: row;
+    column-gap: 40px;
+    border: solid;
+    border-radius: 15px;
+    border-color: #5a2e98;
+    padding: 0 20px;
+}
+.navCatalog {
+    border-color: black;
+    background-color: black;
+    text-decoration: none;
+    color: #CBC3E3;
+}
+.navCatalog:hover {
+    color: white;
+}
+.navCatalog.active {
+    color: #5a2e98;
+} */
