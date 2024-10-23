@@ -47,8 +47,19 @@ class Character(db.Model):
             "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):
+        ac = aliased(anime_character_table)
+        anime_data = db.session.execute(
+            select(Anime, ac.c.characterType)
+            .join(ac, Anime.id == ac.c.animeId)
+            .where(ac.c.characterId == self.id)
+        ).all()
+        animeList = sorted([
+            {**oneAnime.to_dict_catalog(), "characterType": characterType} for oneAnime, characterType in anime_data
+        ], key=lambda ani: ani.get('title'))
+        print("animeList:", animeList)
+
         return {
             **self.to_dict_basic(),
-            "Anime": sorted([oneAnime.to_dict_catalog() for oneAnime in self.anime], key=lambda ani: ani.get('title')),
+            "Anime": animeList,
             "Host Editor": self.user.to_dict_basic(),
         }

@@ -51,11 +51,14 @@ function CharacterPage() {
                     <div>
                         <img src={character.previewImage} alt={character.fullName} />
                     </div>
-                    <div id='origin'>
-                        <h2>Origin</h2>
+                    <div id='originList'>
+                        <h2 id='originHeader'>Origin</h2>
                         {character.Anime.map(anime => {
                             return (
-                                <NavLink key={anime.id} className="animeTitles" to={`/anime/${anime.id}`}>{anime.title} </NavLink>
+                                <div key={anime.id} className='animeOrigin'>
+                                    <NavLink className="animeTitles" to={`/anime/${anime.id}`}>{anime.title}</NavLink>
+                                    <p className='characterType'>({anime.characterType} character)</p>
+                                </div>
                             );
                         })}
                     </div>
