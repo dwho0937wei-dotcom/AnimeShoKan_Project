@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { thunkCharacterIdLoad } from '../../redux/character';
 // import { MdDeleteForever } from "react-icons/md"
-// import { FaEdit } from "react-icons/fa"
+import { FaArrowLeft } from "react-icons/fa"
 // import OpenModalButton from '../OpenModalButton/OpenModalButton';
 // import DeleteCharacterModal from '../DeleteCharacterModal/DeleteCharacterModal';
 import './CharacterPage.css'
@@ -30,37 +30,42 @@ function CharacterPage() {
     return (
         character ?
             <div id='characterPage'>
-                <div id='characterDescription'>
-                    <div>
-                        <h2>Introduction</h2>
-                        <p>{character.introduction}</p>
-                    </div>
-                    <div>
-                        <h2>Appearance</h2>
-                        <p>{character.appearance}</p>
-                    </div>
-                    <div>
-                        <h2>Personality</h2>
-                        <p>{character.personality}</p>
-                    </div>
-                </div>
-                <div id='characterProfile'>
-                    <div>
-                        <h2>{character.fullName}</h2>
-                    </div>
-                    <div>
-                        <img src={character.previewImage} alt={character.fullName} />
-                    </div>
-                    <div id='originList'>
-                        <h2 id='originHeader'>Origin</h2>
-                        {character.Anime.map(anime => {
-                            return (
-                                <div key={anime.id} className='animeOrigin'>
-                                    <NavLink className="animeTitles" to={`/anime/${anime.id}`}>{anime.title}</NavLink>
-                                    <p className='characterType'>({anime.characterType} character)</p>
-                                </div>
-                            );
-                        })}
+                <NavLink to={`/character`} id='navCharCatalog'><FaArrowLeft />Back to the Character Catalog!</NavLink>
+                <div id='characterContainer'>
+                    <div id='charProfDesc'>
+                        <div id='characterProfile'>
+                            <div>
+                                <h2>{character.fullName}</h2>
+                            </div>
+                            <div>
+                                <img src={character.previewImage} alt={character.fullName} />
+                            </div>
+                            <div id='originList'>
+                                <h2 id='originHeader'>Origin</h2>
+                                {character.Anime.map(anime => {
+                                    return (
+                                        <div key={anime.id} className='animeOrigin'>
+                                            <NavLink className="animeTitles" to={`/anime/${anime.id}`}>{anime.title}</NavLink>
+                                            <p className='characterType'>({anime.characterType} character)</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div id='characterDescription'>
+                            <div>
+                                <h2>Introduction</h2>
+                                <p>{character.introduction}</p>
+                            </div>
+                            <div>
+                                <h2>Appearance</h2>
+                                <p>{character.appearance}</p>
+                            </div>
+                            <div>
+                                <h2>Personality</h2>
+                                <p>{character.personality}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

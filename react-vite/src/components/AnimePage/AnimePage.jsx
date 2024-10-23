@@ -32,7 +32,7 @@ function AnimePage() {
         anime ?
             <div>
                 <div className='anime-nav-edit-delete-container'>
-                    <NavLink to={`/anime`}><FaArrowLeft />Back to the Anime Catalog!</NavLink>
+                    <NavLink to={`/anime`} id="navAnimeCatalog"><FaArrowLeft />Back to the Anime Catalog!</NavLink>
                     {
                             !user || user.id !== anime.hostEditorId
                                 ?

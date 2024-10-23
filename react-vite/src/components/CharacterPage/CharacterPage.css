@@ -8,8 +8,13 @@
 
 #characterPage {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#characterContainer {
+    display: flex;
+    justify-content: center;
 }
 
 #characterDescription {
@@ -37,6 +42,17 @@
 .animeOrigin {
     display: flex;
     flex-direction: row;
+}
+
+#navCharCatalog {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(203, 195, 227);
+    font-size: 20px;
+}
+#navCharCatalog:hover {
+    color: white;
 }
 
 #originHeader {

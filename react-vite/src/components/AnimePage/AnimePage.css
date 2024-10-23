@@ -38,6 +38,10 @@
     justify-content: center;
 }
 
+#navAnimeCatalog:hover {
+    color: white;
+}
+
 .subcontainer {
     display: flex;
     flex-direction: row;
