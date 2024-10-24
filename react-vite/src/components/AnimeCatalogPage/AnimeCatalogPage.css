@@ -1,12 +1,12 @@
-body {
-    background-color: black;
-    color: white;
-}
-
 .welcome {
     display: flex;
     align-items: center;
     flex-direction: column;
+    
+    img {
+        border-radius: 15px;
+        max-width: 800px;
+    }
 }
 
 .animeCatalogs {

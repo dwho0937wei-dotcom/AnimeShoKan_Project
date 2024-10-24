@@ -1,8 +1,14 @@
-.welcome {
+/* Already in the AnimeCatalogPage.css */
+/* .welcome {
     display: flex;
     align-items: center;
     flex-direction: column;
-}
+
+    img {
+        border-radius: 15px;
+        max-width: 800px;
+    }
+} */
 
 .characterCatalogs {
     height: calc(100dvh - 259px);
