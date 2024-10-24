@@ -1,20 +1,21 @@
-// import { useDispatch } from "react-redux";
-// import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-// import { thunkDeleteCharacter } from "../../redux/anime";
+import { thunkDeleteCharacter } from "../../redux/character";
 import './DeleteCharacterModal.css'
 
 function DeleteCharacterModal() {
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { closeModal } = useModal();
-    // let { characterId } = useParams();
-    // characterId = parseInt(characterId);
+    let { characterId } = useParams();
+    characterId = parseInt(characterId);
 
     const handleDelete = () => {
-        console.log("Deleting Character...");
-        closeModal();
-        // navigate(``);
+        // console.log("Deleting Character...");
+        dispatch(thunkDeleteCharacter(characterId))
+            .then(() => closeModal())
+            .then(() => navigate(`/character`))
     }
     const handleCancel = () => {
         closeModal();

@@ -69,7 +69,7 @@ def postNewCharacter():
     return {"errors": characterForm.errors}, 400
 
 
-@character_routes.route('/<int:characterId>', methods=['PUT'])
+@character_routes.route('/<int:characterId>', methods=['DELETE'])
 @login_required
 def deleteCharacter(characterId):
     characterToDelete = Character.query.get(characterId)
