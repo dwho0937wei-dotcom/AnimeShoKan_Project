@@ -20,6 +20,7 @@
 #characterDescription {
     margin: 20px;
     max-width: 800px;
+    text-align: center;
 }
 
 #characterProfile {

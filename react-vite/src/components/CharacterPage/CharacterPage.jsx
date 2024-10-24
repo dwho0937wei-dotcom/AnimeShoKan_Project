@@ -63,15 +63,15 @@ function CharacterPage() {
                             </div>
                         </div>
                         <div id='characterDescription'>
-                            <div>
+                            <div className='characterDescriptionSection'>
                                 <h2>Introduction</h2>
                                 <p>{character.introduction}</p>
                             </div>
-                            <div>
+                            <div className='characterDescriptionSection'>
                                 <h2>Appearance</h2>
                                 <p>{character.appearance}</p>
                             </div>
-                            <div>
+                            <div className='characterDescriptionSection'>
                                 <h2>Personality</h2>
                                 <p>{character.personality}</p>
                             </div>
