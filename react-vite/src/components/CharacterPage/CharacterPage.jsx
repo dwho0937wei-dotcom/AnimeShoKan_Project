@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { thunkCharacterIdLoad } from '../../redux/character';
-// import { MdDeleteForever } from "react-icons/md"
+import { MdDeleteForever } from "react-icons/md"
 import { FaArrowLeft, FaEdit } from "react-icons/fa"
-// import OpenModalButton from '../OpenModalButton/OpenModalButton';
-// import DeleteCharacterModal from '../DeleteCharacterModal/DeleteCharacterModal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteCharacterModal from '../DeleteCharacterModal/DeleteCharacterModal';
 import './CharacterPage.css'
 
 function CharacterPage() {
@@ -35,6 +35,10 @@ function CharacterPage() {
                     user && user.id === character.hostEditorId && 
                         <div id="updateDeleteCharacter">
                             <button className='characterPageBtn' onClick={() => navigate(`/character/${characterId}/edit`)}><FaEdit /></button>
+                            <OpenModalButton
+                                    buttonText={<MdDeleteForever className='characterPageBtn'/>}
+                                    modalComponent={<DeleteCharacterModal />}
+                            />
                         </div>
                 }
                 <div id='characterContainer'>

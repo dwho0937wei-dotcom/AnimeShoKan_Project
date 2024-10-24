@@ -3,11 +3,11 @@
     padding: 20px;
 }
 
-.deleteAnimeContainer {
+.deleteCharacterContainer {
     height: 100px;
 }
 
-.deleteAnimeTwoBtns {
+.deleteCharacterTwoBtns {
     display: flex;
     justify-content: center;
     align-items: center;

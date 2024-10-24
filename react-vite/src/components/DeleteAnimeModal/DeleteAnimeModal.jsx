@@ -23,10 +23,10 @@ function DeleteAnimeModal() {
     }
 
     return (
-        <div className="deleteModal">
+        <div className="deleteAnimeModal">
             <h1>Sure you want to permanently delete your anime post?</h1>
-            <div className="container">
-                <div className="twoBtns">
+            <div className="deleteAnimeContainer">
+                <div className="deleteAnimeTwoBtns">
                     <button onClick={handleDelete}>Confirm Delete</button>
                     <button onClick={handleCancel}>Nevermind</button>
                 </div>
