@@ -39,6 +39,7 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     closeMenu();
+    return navigate(`/`);
   };
 
   return (

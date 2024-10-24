@@ -33,6 +33,10 @@
 	.OpenModalMenuText {
 		color: black;
 	}
+	.OpenModalMenuText:hover {
+		color: white;
+		cursor: pointer;
+	}
 	button {
 		border-radius: 15px;
 		background-color: #5a2e98;
