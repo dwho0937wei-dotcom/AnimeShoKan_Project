@@ -65,3 +65,14 @@
     align-items: center;
     row-gap: 20px;
 }
+
+#updateDeleteCharacter {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+
+    .characterPageBtn {
+        font-size: 25px;
+    }
+}

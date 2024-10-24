@@ -228,8 +228,9 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             const newState = { ...state };
             //! Has the anime title been updated?
             if (action.oldTitle !== action.catalogEle.title) {
-                //! Removing the anime with the old title from the animeCatalog
-                newState.animeCatalog[action.oldFirstInitial] = newState.animeCatalog[action.oldFirstInitial].filter(anime => anime.title !== action.oldTitle);
+                //! Removing the anime with the old title from the animeCatalog using its unique id to find it
+                    //! This is in case there are several anime with the same title
+                newState.animeCatalog[action.oldFirstInitial] = newState.animeCatalog[action.oldFirstInitial].filter(anime => anime.id !== action.catalogEle.id);
                 //! Does removing it makes the existing catalog empty?
                 if (newState.animeCatalog[action.oldFirstInitial].length === 0) {
                     //! If so, then remove the empty catalog!
@@ -240,7 +241,7 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
                 if (newState.animeCatalog[action.newFirstInitial]) {
                         //! If so, then push that updated anime title into the existing catalog and then re-sort afterwards!
                     newState.animeCatalog[action.newFirstInitial].push(action.catalogEle);
-                    newState.animeCatalog[action.newFirstInitial].sort((anime1, anime2) => anime1.title.localeCompare(anime2.title)) ;
+                    newState.animeCatalog[action.newFirstInitial].sort((anime1, anime2) => anime1.title.localeCompare(anime2.title));
                 }
                 else {
                         //! If not, then create a new catalog that represents the first initial of the updated anime title!

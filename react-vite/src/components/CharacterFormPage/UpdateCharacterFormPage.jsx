@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { thunkCharacterIdLoad, thunkNewCharacter } from "../../redux/character";
+import { thunkCharacterIdLoad, thunkUpdateCharacter } from "../../redux/character";
 import "./UpdateCharacterFormPage.css"
 
 const UpdateCharacterFormPage = () => {
@@ -39,18 +39,18 @@ const UpdateCharacterFormPage = () => {
         characterData.append("appearance", appearance);
         characterData.append("personality", personality);
         characterData.append("previewImage", previewImage);
-        // const serverResponse = await dispatch(thunkNewCharacter(characterData));
-        // if (typeof serverResponse !== "object") {
-        //     const newCharacterId = serverResponse;
-        //     return navigate(`/character/${newCharacterId}`);
+        // console.log("Update Character has been submitted!");
+        // console.log("Updated Data:");
+        // for (const pair of characterData.entries()) {
+        //     console.log(pair[0], ":", pair[1]);
         // }
-        // else {
-        //     return serverResponse.errors;
-        // }
-        console.log("Update Character has been submitted!");
-        console.log("Updated Data:");
-        for (const pair of characterData.entries()) {
-            console.log(pair[0], ":", pair[1]);
+        const serverResponse = await dispatch(thunkUpdateCharacter(characterId, characterData));
+        if (typeof serverResponse !== "object") {
+            const newCharacterId = serverResponse;
+            return navigate(`/character/${newCharacterId}`);
+        }
+        else {
+            return serverResponse.errors;
         }
     }
     useEffect(() => {

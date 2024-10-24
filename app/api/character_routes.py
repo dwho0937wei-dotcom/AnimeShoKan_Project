@@ -67,3 +67,37 @@ def postNewCharacter():
         return newCharacter.to_dict()
 
     return {"errors": characterForm.errors}, 400
+
+
+@character_routes.route('/<int:characterId>', methods=['PUT'])
+@login_required
+def updateCharacter(characterId):
+    characterUpdateForm = CharacterUpdateForm()
+    characterUpdateForm['csrf_token'].data = request.cookies['csrf_token']
+
+    characterToUpdate = Character.query.get(characterId)
+    if characterToUpdate.hostEditorId != current_user.id:
+        return {"error": "Current user does NOT have the editing privilege for this character!"}, 500
+
+    if characterUpdateForm.validate_on_submit():
+        #! Need the old full name before changing for finding and deleting the old one in characterCatalog in Redux
+        oldFullName = characterToUpdate.fullName
+        characterToUpdate.fullName = characterUpdateForm.data["fullName"]
+        characterToUpdate.introduction = characterUpdateForm.data["introduction"]
+        characterToUpdate.appearance = characterUpdateForm.data["appearance"]
+        characterToUpdate.personality = characterUpdateForm.data["personality"]
+
+        newPreviewImage = characterUpdateForm.data["previewImage"]
+        if newPreviewImage:
+            newPreviewImage.filename = get_unique_filename(newPreviewImage.filename)
+            upload = upload_file_to_s3(newPreviewImage)
+            if "url" not in upload:
+                return characterUpdateForm.errors, 500
+            if characterToUpdate.previewImage:
+                remove_file_from_s3(characterToUpdate.previewImage)
+            characterToUpdate.previewImage = upload["url"]
+        
+        db.session.commit()
+        return { 'oldFullName': oldFullName, 'updated': characterToUpdate.to_dict() }
+    
+    return {"errors": characterUpdateForm.errors}, 400

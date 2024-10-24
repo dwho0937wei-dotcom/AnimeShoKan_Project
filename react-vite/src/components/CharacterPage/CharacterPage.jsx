@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { thunkCharacterIdLoad } from '../../redux/character';
 // import { MdDeleteForever } from "react-icons/md"
-import { FaArrowLeft } from "react-icons/fa"
+import { FaArrowLeft, FaEdit } from "react-icons/fa"
 // import OpenModalButton from '../OpenModalButton/OpenModalButton';
 // import DeleteCharacterModal from '../DeleteCharacterModal/DeleteCharacterModal';
 import './CharacterPage.css'
 
 function CharacterPage() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [ isLoaded, setIsLoaded ] = useState(false);
     let { characterId } = useParams();
@@ -31,6 +31,12 @@ function CharacterPage() {
         character ?
             <div id='characterPage'>
                 <NavLink to={`/character`} id='navCharCatalog'><FaArrowLeft />Back to the Character Catalog!</NavLink>
+                {
+                    user && user.id === character.hostEditorId && 
+                        <div id="updateDeleteCharacter">
+                            <button className='characterPageBtn' onClick={() => navigate(`/character/${characterId}/edit`)}><FaEdit /></button>
+                        </div>
+                }
                 <div id='characterContainer'>
                     <div id='charProfDesc'>
                         <div id='characterProfile'>

@@ -5,6 +5,7 @@ import { thunkAuthenticate } from "./session";
 const CHARACTER_CATALOG = 'character/characterCatalog'
 const CHARACTER_ID_LOAD = 'character/characterIdLoad'
 const NEW_CHARACTER = 'character/newCharacter'
+const UPDATE_CHARACTER = 'character/updateCharacter'
 
 
 //! Action Creator
@@ -21,6 +22,14 @@ const newCharacter = (listEle, catalogEle, firstInitial) => ({
     listEle,
     catalogEle,
     firstInitial
+})
+const updateCharacter = (listEle, catalogEle, newFirstInitial, oldFullName, oldFirstInitial) => ({
+    type: UPDATE_CHARACTER,
+    listEle,
+    catalogEle,
+    newFirstInitial, 
+    oldFullName,
+    oldFirstInitial
 })
 
 
@@ -66,6 +75,24 @@ export const thunkNewCharacter = (characterData) => async (dispatch) => {
         return errors;
     }
 }
+export const thunkUpdateCharacter = (characterId, characterData) => async (dispatch) => {
+    const response = await fetch(`/api/characters/${characterId}`, {
+        method: 'PUT',
+        body: characterData
+    })
+    const { oldFullName, updated: dataLstEle } = await response.json();
+    const oldFirstInitial = oldFullName[0].toUpperCase();
+    if (response.ok) {
+        const dataCatalogEle = { id: dataLstEle.id, fullName: dataLstEle.fullName };
+        const dataFirstInitial = dataCatalogEle.fullName[0].toUpperCase();
+        dispatch(updateCharacter(dataLstEle, dataCatalogEle, dataFirstInitial, oldFullName, oldFirstInitial));
+        dispatch(thunkAuthenticate());
+        return dataLstEle.id;
+    } else {
+        const errors = dataLstEle;
+        return errors;
+    }
+}
 
 
 function characterReducer(state={ characterCatalog: {}, characterList: {} }, action) {
@@ -87,6 +114,34 @@ function characterReducer(state={ characterCatalog: {}, characterList: {} }, act
                 characterList: { ...state.characterList, [action.listEle.id]: action.listEle },
                 characterCatalog: { ...state.characterCatalog, [action.firstInitial]: firstInitialGroup }
             }
+        }
+        case UPDATE_CHARACTER: {
+            const newState = { ...state };
+            //! Has the character full name been updated?
+            if (action.oldFullName !== action.catalogEle.fullName) {
+                //! Removing the character with the old full name from the characterCatalog using its unique id to find it
+                    //! This is in case there are several characters with the same full name
+                newState.characterCatalog[action.oldFirstInitial] = newState.characterCatalog[action.oldFirstInitial].filter(character => character.id !== action.catalogEle.id);
+                //! Does removing it makes the existing catalog empty?
+                if (newState.characterCatalog[action.oldFirstInitial].length === 0) {
+                    //! If so, then remove the empty catalog!
+                    delete newState.characterCatalog[action.oldFirstInitial];
+                }
+                //! Adding the character with the updated full name into the characterCatalog
+                    //! Does there exist a catalog with characters that have the same first initial as the updated character full name?
+                if (newState.characterCatalog[action.newFirstInitial]) {
+                        //! If so, then put that updated character full name into the existing catalog and then re-sort afterwards!
+                    newState.characterCatalog[action.newFirstInitial].push(action.catalogEle);
+                    newState.characterCatalog[action.newFirstInitial].sort((character1, character2) => character1.fullName.localeCompare(character2.fullName));
+                }
+                else {
+                        //! If not, then create a new catalog that represents the first initial of the updated character full name!
+                    newState.characterCatalog[action.newFirstInitial] = [action.catalogEle];
+                }
+            }
+            //! Updating the updated character in the characterList
+            newState.characterList[action.listEle.id] = action.listEle
+            return newState;
         }
         default:
             return state;
