@@ -71,6 +71,20 @@ def postNewCharacter():
 
 @character_routes.route('/<int:characterId>', methods=['PUT'])
 @login_required
+def deleteCharacter(characterId):
+    characterToDelete = Character.query.get(characterId)
+    firstInitial = characterToDelete.fullName[0].upper()
+    if characterToDelete.hostEditorId != current_user.id:
+        return {"error": "Current user has no right to delete this character!"}, 500
+    if characterToDelete.previewImage:
+        remove_file_from_s3(characterToDelete.previewImage)
+    db.session.delete(characterToDelete)
+    db.session.commit()
+    return {"firstInitial": firstInitial, "message": "Character successfully deleted!"}
+
+
+@character_routes.route('/<int:characterId>', methods=['PUT'])
+@login_required
 def updateCharacter(characterId):
     characterUpdateForm = CharacterUpdateForm()
     characterUpdateForm['csrf_token'].data = request.cookies['csrf_token']

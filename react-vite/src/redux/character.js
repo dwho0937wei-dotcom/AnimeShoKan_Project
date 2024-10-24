@@ -4,6 +4,7 @@ import { thunkAuthenticate } from "./session";
 //! Action
 const CHARACTER_CATALOG = 'character/characterCatalog'
 const CHARACTER_ID_LOAD = 'character/characterIdLoad'
+const DELETE_CHARACTER = 'character/deleteCharacter'
 const NEW_CHARACTER = 'character/newCharacter'
 const UPDATE_CHARACTER = 'character/updateCharacter'
 
@@ -17,6 +18,11 @@ const characterIdLoad = (currentCharacter) => ({
     type: CHARACTER_ID_LOAD,
     payload: currentCharacter
 })
+const deleteCharacter = (characterId, firstInitial) => ({
+    type: DELETE_CHARACTER,
+    characterId,
+    firstInitial,
+}) 
 const newCharacter = (listEle, catalogEle, firstInitial) => ({
     type: NEW_CHARACTER,
     listEle,
@@ -53,6 +59,21 @@ export const thunkCharacterIdLoad = (characterId) => async (dispatch) => {
         }
         dispatch(characterIdLoad(data))
     }
+}
+export const thunkDeleteCharacter = (characterId) => async (dispatch) => {
+    const response = await fetch(`/api/characters/${characterId}`, {
+        method: "DELETE",
+    });
+    if (response.ok) {
+        const { firstInitial, message } = await response.json();
+        //! Remove the character from
+            //! the characterCatalog (firstInitial is needed to find it)
+            //! and the characterList
+        dispatch(deleteCharacter(parseInt(characterId), firstInitial));
+        dispatch(thunkAuthenticate())
+        return message;
+    }
+    return;
 }
 export const thunkNewCharacter = (characterData) => async (dispatch) => {
     const response = await fetch("/api/characters", {
@@ -101,6 +122,20 @@ function characterReducer(state={ characterCatalog: {}, characterList: {} }, act
             return { ...state, characterCatalog: action.payload };
         case CHARACTER_ID_LOAD:
             return { ...state, characterList: { ...state.characterList, [action.payload.id]: action.payload } }
+        case DELETE_CHARACTER: {
+            const newState = { ...state }
+            //! Remove the character from characterCatalog
+            newState.characterCatalog[action.firstInitial] = newState.characterCatalog[action.firstInitial].filter(character => character.id !== action.characterId);
+                //! If that makes the catalog empty, then delete it
+            if (newState.characterCatalog[action.firstInitial].length === 0) {
+                delete newState.characterCatalog[action.firstInitial];
+            }
+            //! Remove the character from characterList
+            if (newState.characterList[action.characterId]) {
+                delete newState.characterList[action.characterId];
+            }
+            return newState;
+        }
         case NEW_CHARACTER: {
             let firstInitialGroup = state.characterCatalog[action.firstInitial];
             if (firstInitialGroup) {
