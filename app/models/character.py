@@ -36,6 +36,7 @@ class Character(db.Model):
         return {
             "id": self.id,
             "fullName": self.fullName,
+            "previewImage": self.previewImage,
         }
     def to_dict_basic(self):
         return {
@@ -43,7 +44,6 @@ class Character(db.Model):
             "introduction": self.introduction,
             "appearance": self.appearance,
             "personality": self.personality,
-            "previewImage": self.previewImage,
             "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):

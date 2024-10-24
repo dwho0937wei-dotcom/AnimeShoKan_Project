@@ -82,7 +82,7 @@ export const thunkNewCharacter = (characterData) => async (dispatch) => {
     });
     const dataLstEle = await response.json();
     if (response.ok) {
-        const dataCatalogEle = { id: dataLstEle.id, fullName: dataLstEle.fullName };
+        const dataCatalogEle = { id: dataLstEle.id, fullName: dataLstEle.fullName, previewImage: dataLstEle.previewImage };
         const dataFirstInitial = dataCatalogEle.fullName[0].toUpperCase();
         //! For adding the character into the characterCatalog and characterList in Redux
         dispatch(newCharacter(dataLstEle, dataCatalogEle, dataFirstInitial))
@@ -104,7 +104,7 @@ export const thunkUpdateCharacter = (characterId, characterData) => async (dispa
     const { oldFullName, updated: dataLstEle } = await response.json();
     const oldFirstInitial = oldFullName[0].toUpperCase();
     if (response.ok) {
-        const dataCatalogEle = { id: dataLstEle.id, fullName: dataLstEle.fullName };
+        const dataCatalogEle = { id: dataLstEle.id, fullName: dataLstEle.fullName, previewImage: dataLstEle.previewImage };
         const dataFirstInitial = dataCatalogEle.fullName[0].toUpperCase();
         dispatch(updateCharacter(dataLstEle, dataCatalogEle, dataFirstInitial, oldFullName, oldFirstInitial));
         dispatch(thunkAuthenticate());
@@ -139,7 +139,7 @@ function characterReducer(state={ characterCatalog: {}, characterList: {} }, act
         case NEW_CHARACTER: {
             let firstInitialGroup = state.characterCatalog[action.firstInitial];
             if (firstInitialGroup) {
-                firstInitialGroup = [...firstInitialGroup, action.catalogEle].sort((character1, character2) => character1.title.localeCompare(character2.title));
+                firstInitialGroup = [...firstInitialGroup, action.catalogEle].sort((character1, character2) => character1.fullName.localeCompare(character2.fullName));
             }
             else {
                 firstInitialGroup = [action.catalogEle];

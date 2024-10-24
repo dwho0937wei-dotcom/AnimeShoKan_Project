@@ -33,13 +33,13 @@ class Anime(db.Model):
         return {
             "id": self.id,
             "title": self.title,
+            "previewImage": self.previewImage,
         }
     def to_dict_basic(self):
         return {
             **self.to_dict_catalog(),
             "hostEditorId": self.hostEditorId,
             "numOfEpisode": self.numOfEpisode,
-            "previewImage": self.previewImage,
             "synopsis": self.synopsis,
         }
     def to_dict(self):

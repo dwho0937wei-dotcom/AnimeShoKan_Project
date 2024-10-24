@@ -29,7 +29,10 @@ function AnimeCatalogPage() {
                                         <li key={anime.id}>
                                             <NavLink to={`/anime/${anime.id}`} 
                                             // style={{ textDecoration: 'none', color: '#CBC3E3' }}
-                                            >{anime.title}</NavLink>
+                                            >
+                                                 <img src={anime.previewImage} alt={anime.title} />
+                                                {anime.title}
+                                            </NavLink>
                                         </li>
                                     )
                                 })}

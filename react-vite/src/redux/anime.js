@@ -104,7 +104,7 @@ export const thunkNewAnime = (animeData) => async (dispatch) => {
     });
     const dataLstEle = await response.json();
     if (response.ok) {
-        const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
+        const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title, previewImage: dataLstEle.previewImage };
         const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
         //! For adding the anime into the animeCatalog and animeList in Redux
         dispatch(newAnime(dataLstEle, dataCatalogEle, dataFirstInitial))
@@ -126,7 +126,7 @@ export const thunkUpdateAnime = (animeId, animeData) => async (dispatch) => {
     const { oldTitle, updated: dataLstEle } = await response.json();
     const oldFirstInitial = oldTitle[0].toUpperCase();
     if (response.ok) {
-        const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title };
+        const dataCatalogEle = { id: dataLstEle.id, title: dataLstEle.title, previewImage: dataLstEle.previewImage };
         const dataFirstInitial = dataCatalogEle.title[0].toUpperCase();
         //! For updating the anime into the animeCatalog and animeList in Redux
         dispatch(updateAnime(dataLstEle, dataCatalogEle, dataFirstInitial, oldTitle, oldFirstInitial))

@@ -33,6 +33,7 @@
     flex-direction: column;
     align-items: center;
     img {
+        border-radius: 15px;
         max-width: 800px;
     }
 }

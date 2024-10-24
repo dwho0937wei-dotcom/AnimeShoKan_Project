@@ -29,7 +29,10 @@ function CharacterCatalogPage() {
                                         <li key={character.id}>
                                             <NavLink to={`/character/${character.id}`} 
                                             // style={{ textDecoration: 'none', color: '#CBC3E3' }}
-                                            >{character.fullName}</NavLink>
+                                            >
+                                                <img src={character.previewImage} alt={character.fullName} />
+                                                {character.fullName}
+                                            </NavLink>
                                         </li>
                                     )
                                 })}
