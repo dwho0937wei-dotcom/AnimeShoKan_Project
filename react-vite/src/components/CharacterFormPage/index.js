@@ -1,3 +1,4 @@
 import CreateCharacterFormPage from "./CreateCharacterFormPage";
+import UpdateCharacterFormPage from "./UpdateCharacterFormPage";
 
-export { CreateCharacterFormPage };
+export { CreateCharacterFormPage, UpdateCharacterFormPage };

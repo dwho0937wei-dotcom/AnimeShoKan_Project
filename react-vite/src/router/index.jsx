@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import AnimePage from '../components/AnimePage/AnimePage';
 import { CreateAnimeFormPage, UpdateAnimeFormPage } from '../components/AnimeFormPage';
-import { CreateCharacterFormPage } from '../components/CharacterFormPage'
+import { CreateCharacterFormPage, UpdateCharacterFormPage } from '../components/CharacterFormPage'
 import CharacterPage from '../components/CharacterPage';
 import EpisodePage from '../components/EpisodePage';
 import { CreateEpisodeFormPage, UpdateEpisodeFormPage } from '../components/EpisodeFormPage';
@@ -54,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "character/:characterId",
         element: <CharacterPage />
+      },
+      {
+        path: "character/:characterId/edit",
+        element: <UpdateCharacterFormPage />
       },
       {
         path: "character/new",
