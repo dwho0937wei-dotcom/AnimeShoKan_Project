@@ -45,11 +45,11 @@
     border-color: black;
     background-color: black;
     text-decoration: none;
-    color: #CBC3E3;
+    color: rgb(138, 43, 226);
 }
 .navCatalog:hover {
     color: white;
 }
 .navCatalog.active {
-    color: #5a2e98;
+    color: #CBC3E3;
 } */
