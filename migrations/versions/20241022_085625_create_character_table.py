@@ -31,7 +31,7 @@ def upgrade():
     op.create_table('anime_characters',
     sa.Column('animeId', sa.Integer(), nullable=False),
     sa.Column('characterId', sa.Integer(), nullable=False),
-    sa.Column('characterType', sa.Enum('major', 'supporting', 'minor'), nullable=False),
+    sa.Column('characterType', sa.Enum('major', 'supporting', 'minor', name='character_type_enum'), nullable=False),
     sa.ForeignKeyConstraint(['animeId'], ['anime.id'], ),
     sa.ForeignKeyConstraint(['characterId'], ['characters.id'], ),
     sa.PrimaryKeyConstraint('animeId', 'characterId')
