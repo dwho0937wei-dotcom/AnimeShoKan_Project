@@ -1,5 +1,5 @@
 /* TODO: Add sitewide styles */
 body {
-    background-color: black;
+    background: radial-gradient(#1b1b1b, black);
     color: white;
 }
