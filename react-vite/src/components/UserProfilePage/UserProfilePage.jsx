@@ -1,11 +1,20 @@
-import { NavLink } from 'react-router-dom';
-// import { NavLink, useParams } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkGetUserById } from '../../redux/user';
 import './UserProfilePage.css';
 
 function UserProfilePage () {
-    // const { userId } = useParams();
-    // const user = useSelector(state)
+    const dispatch = useDispatch();
+
+    const { userId } = useParams();
+    const userList = useSelector(state => state.userList);
+    const userInProfile = userList && userList[userId];
+    useEffect(() => {
+        if (!userList || !userInProfile) {
+            dispatch(thunkGetUserById(userId))
+        }
+    }, [])
 
     return (
         <div id='userProfilePage'>

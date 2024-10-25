@@ -8,11 +8,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import animeReducer from "./anime";
 import characterReducer from "./character";
+import userReducer from "./user";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   anime: animeReducer,
   characters: characterReducer,
+  users: userReducer,
 });
 
 let enhancer;
