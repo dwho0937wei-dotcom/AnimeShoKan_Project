@@ -19,5 +19,6 @@ anime_character_table = db.Table(
         "characterType",
         db.Enum('major', 'supporting', 'minor', name='character_type_enum'), 
         nullable=False,
-    )
+    ),
+    schema=SCHEMA if environment == "production" else None,
 )
