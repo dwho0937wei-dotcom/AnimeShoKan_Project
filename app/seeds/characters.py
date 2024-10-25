@@ -65,6 +65,7 @@ def seed_characters():
     ]
     for character in character_list:
         db.session.add(character)
+    db.session.commit()
     
     anime_character_associations = [
         (9, 1, "major"),
@@ -78,7 +79,6 @@ def seed_characters():
         db.session.execute(
             anime_character_table.insert().values(animeId=animeId, characterId=characterId, characterType=characterType)
         )
-    
     db.session.commit()
 
 
