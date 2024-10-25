@@ -80,6 +80,20 @@ function AnimePage() {
                             }
                         </div>
                     </div>  
+                    <div id="animeCharacterList">
+                        {anime.Characters.length > 0 ?
+                                anime.Characters.map(character => {
+                                    return (
+                                        <NavLink key={character.id} className='animeCharacter' to={`/character/${character.id}`}>
+                                            <img src={character.previewImage} alt={character.fullName} />
+                                            {character.fullName}
+                                        </NavLink>
+                                    )
+                                })
+                            :
+                                <h1 id="noAnimeCharacters">No characters aligned with this anime yet!</h1>
+                        }
+                    </div>
                 </div>
             </div>
         :
