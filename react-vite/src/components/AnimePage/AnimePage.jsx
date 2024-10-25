@@ -91,7 +91,9 @@ function AnimePage() {
                                     )
                                 })
                             :
-                                <h1 id="noAnimeCharacters">No characters aligned with this anime yet!</h1>
+                                <div id="emptyAnimeCharactersContainer">
+                                    <h1>No characters aligned with this anime yet!</h1>
+                                </div>
                         }
                     </div>
                 </div>

@@ -144,3 +144,8 @@
 .animeCharacter:hover {
     color: white;
 }
+#emptyAnimeCharactersContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
