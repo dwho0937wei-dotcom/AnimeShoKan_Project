@@ -17,7 +17,7 @@ anime_character_table = db.Table(
     ),
     db.Column(
         "characterType",
-        db.Enum('major', 'supporting', 'minor'), 
+        db.Enum('major', 'supporting', 'minor', name='character_type_enum'), 
         nullable=False,
     )
 )
