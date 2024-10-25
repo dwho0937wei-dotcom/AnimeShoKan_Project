@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -51,7 +51,7 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>Hello, {user.firstName}</li>
+              <li>Hello, <NavLink to={`/user/${user.id}`}>{user.firstName}</NavLink></li>
               <li>
                 <button onClick={() => navigate("/anime/new")}>
                   Create Anime

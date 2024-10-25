@@ -49,7 +49,7 @@ function AnimePage() {
                 </div>
                 <div className='title-editor'>
                     <h1>{anime.title}</h1>
-                    <h2>Posted by {anime['Host Editor'].firstName} {anime['Host Editor'].lastName}</h2>
+                    <h2>Posted by <NavLink to={`/user/${anime.hostEditorId}`}>{anime['Host Editor'].firstName} {anime['Host Editor'].lastName}</NavLink></h2>
                 </div>
                 <div className='container'>
                     <div className='subcontainer'>

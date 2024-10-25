@@ -1,4 +1,10 @@
 /* TODO: Add sitewide styles */
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: radial-gradient(#1b1b1b, black);
     color: white;

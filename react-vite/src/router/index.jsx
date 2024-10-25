@@ -10,6 +10,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import AnimeCatalogPage from '../components/AnimeCatalogPage';
 import CharacterCatalogPage from '../components/CharacterCatalogPage';
+import UserProfilePage from '../components/UserProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -24,27 +25,27 @@ export const router = createBrowserRouter([
         element: <AnimeCatalogPage />
       },
       {
-        path: "anime/:animeId",
+        path: "/anime/:animeId",
         element: <AnimePage />
       },
       {
-        path: "anime/new",
+        path: "/anime/new",
         element: <CreateAnimeFormPage />
       },
       {
-        path: "anime/:animeId/edit",
+        path: "/anime/:animeId/edit",
         element: <UpdateAnimeFormPage />
       },
       {
-        path: "anime/:animeId/episode/:episodeId",
+        path: "/anime/:animeId/episode/:episodeId",
         element: <EpisodePage />
       },
       {
-        path: "anime/:animeId/episode/new",
+        path: "/anime/:animeId/episode/new",
         element: <CreateEpisodeFormPage />
       },
       {
-        path: "anime/:animeId/episode/:episodeId/edit",
+        path: "/anime/:animeId/episode/:episodeId/edit",
         element: <UpdateEpisodeFormPage />
       },
       {
@@ -52,25 +53,29 @@ export const router = createBrowserRouter([
         element: <CharacterCatalogPage />
       },
       {
-        path: "character/:characterId",
+        path: "/character/:characterId",
         element: <CharacterPage />
       },
       {
-        path: "character/:characterId/edit",
+        path: "/character/:characterId/edit",
         element: <UpdateCharacterFormPage />
       },
       {
-        path: "character/new",
+        path: "/character/new",
         element: <CreateCharacterFormPage />
       },
       {
-        path: "login",
+        path: "/login",
         element: <LoginFormPage />,
       },
       {
-        path: "signup",
+        path: "/signup",
         element: <SignupFormPage />,
       },
+      {
+        path: "/user/:userId",
+        element: <UserProfilePage />
+      }
     ],
   },
 ]);

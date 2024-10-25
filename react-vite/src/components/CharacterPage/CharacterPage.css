@@ -1,10 +1,10 @@
-.animeTitles {
+/* .animeTitles {
     text-decoration: none;
     color: lightblue;
 }
 .animeTitles:hover {
     color: rgb(203, 195, 227);
-}
+} */
 
 #characterPage {
     display: flex;
@@ -35,6 +35,13 @@
     img {
         border-radius: 15px;
         max-width: 800px;
+    }
+    a {
+        text-decoration: none;
+        color: lightblue;
+    }
+    a:hover {
+        color: rgb(203, 195, 227);
     }
 }
 

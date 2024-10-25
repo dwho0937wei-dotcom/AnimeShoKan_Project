@@ -27,6 +27,14 @@
     h1 {
         margin-bottom: 0;
     }
+    
+    a {
+        color: rgb(138, 43, 226);
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
 }
 
 .animeBtn {

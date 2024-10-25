@@ -50,6 +50,9 @@ function CharacterPage() {
                             <div>
                                 <img src={character.previewImage} alt={character.fullName} />
                             </div>
+                            <div>
+                                Posted by <NavLink to={`/user/${character.hostEditorId}`}>{character['Host Editor'].firstName} {character['Host Editor'].lastName}</NavLink>
+                            </div>
                             <div id='originList'>
                                 <h2 id='originHeader'>Origin</h2>
                                 {character.Anime.map(anime => {

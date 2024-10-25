@@ -29,6 +29,12 @@
 .profile-dropdown {
 	li {
 		font-size: 25px;
+		a {
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
 	}
 	.OpenModalMenuText {
 		color: black;
