@@ -1,5 +1,6 @@
-import { NavLink, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+// import { NavLink, useParams } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 import './UserProfilePage.css';
 
 function UserProfilePage () {
