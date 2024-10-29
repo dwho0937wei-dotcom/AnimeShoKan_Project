@@ -25,8 +25,16 @@
 }
 .postedNavLink {
     text-decoration: none;
+    color: rgb(138, 43, 226);
     font-size: 30px;
 }
 .postedNavLink:hover {
     color: white;
+}
+.activePostedNavLink {
+    color: rgb(203, 195, 227);
+}
+
+#mainUserPosts {
+    width: 100dvw;
 }

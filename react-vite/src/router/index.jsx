@@ -10,7 +10,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import AnimeCatalogPage from '../components/AnimeCatalogPage';
 import CharacterCatalogPage from '../components/CharacterCatalogPage';
-import UserProfilePage from '../components/UserProfilePage';
+import { UserProfilePage, UserProfileAnime } from '../components/UserProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -74,7 +74,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/user/:userId",
-        element: <UserProfilePage />
+        element: <UserProfilePage />,
+        children: [
+          {
+            path: "posted-anime",
+            element: <UserProfileAnime />
+          }
+        ]
       }
     ],
   },

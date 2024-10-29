@@ -11,7 +11,7 @@ const getUserById = (user) => ({
 
 //! Thunk Action
 export const thunkGetUserById = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/user/${userId}`);
+    const response = await fetch(`/api/users/${userId}`);
     if (response.ok) {
         const data = await response.json()
         if (data.errors) {

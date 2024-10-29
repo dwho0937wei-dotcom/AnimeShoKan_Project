@@ -1,0 +1,29 @@
+#posted-anime-list {
+    width: 100dvw;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.posted-anime-card {
+    border: solid white;
+    border-radius: 15px;
+    margin: 40px;
+    padding: 10px;
+    width: 250px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        max-height: 250px;
+        max-width: 250px;
+    }
+    h2 {
+        margin-bottom: 0;
+        text-align: center;
+    }
+}

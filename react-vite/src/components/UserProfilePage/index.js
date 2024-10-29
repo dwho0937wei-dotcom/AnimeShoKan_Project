@@ -1,3 +1,4 @@
 import UserProfilePage from "./UserProfilePage";
+import UserProfileAnime from "./UserProfileAnime";
 
-export default UserProfilePage;
+export { UserProfilePage, UserProfileAnime };
