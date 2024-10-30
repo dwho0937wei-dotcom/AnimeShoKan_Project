@@ -31,10 +31,11 @@
 .postedNavLink:hover {
     color: white;
 }
-.activePostedNavLink {
+.postedNavLink.active {
     color: rgb(203, 195, 227);
 }
 
 #mainUserPosts {
     width: 100dvw;
+    height: calc(100vh - 450px);
 }

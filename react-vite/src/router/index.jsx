@@ -10,7 +10,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import AnimeCatalogPage from '../components/AnimeCatalogPage';
 import CharacterCatalogPage from '../components/CharacterCatalogPage';
-import { UserProfilePage, UserProfileAnime } from '../components/UserProfilePage';
+import { UserProfilePage, UserProfileAnime, UserProfileCharacters } from '../components/UserProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +79,10 @@ export const router = createBrowserRouter([
           {
             path: "posted-anime",
             element: <UserProfileAnime />
+          },
+          {
+            path: "posted-characters",
+            element: <UserProfileCharacters />
           }
         ]
       }

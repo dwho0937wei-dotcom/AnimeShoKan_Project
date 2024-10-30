@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import "./UserProfileAnime.css";
 
 function UserProfileAnime () {
@@ -9,17 +8,19 @@ function UserProfileAnime () {
     const userInProfile = userList && userList[userId];
     const postedAnime = userInProfile && userInProfile['Posted Anime'];
     return (
-        postedAnime && 
+        postedAnime && postedAnime.length > 0 ?
             <div id="posted-anime-list">
                 {postedAnime.map(anime => {
                     return (
-                        <div key={anime.id} className='posted-anime-card'>
+                        <NavLink key={anime.id} className='posted-anime-card' to={`/anime/${anime.id}`}>
                             <img src={anime.previewImage} alt={anime.title} />
                             <h2>{anime.title}</h2>
-                        </div>
+                        </NavLink>
                     )
                 })}
             </div>
+        :
+            <h1 id="no-posted-anime">{`${userInProfile.firstName} haven't posted any anime!`}</h1>
     )
 }
 

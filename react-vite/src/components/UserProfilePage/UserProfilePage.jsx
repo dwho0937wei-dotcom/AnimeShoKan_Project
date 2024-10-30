@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetUserById } from '../../redux/user';
@@ -20,11 +20,11 @@ function UserProfilePage () {
         userInProfile && 
             <div id='userProfilePage'>
                 <div id='circle'>{userInProfile.firstName[0].toUpperCase()}</div>
+                <h1>{userInProfile.firstName} {userInProfile.lastName}</h1>
                 <div id='postedNavLinks'>
                     <NavLink className="postedNavLink" to="posted-anime">Posted Anime</NavLink>
-                    <NavLink className="postedNavLink">Posted Characters</NavLink>
+                    <NavLink className="postedNavLink" to="posted-characters">Posted Characters</NavLink>
                 </div>
-                <h1>Welcome to the User Profile Page!</h1>
                 <main id='mainUserPosts'>
                     <Outlet />
                 </main>

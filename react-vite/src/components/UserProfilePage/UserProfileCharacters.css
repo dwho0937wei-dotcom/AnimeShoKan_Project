@@ -1,4 +1,4 @@
-#posted-anime-list {
+#posted-character-list {
     width: 100dvw;
 
     display: flex;
@@ -6,7 +6,7 @@
     flex-wrap: wrap;
 }
 
-.posted-anime-card {
+.posted-character-card {
     border: solid white;
     border-radius: 15px;
     margin: 40px;
@@ -30,7 +30,7 @@
     color: white;
 }
 
-#no-posted-anime {
+#no-posted-characters {
     display: flex;
     justify-content: center;
     align-items: center;
