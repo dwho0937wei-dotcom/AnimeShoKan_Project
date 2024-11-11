@@ -1,6 +1,5 @@
-AnimeShoKan will be a library website that talks about various existing anime including their episodes. 
-Each anime may have their own wiki.
+AnimeShoKan will is a catolog library website that lists various existing anime and characters of these existing anime. 
+Each anime will also have their corresponding characters and episodes.
 
 (Not planned yet)
-Users will find pages of anime characters relevant to their corresponding anime.
 Users can post blogs and comments in reference to some anime (not planned yet).
