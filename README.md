@@ -1,4 +1,4 @@
-AnimeShoKan will is a catolog library website that lists various existing anime and characters of these existing anime. 
+AnimeShoKan will be a catolog library website that lists various existing anime and characters of these existing anime. 
 Each anime will also have their corresponding characters and episodes.
 
 (Not planned yet)
