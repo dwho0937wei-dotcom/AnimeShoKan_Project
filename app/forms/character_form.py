@@ -1,11 +1,14 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField, FileRequired
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import SelectMultipleField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
 from app.api.s3_helper import ALLOWED_EXTENSIONS
 
 
 class CharacterForm(FlaskForm):
+    involvement_in_anime = SelectMultipleField("Anime They Are In",
+                                               choices=[('animeA', 'animeA'), ('animeB', 'animeB'), ('animeC', 'animeC')],
+                                               validate_choice=False)
     appearance = TextAreaField('Appearance', 
                                validators=[
                                    DataRequired(message='''If you can't describe what the character looks like, then you can say something like "Unknown Identity"''')])

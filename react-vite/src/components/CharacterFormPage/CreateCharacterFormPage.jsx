@@ -102,6 +102,12 @@ const CreateCharacterFormPage = () => {
                     />
                     {errors.personality && <p className="createCharacterErrors">{errors.personality}</p>}
                 </label>
+
+                <label className="createCharacterLabels">
+                    <div>Anime They Are In!</div>
+                    <div>{`(Checkboxes Currently Under Development...)`}</div>
+                </label>
+
                 <label className="createCharacterLabels">
                     <div className="createCharacterImage">
                         Preview Image
