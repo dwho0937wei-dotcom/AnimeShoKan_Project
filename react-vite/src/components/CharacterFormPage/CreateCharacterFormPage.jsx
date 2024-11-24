@@ -33,6 +33,8 @@ const CreateCharacterFormPage = () => {
             return serverResponse.errors;
         }
     }
+
+    // This is to display any invalid input error when the user submit the form!
     useEffect(() => {
         if (submit) {
             const newErrors = {};
@@ -106,6 +108,7 @@ const CreateCharacterFormPage = () => {
                 <label className="createCharacterLabels">
                     <div>Anime They Are In!</div>
                     <div>{`(Checkboxes Currently Under Development...)`}</div>
+
                 </label>
 
                 <label className="createCharacterLabels">
