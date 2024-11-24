@@ -6,6 +6,9 @@ from app.api.s3_helper import ALLOWED_EXTENSIONS
 
 
 class CharacterForm(FlaskForm):
+    appearance = TextAreaField('Appearance', 
+                               validators=[
+                                   DataRequired(message='''If you can't describe what the character looks like, then you can say something like "Unknown Identity"''')])
     fullName = StringField('Full Name',
                            validators=[
                                DataRequired(message="If the character doesn't have a name, then it at least must be called something."),
@@ -14,9 +17,6 @@ class CharacterForm(FlaskForm):
                                  validators=[
                                      DataRequired(message="Please introduce the character!")
                                  ])
-    appearance = TextAreaField('Appearance', 
-                               validators=[
-                                   DataRequired(message='''If you can't describe what the character looks like, then you can say something like "Unknown Identity"''')])
     personality = TextAreaField('Personality',
                                 validators=[
                                     DataRequired(message="If the character has no personality, then just say so right here rather than leaving this empty!")])
