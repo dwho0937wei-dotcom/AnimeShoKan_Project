@@ -3,13 +3,18 @@
     flex-direction: row;
 }
 
-.createCharacterPage {
-    height: calc(100dvh - 99px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.createCharacterBtn {
+    border-radius: 15px;
+    background-color: #5a2e98;
+    color: white;
     font-size: 20px;
+}
+
+.createCharacterErrors {
+    color: red;
+    display: flex;
+    text-align: center;
+    position: relative;
 }
 
 .createCharacterForm {
@@ -24,6 +29,13 @@
     width: 600px;
 }
 
+.createCharacterImage {
+    display: flex;
+    justify-content: center;
+    margin-left: 75px;
+    column-gap: 10px;
+}
+
 .createCharacterLabels {
     display: flex;
     flex-direction: column;
@@ -35,23 +47,13 @@
     }
 }
 
-.createCharacterUploadImage {
+.createCharacterPage {
+    height: calc(100dvh - 99px);
     display: flex;
     flex-direction: column;
-}
-
-.createCharacterImage {
-    display: flex;
     justify-content: center;
-    margin-left: 75px;
-    column-gap: 10px;
-}
-
-.createCharacterErrors {
-    color: red;
-    display: flex;
-    text-align: center;
-    position: relative;
+    align-items: center;
+    font-size: 20px;
 }
 
 .createCharacterSubmitContainer {
@@ -64,9 +66,7 @@
     font-size: 20px;
 }
 
-.createCharacterBtn {
-    border-radius: 15px;
-    background-color: #5a2e98;
-    color: white;
-    font-size: 20px;
+.createCharacterUploadImage {
+    display: flex;
+    flex-direction: column;
 }
