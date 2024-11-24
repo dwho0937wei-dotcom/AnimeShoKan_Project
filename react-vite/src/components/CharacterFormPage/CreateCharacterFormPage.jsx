@@ -60,6 +60,9 @@ const CreateCharacterFormPage = () => {
         }
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
+    //! Work in progress on adding functionalities for multiple anime choices the character may be in!
+    const [animeIsChecked, setAnimeIsChecked] = useState(false);
+
     return (
         <div className="createCharacterPage">
             <h1>Post a new character!</h1>
@@ -105,10 +108,21 @@ const CreateCharacterFormPage = () => {
                     {errors.personality && <p className="createCharacterErrors">{errors.personality}</p>}
                 </label>
 
+                {/* Work in progress on adding the multiple anime checkboxes */}
                 <label className="createCharacterLabels">
-                    <div>Anime They Are In!</div>
+                    <div>Select which of your posted anime your character is in:</div>
                     <div>{`(Checkboxes Currently Under Development...)`}</div>
-
+                    <div id="createCharacterAnimeChoices">
+                        <div>
+                            <input 
+                                type="checkbox"
+                                checked={animeIsChecked}
+                                value="anime"
+                                onChange={() => setAnimeIsChecked(!animeIsChecked)}
+                            />
+                        </div>
+                        anime
+                    </div>
                 </label>
 
                 <label className="createCharacterLabels">
