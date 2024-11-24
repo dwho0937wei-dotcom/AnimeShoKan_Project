@@ -9,6 +9,20 @@ from app.models import Character, db
 character_routes = Blueprint('characters', __name__)
 
 
+@character_routes.route('/<int:characterId>', methods=['DELETE'])
+@login_required
+def deleteCharacter(characterId):
+    characterToDelete = Character.query.get(characterId)
+    firstInitial = characterToDelete.fullName[0].upper()
+    if characterToDelete.hostEditorId != current_user.id:
+        return {"error": "Current user has no right to delete this character!"}, 500
+    if characterToDelete.previewImage:
+        remove_file_from_s3(characterToDelete.previewImage)
+    db.session.delete(characterToDelete)
+    db.session.commit()
+    return {"firstInitial": firstInitial, "message": "Character successfully deleted!"}
+
+
 @character_routes.route('/catalog')
 def getCharacterCatalog():
     allCharacters = Character.query.all()
@@ -67,20 +81,6 @@ def postNewCharacter():
         return newCharacter.to_dict()
 
     return {"errors": characterForm.errors}, 400
-
-
-@character_routes.route('/<int:characterId>', methods=['DELETE'])
-@login_required
-def deleteCharacter(characterId):
-    characterToDelete = Character.query.get(characterId)
-    firstInitial = characterToDelete.fullName[0].upper()
-    if characterToDelete.hostEditorId != current_user.id:
-        return {"error": "Current user has no right to delete this character!"}, 500
-    if characterToDelete.previewImage:
-        remove_file_from_s3(characterToDelete.previewImage)
-    db.session.delete(characterToDelete)
-    db.session.commit()
-    return {"firstInitial": firstInitial, "message": "Character successfully deleted!"}
 
 
 @character_routes.route('/<int:characterId>', methods=['PUT'])
