@@ -61,7 +61,14 @@ const CreateCharacterFormPage = () => {
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
     //! Work in progress on adding functionalities for multiple anime choices the character may be in!
-    const [animeIsChecked, setAnimeIsChecked] = useState(false);
+    const animeChoices = ["animeA", "animeB", "animeC"];
+    const [animeIsChecked, setAnimeIsChecked] = useState(new Array(animeChoices.length).fill(false));
+    const handleChoiceChange = (position) => {
+        const updatedAnimeIsChecked = animeIsChecked.map((anime, index) => {
+            index === position ? !anime : anime
+        });
+        setAnimeIsChecked(updatedAnimeIsChecked);
+    }
 
     return (
         <div className="createCharacterPage">
@@ -112,17 +119,21 @@ const CreateCharacterFormPage = () => {
                 <label className="createCharacterLabels">
                     <div>Select which of your posted anime your character is in:</div>
                     <div>{`(Checkboxes Currently Under Development...)`}</div>
-                    <div id="createCharacterAnimeChoices">
-                        <div>
-                            <input 
-                                type="checkbox"
-                                checked={animeIsChecked}
-                                value="anime"
-                                onChange={() => setAnimeIsChecked(!animeIsChecked)}
-                            />
-                        </div>
-                        anime
-                    </div>
+                    <ul className="createCharacterAnimeChoices">
+                        {animeChoices.map((anime, index) => {
+                            return (
+                                <li key={index}>
+                                    <input 
+                                        type="checkbox"
+                                        value={anime}
+                                        checked={animeIsChecked[index]}
+                                        onChange={handleChoiceChange}  
+                                    />
+                                    {anime}
+                                </li>
+                            )
+                        })}
+                    </ul>
                 </label>
 
                 <label className="createCharacterLabels">
