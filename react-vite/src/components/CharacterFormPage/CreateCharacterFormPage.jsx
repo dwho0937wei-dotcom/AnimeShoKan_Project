@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { thunkNewCharacter } from "../../redux/character";
 import "./CreateCharacterFormPage.css"
@@ -61,8 +61,8 @@ const CreateCharacterFormPage = () => {
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
     //! Work in progress on adding functionalities for multiple anime choices the character may be in!
-    const animeChoices = ["animeA", "animeB", "animeC"];
-    const [animeIsChecked, setAnimeIsChecked] = useState(new Array(animeChoices.length).fill(false));
+    const animePostedByUser = useSelector(state => state.session.user["Posted Anime"]);
+    const [animeIsChecked, setAnimeIsChecked] = useState(new Array(animePostedByUser.length).fill(false));
     const handleChoiceChange = (position) => {
         const updatedAnimeIsChecked = animeIsChecked.map((anime, index) => {
             index === position ? !anime : anime
@@ -116,25 +116,26 @@ const CreateCharacterFormPage = () => {
                 </label>
 
                 {/* Work in progress on adding the multiple anime checkboxes */}
-                <label className="createCharacterLabels">
+                <div className="createCharacterLabels">
                     <div>Select which of your posted anime your character is in:</div>
                     <div>{`(Checkboxes Currently Under Development...)`}</div>
-                    <ul className="createCharacterAnimeChoices">
-                        {animeChoices.map((anime, index) => {
+                    <ul id="createCharacterAnimeChoices">
+                        {animePostedByUser.map((anime, index) => {
                             return (
-                                <li key={index}>
+                                <li key={index} className="createCharacterAnime">
                                     <input 
                                         type="checkbox"
-                                        value={anime}
+                                        value={anime.title}
                                         checked={animeIsChecked[index]}
                                         onChange={handleChoiceChange}  
                                     />
-                                    {anime}
+                                    {anime.title}
+                                    <img src={anime.previewImage} alt={anime.title} />
                                 </li>
                             )
                         })}
                     </ul>
-                </label>
+                </div>
 
                 <label className="createCharacterLabels">
                     <div className="createCharacterImage">

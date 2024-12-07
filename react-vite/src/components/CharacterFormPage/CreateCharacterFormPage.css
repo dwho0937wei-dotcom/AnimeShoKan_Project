@@ -1,8 +1,22 @@
-.createCharacterAnimeChoices {
+#createCharacterAnimeChoices {
     display: flex;
     flex-direction: row;
     column-gap: 20px;
     list-style: none;
+    overflow-x: scroll;
+    max-width: 600px;
+    padding: 0;
+
+    .createCharacterAnime {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        img {
+            max-height: 10em;
+            max-width: 10em;
+        }
+    }
 }
 
 .createCharacterBtn {
