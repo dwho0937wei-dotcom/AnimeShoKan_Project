@@ -6,6 +6,7 @@ function UserProfileAnime () {
     const { userId } = useParams();
     const userList = useSelector(state => state.users.userList);
     const userInProfile = userList && userList[userId];
+    //! Error! Whenever the user deletes the anime, it doesn't update on their "Posted Anime" in their User Profile Page!
     const postedAnime = userInProfile && userInProfile['Posted Anime'];
     return (
         postedAnime && postedAnime.length > 0 ?
