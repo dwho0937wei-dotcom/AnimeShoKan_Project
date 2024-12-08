@@ -11,9 +11,7 @@ function UserProfilePage () {
     const userList = useSelector(state => state.users.userList);
     const userInProfile = userList && userList[userId];
     useEffect(() => {
-        if (!userList || !userInProfile) {
-            dispatch(thunkGetUserById(userId))
-        }
+        dispatch(thunkGetUserById(userId));
     }, [])
 
     return (
