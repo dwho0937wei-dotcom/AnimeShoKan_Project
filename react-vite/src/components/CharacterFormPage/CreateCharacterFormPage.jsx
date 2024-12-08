@@ -62,14 +62,13 @@ const CreateCharacterFormPage = () => {
 
     //! Work in progress on adding functionalities for multiple anime choices the character may be in!
     const animePostedByUser = useSelector(state => state.session.user["Posted Anime"]);
-    const [animeIsChecked, setAnimeIsChecked] = useState(new Array(animePostedByUser.length).fill(false));
+
+    const [animeIsChecked, setAnimeIsChecked] = useState(animePostedByUser.map(anime => [anime.id, anime.title, false]));
     const handleChoiceChange = (position) => {
-        const updatedAnimeIsChecked = animeIsChecked.map((checkStatus, index) => {
-            return index === position ? !checkStatus : checkStatus
+        const updatedAnimeIsChecked = animeIsChecked.map((anime, index) => {
+            return index === position ? [anime[0], anime[1], !anime[2]] : [anime[0], anime[1], anime[2]]
         });
         setAnimeIsChecked(updatedAnimeIsChecked);
-
-        console.log(updatedAnimeIsChecked);
     }
 
     return (
@@ -128,7 +127,7 @@ const CreateCharacterFormPage = () => {
                                     <input 
                                         type="checkbox"
                                         value={anime.title}
-                                        checked={animeIsChecked[index]}
+                                        checked={animeIsChecked[index][2]}
                                         onChange={() => handleChoiceChange(index)}  
                                     />
                                     {anime.title}
