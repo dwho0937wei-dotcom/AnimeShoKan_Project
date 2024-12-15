@@ -2,6 +2,10 @@ import { thunkAuthenticate } from "./session";
 
 
 //! Action
+
+//! Work In Progress
+const ADD_CHARACTER = 'anime/addCharacter';
+
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
@@ -15,6 +19,14 @@ const DELETE_EPISODE = 'episode/deleteEpisode'
 
 
 //! Action Creator
+
+//! Work In Progress
+const addCharacter = (animeId, characterId) => ({
+    type: ADD_CHARACTER,
+    animeId,
+    characterId,
+})
+
 // const allAnimeLoad = (animeCatalog) => ({
 //     type: ALL_ANIME_LOAD,
 //     payload: animeCatalog
@@ -66,6 +78,19 @@ const deleteEpisode = (animeId, episodeIndex) => ({
 
 
 //! Thunk Action
+
+//! Work In Progress
+export const thunkAddCharacter = (animeId, characterId) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/character/${characterId}`);
+    if (response.ok) {
+        const data = await response.json()
+        if (data.errors) {
+            return;
+        }
+        dispatch(addCharacter(animeId, characterId));
+    }
+} 
+
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
 //     if (response.ok) {
