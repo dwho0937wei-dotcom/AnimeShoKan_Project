@@ -80,7 +80,7 @@ const deleteEpisode = (animeId, episodeIndex) => ({
 //! Thunk Action
 
 //! Work In Progress
-export const thunkAddCharacter = (animeId, characterId) => async (dispatch) => {
+export const thunkAddCharacterToAnime = (animeId, characterId) => async (dispatch) => {
     const response = await fetch(`/api/anime/${animeId}/character/${characterId}`);
     if (response.ok) {
         const data = await response.json()

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+//! Work In Progress
+import { thunkAddCharacterToAnime } from "../../redux/anime";
+
 import { thunkNewCharacter } from "../../redux/character";
 import "./CreateCharacterFormPage.css"
 
@@ -27,6 +31,16 @@ const CreateCharacterFormPage = () => {
         const serverResponse = await dispatch(thunkNewCharacter(characterData));
         if (typeof serverResponse !== "object") {
             const newCharacterId = serverResponse;
+
+            //! Work In Progress
+            for (let checkbox of animeIsChecked) {
+                const animeId = checkbox[0];
+                const isAssociated = checkbox[2];
+                if (isAssociated) {
+                    dispatch(thunkAddCharacterToAnime(animeId, newCharacterId));
+                }
+            }
+
             return navigate(`/character/${newCharacterId}`);
         }
         else {
@@ -69,6 +83,9 @@ const CreateCharacterFormPage = () => {
             return index === position ? [anime[0], anime[1], !anime[2]] : [anime[0], anime[1], anime[2]]
         });
         setAnimeIsChecked(updatedAnimeIsChecked);
+
+        // print to see what it looks like
+        console.log(updatedAnimeIsChecked);
     }
 
     return (
