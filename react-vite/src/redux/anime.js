@@ -4,7 +4,7 @@ import { thunkAuthenticate } from "./session";
 //! Action
 
 //! Work In Progress
-const ADD_CHARACTER = 'anime/addCharacter';
+const ADD_CHARACTER_TO_ANIME = 'anime/addCharacter';
 
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
@@ -21,8 +21,8 @@ const DELETE_EPISODE = 'episode/deleteEpisode'
 //! Action Creator
 
 //! Work In Progress
-const addCharacter = (animeId, characterId) => ({
-    type: ADD_CHARACTER,
+const addCharacterToAnime = (animeId, characterId) => ({
+    type: ADD_CHARACTER_TO_ANIME,
     animeId,
     characterId,
 })
@@ -87,7 +87,7 @@ export const thunkAddCharacterToAnime = (animeId, characterId) => async (dispatc
         if (data.errors) {
             return;
         }
-        dispatch(addCharacter(animeId, characterId));
+        dispatch(addCharacterToAnime(animeId, characterId));
     }
 } 
 
