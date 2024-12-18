@@ -9,12 +9,11 @@ from app.models import Anime, anime_character_table, db, Episode
 anime_routes = Blueprint('anime', __name__)
 
 
-#! Work In Progress
 @anime_routes.route('/<int:animeId>/character/<int:characterId>')
 def addCharacterToAnime(animeId, characterId):
     new_association = anime_character_table.insert().values(
-        animeId,
-        characterId,
+        animeId=animeId,
+        characterId=characterId,
         characterType='minor'
     )
     db.session.execute(new_association)
