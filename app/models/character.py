@@ -28,7 +28,7 @@ class Character(db.Model):
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table, cascade="all, delete")
+    anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table, cascade="none")
     user = db.relationship("User", back_populates="characters")
 
 
