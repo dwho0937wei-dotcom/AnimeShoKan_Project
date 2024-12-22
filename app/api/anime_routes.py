@@ -19,7 +19,8 @@ def addCharacterToAnime(animeId, characterId):
     db.session.execute(new_association)
     db.session.commit()
 
-    return f'character ID {characterId} added to anime ID ${animeId}'
+    print(new_association)
+    return {}
 
 
 # @anime_routes.route('')

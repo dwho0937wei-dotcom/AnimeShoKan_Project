@@ -79,9 +79,8 @@ const CreateCharacterFormPage = () => {
 
     const [animeIsChecked, setAnimeIsChecked] = useState(animePostedByUser.map(anime => [anime.id, anime.title, false]));
     const handleChoiceChange = (position) => {
-        const updatedAnimeIsChecked = animeIsChecked.map((anime, index) => {
-            return index === position ? [anime[0], anime[1], !anime[2]] : [anime[0], anime[1], anime[2]]
-        });
+        const updatedAnimeIsChecked = [...animeIsChecked];
+        updatedAnimeIsChecked[position][2] = !updatedAnimeIsChecked[position][2];
         setAnimeIsChecked(updatedAnimeIsChecked);
 
         // print to see what it looks like

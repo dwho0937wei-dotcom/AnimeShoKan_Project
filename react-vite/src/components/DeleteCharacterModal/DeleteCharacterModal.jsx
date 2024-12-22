@@ -11,16 +11,15 @@ function DeleteCharacterModal() {
     const { closeModal } = useModal();
     let { characterId } = useParams();
     characterId = parseInt(characterId);
-    const animeList = useSelector(state => state.characters.characterList[characterId].Anime)
 
     const handleDelete = () => {
         // console.log("Deleting Character...");
         dispatch(thunkDeleteCharacter(characterId))
             .then(() => closeModal())
             .then(() => navigate(`/character`))
-        animeList.forEach(anime => {
-            dispatch(thunkAnimeIdLoad(anime.id))
-        })
+        // animeList.forEach(anime => {
+        //     dispatch(thunkAnimeIdLoad(anime.id))
+        // })
     }
     const handleCancel = () => {
         closeModal();
