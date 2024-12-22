@@ -1,10 +1,11 @@
+//! Current Issue
+//! thunkAddCharacterToAnime has failed to add the association between the character and anime BEFORE entering the CharacterPage!
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-//! Work In Progress
 import { thunkAddCharacterToAnime } from "../../redux/anime";
-
 import { thunkNewCharacter } from "../../redux/character";
 import "./CreateCharacterFormPage.css"
 
@@ -74,9 +75,7 @@ const CreateCharacterFormPage = () => {
         }
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
-    //! Work in progress on adding functionalities for multiple anime choices the character may be in!
     const animePostedByUser = useSelector(state => state.session.user["Posted Anime"]);
-
     const [animeIsChecked, setAnimeIsChecked] = useState(animePostedByUser.map(anime => [anime.id, anime.title, false]));
     const handleChoiceChange = (position) => {
         const updatedAnimeIsChecked = [...animeIsChecked];
@@ -131,7 +130,6 @@ const CreateCharacterFormPage = () => {
                     />
                     {errors.personality && <p className="createCharacterErrors">{errors.personality}</p>}
                 </label>
-
                 {/* Work in progress on adding the multiple anime checkboxes */}
                 <div className="createCharacterLabels">
                     <div>Select which of your posted anime your character is in:</div>
@@ -153,7 +151,6 @@ const CreateCharacterFormPage = () => {
                         })}
                     </ul>
                 </div>
-
                 <label className="createCharacterLabels">
                     <div className="createCharacterImage">
                         Preview Image

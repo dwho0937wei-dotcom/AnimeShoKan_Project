@@ -2,7 +2,7 @@ import { thunkAuthenticate } from "./session";
 
 
 //! Action
-const ADD_CHARACTER_TO_ANIME = 'anime/addCharacter';
+const ADD_CHARACTER_TO_ANIME = 'anime/addCharacterToAnime';
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';

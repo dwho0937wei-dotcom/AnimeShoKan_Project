@@ -1,3 +1,6 @@
+//! Current Issue 
+//! Need to access the associated anime of the deleted character without relying on its Redux Store!
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
