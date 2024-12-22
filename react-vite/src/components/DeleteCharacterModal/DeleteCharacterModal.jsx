@@ -1,8 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { thunkDeleteCharacter } from "../../redux/character";
 import './DeleteCharacterModal.css'
+import { thunkAnimeIdLoad } from "../../redux/anime";
 
 function DeleteCharacterModal() {
     const dispatch = useDispatch();
@@ -10,12 +11,16 @@ function DeleteCharacterModal() {
     const { closeModal } = useModal();
     let { characterId } = useParams();
     characterId = parseInt(characterId);
+    const animeList = useSelector(state => state.characters.characterList[characterId].Anime)
 
     const handleDelete = () => {
         // console.log("Deleting Character...");
         dispatch(thunkDeleteCharacter(characterId))
             .then(() => closeModal())
             .then(() => navigate(`/character`))
+        animeList.forEach(anime => {
+            dispatch(thunkAnimeIdLoad(anime.id))
+        })
     }
     const handleCancel = () => {
         closeModal();
