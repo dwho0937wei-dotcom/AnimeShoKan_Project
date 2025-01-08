@@ -1,12 +1,8 @@
-//! Current Issue
-//! thunkAddCharacterToAnime has failed to add the association between the character and anime BEFORE entering the CharacterPage!
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { thunkAddCharacterToAnime } from "../../redux/anime";
-import { thunkNewCharacter } from "../../redux/character";
+import { thunkAddCharacterToAnime, thunkAnimeIdLoad } from "../../redux/anime";
+import { thunkCharacterIdLoad, thunkNewCharacter } from "../../redux/character";
 import "./CreateCharacterFormPage.css"
 
 const CreateCharacterFormPage = () => {
@@ -30,18 +26,18 @@ const CreateCharacterFormPage = () => {
         characterData.append("personality", personality);
         characterData.append("previewImage", previewImage);
         const serverResponse = await dispatch(thunkNewCharacter(characterData));
+
         if (typeof serverResponse !== "object") {
             const newCharacterId = serverResponse;
-
-            //! Work In Progress
-            for (let checkbox of animeIsChecked) {
+            for (const checkbox of animeIsChecked) {
                 const animeId = checkbox[0];
                 const isAssociated = checkbox[2];
                 if (isAssociated) {
-                    dispatch(thunkAddCharacterToAnime(animeId, newCharacterId));
+                    await dispatch(thunkAddCharacterToAnime(animeId, newCharacterId));
+                    await dispatch(thunkAnimeIdLoad(animeId));
                 }
             }
-
+            await dispatch(thunkCharacterIdLoad(newCharacterId));
             return navigate(`/character/${newCharacterId}`);
         }
         else {
