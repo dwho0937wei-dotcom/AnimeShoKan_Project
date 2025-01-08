@@ -1,12 +1,9 @@
-//! Current Issue 
-//! Need to access the associated anime of the deleted character without relying on its Redux Store!
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { thunkAnimeIdLoad } from "../../redux/anime";
 import { thunkDeleteCharacter } from "../../redux/character";
 import './DeleteCharacterModal.css'
-import { thunkAnimeIdLoad } from "../../redux/anime";
 
 function DeleteCharacterModal() {
     const dispatch = useDispatch();
@@ -15,14 +12,18 @@ function DeleteCharacterModal() {
     let { characterId } = useParams();
     characterId = parseInt(characterId);
 
+    const animeList = useSelector(state => state.anime.animeList)
+    const associatedLoadedAnime = Object.values(animeList).filter(anime => anime.Characters.filter(character => character.id === characterId).length === 1);
+
     const handleDelete = () => {
-        // console.log("Deleting Character...");
         dispatch(thunkDeleteCharacter(characterId))
             .then(() => closeModal())
             .then(() => navigate(`/character`))
-        // animeList.forEach(anime => {
-        //     dispatch(thunkAnimeIdLoad(anime.id))
-        // })
+            .then(() => {
+                for (const anime of associatedLoadedAnime) {
+                    dispatch(thunkAnimeIdLoad(anime.id));
+                }
+            });
     }
     const handleCancel = () => {
         closeModal();
