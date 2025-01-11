@@ -72,8 +72,11 @@ const deleteEpisode = (animeId, episodeIndex) => ({
 
 
 //! Thunk Action
-export const thunkAddCharacterToAnime = (animeId, characterId) => async (dispatch) => {
-    const response = await fetch(`/api/anime/${animeId}/character/${characterId}`);
+export const thunkAddCharacterToAnime = (animeId, characterId, role) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/character/${characterId}`, {
+        method: "POST",
+        body: role
+    });
     if (response.ok) {
         const data = await response.json()
         if (data.errors) {

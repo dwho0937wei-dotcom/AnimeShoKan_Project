@@ -29,11 +29,11 @@ const CreateCharacterFormPage = () => {
 
         if (typeof serverResponse !== "object") {
             const newCharacterId = serverResponse;
-            for (const checkbox of animeIsChecked) {
-                const animeId = checkbox[0];
-                const isAssociated = checkbox[2];
-                if (isAssociated) {
-                    await dispatch(thunkAddCharacterToAnime(animeId, newCharacterId));
+            for (const animeRole of animeRoles) {
+                const animeId = animeRole[0];
+                const role = animeRole[2];
+                if (role !== "none") {
+                    await dispatch(thunkAddCharacterToAnime(animeId, newCharacterId, role));
                     await dispatch(thunkAnimeIdLoad(animeId));
                 }
             }
@@ -72,14 +72,14 @@ const CreateCharacterFormPage = () => {
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
     const animePostedByUser = useSelector(state => state.session.user["Posted Anime"]);
-    const [animeIsChecked, setAnimeIsChecked] = useState(animePostedByUser.map(anime => [anime.id, anime.title, false]));
-    const handleChoiceChange = (position) => {
-        const updatedAnimeIsChecked = [...animeIsChecked];
-        updatedAnimeIsChecked[position][2] = !updatedAnimeIsChecked[position][2];
-        setAnimeIsChecked(updatedAnimeIsChecked);
+    const [animeRoles, setAnimeRoles] = useState(animePostedByUser.map(anime => [anime.id, anime.title, "none"]));
+    const handleChoiceChange = (position, event) => {
+        const updatedAnimeRoles = [...animeRoles];
+        updatedAnimeRoles[position][2] = event.target.value;
+        setAnimeRoles(updatedAnimeRoles);
 
         // print to see what it looks like
-        console.log(updatedAnimeIsChecked);
+        console.log(updatedAnimeRoles);
     }
 
     return (
@@ -134,12 +134,12 @@ const CreateCharacterFormPage = () => {
                         {animePostedByUser.map((anime, index) => {
                             return (
                                 <li key={index} className="createCharacterAnime">
-                                    <input 
-                                        type="checkbox"
-                                        value={anime.title}
-                                        checked={animeIsChecked[index][2]}
-                                        onChange={() => handleChoiceChange(index)}  
-                                    />
+                                    <select name="roles" id="role-select" onChange={(event) => handleChoiceChange(index, event)}>
+                                        <option value="none" selected>None</option>
+                                        <option value="major">Major</option>
+                                        <option value="supporting">Supporting</option>
+                                        <option value="minor">Minor</option>
+                                    </select>
                                     {anime.title}
                                     <img src={anime.previewImage} alt={anime.title} />
                                 </li>

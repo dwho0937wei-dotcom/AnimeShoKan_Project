@@ -9,12 +9,13 @@ from app.models import Anime, anime_character_table, db, Episode
 anime_routes = Blueprint('anime', __name__)
 
 
-@anime_routes.route('/<int:animeId>/character/<int:characterId>')
-def addCharacterToAnime(animeId, characterId):
+@anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST'])
+def addCharacterToAnimeRouter(animeId, characterId):
+    role = request.data.decode("utf-8")
     new_association = anime_character_table.insert().values(
         animeId=animeId,
         characterId=characterId,
-        characterType='minor'
+        characterType=role
     )
     db.session.execute(new_association)
     db.session.commit()
