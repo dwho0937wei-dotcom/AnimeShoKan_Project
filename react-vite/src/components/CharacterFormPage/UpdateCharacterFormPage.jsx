@@ -139,7 +139,7 @@ const UpdateCharacterFormPage = () => {
                         {animePostedByUser.map((anime, index) => {
                             return (
                                 <li key={index} className="updateCharacterAnime">
-                                    <select name="updateRoles" id="updateRoleSelect" value={animeObjCharacterIsIn[anime.id]} onChange={(event) => handleChoiceChange(index, event)}>
+                                    <select name="updateRoles" id="updateRoleSelect" value={animeRoles[index][2]} onChange={(event) => handleChoiceChange(index, event)}>
                                         <option value="none">None</option>
                                         <option value="major">Major</option>
                                         <option value="supporting">Supporting</option>
