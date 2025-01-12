@@ -5,6 +5,8 @@ from app.api.s3_helper import (
 )
 from app.forms import AnimeForm, AnimeUpdateForm, EpisodeForm, EpisodeUpdateForm
 from app.models import Anime, anime_character_table, db, Episode
+from sqlalchemy import func
+
 
 anime_routes = Blueprint('anime', __name__)
 
@@ -12,16 +14,45 @@ anime_routes = Blueprint('anime', __name__)
 @anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST'])
 def addCharacterToAnimeRouter(animeId, characterId):
     role = request.data.decode("utf-8")
-    new_association = anime_character_table.insert().values(
-        animeId=animeId,
-        characterId=characterId,
-        characterType=role
-    )
-    db.session.execute(new_association)
+    response = {}
+    if db.session.query(func.count()).filter(
+        anime_character_table.c.animeId == animeId,
+        anime_character_table.c.characterId == characterId
+    ).scalar() > 0:
+        response["message"] = "Character's role updated in anime!"
+        updated_association = anime_character_table.update().where(
+            anime_character_table.c.animeId == animeId, 
+            anime_character_table.c.characterId == characterId
+        ).values(characterType=role)
+        db.session.execute(updated_association)
+    else :
+        response["message"] = "Character added to anime!"
+        new_association = anime_character_table.insert().values(
+            animeId=animeId,
+            characterId=characterId,
+            characterType=role
+        )
+        db.session.execute(new_association)
     db.session.commit()
+    return response
 
-    print(new_association)
-    return {}
+
+@anime_routes.route('/<int:animeId>/character/<int:characterId>/delete', methods=['DELETE'])
+def removeCharacterFromAnimeRouter(animeId, characterId):
+    response = {}
+    if db.session.query(func.count()).filter(
+        anime_character_table.c.animeId == animeId,
+        anime_character_table.c.characterId == characterId
+    ).scalar() > 0:
+        response["message"] = "Character removed from anime!"
+        delete_association = anime_character_table.delete().where(
+            anime_character_table.c.animeId == animeId,
+            anime_character_table.c.characterId == characterId
+        )
+        db.execute(delete_association)
+    else:
+        response["message"] = "Character not found in anime!"
+    return response
 
 
 # @anime_routes.route('')
