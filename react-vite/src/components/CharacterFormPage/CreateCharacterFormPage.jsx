@@ -126,15 +126,13 @@ const CreateCharacterFormPage = () => {
                     />
                     {errors.personality && <p className="createCharacterErrors">{errors.personality}</p>}
                 </label>
-                {/* Work in progress on adding the multiple anime checkboxes */}
                 <div className="createCharacterLabels">
                     <div>Select which of your posted anime your character is in:</div>
-                    <div>{`(Checkboxes Currently Under Development...)`}</div>
                     <ul id="createCharacterAnimeChoices">
                         {animePostedByUser.map((anime, index) => {
                             return (
                                 <li key={index} className="createCharacterAnime">
-                                    <select name="roles" id="role-select" onChange={(event) => handleChoiceChange(index, event)}>
+                                    <select name="createRoles" id="createRoleSelect" onChange={(event) => handleChoiceChange(index, event)}>
                                         <option value="none" selected>None</option>
                                         <option value="major">Major</option>
                                         <option value="supporting">Supporting</option>

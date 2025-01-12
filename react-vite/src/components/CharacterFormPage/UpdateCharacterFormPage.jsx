@@ -75,6 +75,20 @@ const UpdateCharacterFormPage = () => {
         }
     }, [submit, fullName, introduction, appearance, personality, previewImage])
 
+    const animeListCharacterIsIn = useSelector(state => state.characters.characterList[characterId].Anime);
+    const animeObjCharacterIsIn = {};
+    animeListCharacterIsIn.forEach(anime => animeObjCharacterIsIn[anime.id] = anime);
+    const animePostedByUser = useSelector(state => state.session.user["Posted Anime"]);
+    const [animeRoles, setAnimeRoles] = useState(animePostedByUser.map(anime => [anime.id, anime.title, animeObjCharacterIsIn[anime.id] ? animeObjCharacterIsIn[anime.id].characterType : "none"]));
+    const handleChoiceChange = (position, event) => {
+        const updatedAnimeRoles = [...animeRoles];
+        updatedAnimeRoles[position][2] = event.target.value;
+        setAnimeRoles(updatedAnimeRoles);
+
+        // print to see what it looks like
+        console.log(updatedAnimeRoles);
+    }
+
     return (
         <div className="updateCharacterPage">
             <h1>Post a new character!</h1>
@@ -119,6 +133,26 @@ const UpdateCharacterFormPage = () => {
                     />
                     {errors.personality && <p className="updateCharacterErrors">{errors.personality}</p>}
                 </label>
+
+                <div className="updateCharacterLabels">
+                    <ul id="updateCharacterAnimeChoices">
+                        {animePostedByUser.map((anime, index) => {
+                            return (
+                                <li key={index} className="updateCharacterAnime">
+                                    <select name="updateRoles" id="updateRoleSelect" value={animeObjCharacterIsIn[anime.id]} onChange={(event) => handleChoiceChange(index, event)}>
+                                        <option value="none">None</option>
+                                        <option value="major">Major</option>
+                                        <option value="supporting">Supporting</option>
+                                        <option value="minor">Minor</option>
+                                    </select>
+                                    {anime.title}
+                                    <img src={anime.previewImage} alt={anime.title} />
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+
                 <label className="updateCharacterLabels">
                     <div className="updateCharacterImage">
                         Preview Image
