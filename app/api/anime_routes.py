@@ -11,20 +11,23 @@ from sqlalchemy import func
 anime_routes = Blueprint('anime', __name__)
 
 
-@anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST'])
+@anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST', 'PUT'])
 def addCharacterToAnimeRouter(animeId, characterId):
     role = request.data.decode("utf-8")
     response = {}
+    # Does the character exist in the anime?
     if db.session.query(func.count()).filter(
         anime_character_table.c.animeId == animeId,
         anime_character_table.c.characterId == characterId
     ).scalar() > 0:
+        # If so, update the character's role
         response["message"] = "Character's role updated in anime!"
         updated_association = anime_character_table.update().where(
             anime_character_table.c.animeId == animeId, 
             anime_character_table.c.characterId == characterId
         ).values(characterType=role)
         db.session.execute(updated_association)
+    # If not, add the character in!
     else :
         response["message"] = "Character added to anime!"
         new_association = anime_character_table.insert().values(
@@ -35,6 +38,7 @@ def addCharacterToAnimeRouter(animeId, characterId):
         db.session.execute(new_association)
     db.session.commit()
     return response
+
 
 
 @anime_routes.route('/<int:animeId>/character/<int:characterId>/delete', methods=['DELETE'])
