@@ -2,25 +2,23 @@ import { thunkAuthenticate } from "./session";
 
 
 //! Action
-const ADD_CHARACTER_TO_ANIME = 'anime/addCharacterToAnime';
+    //! Anime
 // const ALL_ANIME_LOAD = 'anime/allAnimeLoad';
 const ANIME_CATALOG = 'anime/animeCatalog';
 const ANIME_ID_LOAD = 'anime/animeIdLoad';
+const DELETE_ANIME = 'anime/deleteAnime';
 const NEW_ANIME = 'anime/newAnime';
 const UPDATE_ANIME = 'anime/updateAnime';
-const DELETE_ANIME = 'anime/deleteAnime';
+    //! Character Association
+const ADD_CHARACTER_TO_ANIME = 'anime/addCharacterToAnime';
     //! Episodes
 const ADD_EPISODE = 'episode/addEpisode'
-const UPDATE_EPISODE = 'episode/updateEpisode'
 const DELETE_EPISODE = 'episode/deleteEpisode'
+const UPDATE_EPISODE = 'episode/updateEpisode'
 
 
 //! Action Creator
-const addCharacterToAnime = (animeId, characterId) => ({
-    type: ADD_CHARACTER_TO_ANIME,
-    animeId,
-    characterId,
-})
+    //! Anime
 // const allAnimeLoad = (animeCatalog) => ({
 //     type: ALL_ANIME_LOAD,
 //     payload: animeCatalog
@@ -33,6 +31,11 @@ const animeIdLoad = (currentAnime) => ({
     type: ANIME_ID_LOAD,
     payload: currentAnime
 })
+const deleteAnime = (animeId, firstInitial) => ({
+    type: DELETE_ANIME,
+    animeId,
+    firstInitial,
+}) 
 const newAnime = (listEle, catalogEle, firstInitial) => ({
     type: NEW_ANIME,
     listEle,
@@ -47,16 +50,22 @@ const updateAnime = (listEle, catalogEle, newFirstInitial, oldTitle, oldFirstIni
     oldTitle,
     oldFirstInitial
 })
-const deleteAnime = (animeId, firstInitial) => ({
-    type: DELETE_ANIME,
+    //! Character Association
+const addCharacterToAnime = (animeId, characterId) => ({
+    type: ADD_CHARACTER_TO_ANIME,
     animeId,
-    firstInitial,
-}) 
+    characterId,
+})
     //! Episodes
 const addEpisode = (animeId, newEpisode) => ({
     type: ADD_EPISODE,
     animeId,
     newEpisode
+})
+const deleteEpisode = (animeId, episodeIndex) => ({
+    type: DELETE_EPISODE,
+    animeId,
+    episodeIndex
 })
 const updateEpisode = (animeId, episodeIndex, updatedEpisode) => ({
     type: UPDATE_EPISODE,
@@ -64,27 +73,10 @@ const updateEpisode = (animeId, episodeIndex, updatedEpisode) => ({
     episodeIndex,
     updatedEpisode
 })
-const deleteEpisode = (animeId, episodeIndex) => ({
-    type: DELETE_EPISODE,
-    animeId,
-    episodeIndex
-})
 
 
 //! Thunk Action
-export const thunkAddCharacterToAnime = (animeId, characterId, role) => async (dispatch) => {
-    const response = await fetch(`/api/anime/${animeId}/character/${characterId}`, {
-        method: "POST",
-        body: role
-    });
-    if (response.ok) {
-        const data = await response.json()
-        if (data.errors) {
-            return;
-        }
-        dispatch(addCharacterToAnime(animeId, characterId));
-    }
-} 
+    //! Anime
 // export const thunkAllAnimeLoad = () => async (dispatch) => {
 //     const response = await fetch("/api/anime");
 //     if (response.ok) {
@@ -115,6 +107,21 @@ export const thunkAnimeIdLoad = (animeId) => async (dispatch) => {
         }
         dispatch(animeIdLoad(data))
     }
+}
+export const thunkDeleteAnime = (animeId) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}`, {
+        method: "DELETE",
+    });
+    if (response.ok) {
+        const { firstInitial, message } = await response.json();
+        //! Remove the anime from 
+            //! the animeCatalog (firstInitial is needed to find it) 
+            //! and the animeList
+        dispatch(deleteAnime(parseInt(animeId), firstInitial));
+        dispatch(thunkAuthenticate());
+        return message;
+    }
+    return;
 }
 export const thunkNewAnime = (animeData) => async (dispatch) => {
     const response = await fetch(`/api/anime/new`, {
@@ -159,21 +166,20 @@ export const thunkUpdateAnime = (animeId, animeData) => async (dispatch) => {
         return errors;
     }
 }
-export const thunkDeleteAnime = (animeId) => async (dispatch) => {
-    const response = await fetch(`/api/anime/${animeId}`, {
-        method: "DELETE",
+    //! Character Association
+export const thunkAddCharacterToAnime = (animeId, characterId, role) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/character/${characterId}`, {
+        method: "POST",
+        body: role
     });
     if (response.ok) {
-        const { firstInitial, message } = await response.json();
-        //! Remove the anime from 
-            //! the animeCatalog (firstInitial is needed to find it) 
-            //! and the animeList
-        dispatch(deleteAnime(parseInt(animeId), firstInitial));
-        dispatch(thunkAuthenticate());
-        return message;
+        const data = await response.json()
+        if (data.errors) {
+            return;
+        }
+        dispatch(addCharacterToAnime(animeId, characterId));
     }
-    return;
-}
+} 
     //! Episodes
 export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
     const response = await fetch(`/api/anime/${animeId}/episode`, {
@@ -187,6 +193,20 @@ export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
     }
     else {
         const errors = newEpisode;
+        return errors;
+    }
+}
+export const thunkDeleteEpisode = (animeId, episodeId, episodeIndex) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/episode/${episodeId}`, {
+        method: 'DELETE'
+    })
+    const result = await response.json();
+    if (response.ok) {
+        await dispatch(deleteEpisode(animeId, episodeIndex));
+        return result;
+    }
+    else {
+        const errors = result;
         return errors;
     }
 }
@@ -205,24 +225,11 @@ export const thunkUpdateEpisode = (animeId, episodeId, episodeIndex, episodeData
         return errors;
     }
 }
-export const thunkDeleteEpisode = (animeId, episodeId, episodeIndex) => async (dispatch) => {
-    const response = await fetch(`/api/anime/${animeId}/episode/${episodeId}`, {
-        method: 'DELETE'
-    })
-    const result = await response.json();
-    if (response.ok) {
-        await dispatch(deleteEpisode(animeId, episodeIndex));
-        return result;
-    }
-    else {
-        const errors = result;
-        return errors;
-    }
-}
 
 
 function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
     switch (action.type) {
+        //! Anime
         // case ALL_ANIME_LOAD:
         //     return { ...state, animeCatalog: action.payload };
         case ANIME_CATALOG:
@@ -242,6 +249,20 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
                 animeList: { ...state.animeList, [action.listEle.id]: action.listEle },
                 animeCatalog: { ...state.animeCatalog, [action.firstInitial]: firstInitialGroup }
             }
+        }
+        case DELETE_ANIME: {
+            const newState = { ...state };
+            //! Remove the anime from animeCatalog
+            newState.animeCatalog[action.firstInitial] = newState.animeCatalog[action.firstInitial].filter(anime => anime.id !== action.animeId);
+                //! If that makes the catalog empty, then delete it
+            if (newState.animeCatalog[action.firstInitial].length === 0) {
+                delete newState.animeCatalog[action.firstInitial];
+            }
+            //! Remove the anime from animeList
+            if (newState.animeList[action.animeId]) {
+                delete newState.animeList[action.animeId];
+            }
+            return newState;
         }
         case UPDATE_ANIME: {
             const newState = { ...state };
@@ -271,20 +292,7 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             newState.animeList[action.listEle.id] = action.listEle
             return newState
         }
-        case DELETE_ANIME: {
-            const newState = { ...state };
-            //! Remove the anime from animeCatalog
-            newState.animeCatalog[action.firstInitial] = newState.animeCatalog[action.firstInitial].filter(anime => anime.id !== action.animeId);
-                //! If that makes the catalog empty, then delete it
-            if (newState.animeCatalog[action.firstInitial].length === 0) {
-                delete newState.animeCatalog[action.firstInitial];
-            }
-            //! Remove the anime from animeList
-            if (newState.animeList[action.animeId]) {
-                delete newState.animeList[action.animeId];
-            }
-            return newState;
-        }
+        //! Episodes
         case ADD_EPISODE: {
             const newState = { ...state };
             if (newState.animeList[action.animeId]) {
@@ -294,16 +302,16 @@ function animeReducer(state={ animeCatalog: {}, animeList: {} }, action) {
             newState.animeList[action.animeId].numOfEpisode += 1;
             return newState;
         }
-        case UPDATE_EPISODE: {
-            const newState = { ...state };
-            newState.animeList[action.animeId].Episodes[action.episodeIndex] = action.updatedEpisode;
-            newState.animeList[action.animeId].Episodes.sort((episode1, episode2) => episode1.episodeNum - episode2.episodeNum);
-            return newState;
-        }
         case DELETE_EPISODE: {
             const newState = { ...state };
             newState.animeList[action.animeId].Episodes.splice(action.episodeIndex, 1);
             newState.animeList[action.animeId].numOfEpisode -= 1;
+            return newState;
+        }
+        case UPDATE_EPISODE: {
+            const newState = { ...state };
+            newState.animeList[action.animeId].Episodes[action.episodeIndex] = action.updatedEpisode;
+            newState.animeList[action.animeId].Episodes.sort((episode1, episode2) => episode1.episodeNum - episode2.episodeNum);
             return newState;
         }
         default:
