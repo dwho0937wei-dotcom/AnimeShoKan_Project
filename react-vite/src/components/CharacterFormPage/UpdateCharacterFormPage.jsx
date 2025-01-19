@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { thunkAddCharacterToAnime, thunkAnimeIdLoad } from "../../redux/anime";
+import { thunkAddCharacterToAnime, thunkRemoveCharacterFromAnime, thunkAnimeIdLoad } from "../../redux/anime";
 import { thunkCharacterIdLoad, thunkUpdateCharacter } from "../../redux/character";
 import "./UpdateCharacterFormPage.css"
 
@@ -47,20 +47,19 @@ const UpdateCharacterFormPage = () => {
         // }
         const serverResponse = await dispatch(thunkUpdateCharacter(characterId, characterData));
         if (typeof serverResponse !== "object") {
-            const newCharacterId = serverResponse;
             for (const animeRole of animeRoles) {
                 const animeId = animeRole[0];
                 const role = animeRole[2];
                 if (role !== "none") {
-                    await dispatch(thunkAddCharacterToAnime(animeId, newCharacterId, role));
-                    await dispatch(thunkAnimeIdLoad(animeId));
+                    await dispatch(thunkAddCharacterToAnime(animeId, characterId, role));
                 }
-                // else {
-
-                // }
+                else {
+                    await dispatch(thunkRemoveCharacterFromAnime(animeId, characterId));
+                }
+                dispatch(thunkAnimeIdLoad(animeId));
             }
             await dispatch(thunkCharacterIdLoad(characterId))
-            return navigate(`/character/${newCharacterId}`);
+            return navigate(`/character/${characterId}`);
         }
         else {
             return serverResponse.errors;

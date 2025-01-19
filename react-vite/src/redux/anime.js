@@ -187,12 +187,15 @@ export const thunkAddCharacterToAnime = (animeId, characterId, role) => async (d
     }
 } 
 export const thunkRemoveCharacterFromAnime = (animeId, characterId) => async (dispatch) => {
-    const response = await fetch(`/api/anime/${animeId}/character/${characterId}/delete`);
+    const response = await fetch(`/api/anime/${animeId}/character/${characterId}/delete`, {
+        method: 'DELETE'
+    });
     if (response.ok) {
-        const data = await response.json()
+        const data = await response.json();
         if (data.errors) {
             return;
         }
+        console.log(data);
         dispatch(removeCharacterFromAnime(animeId, characterId));
     }
 }
