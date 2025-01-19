@@ -11,6 +11,7 @@ const NEW_ANIME = 'anime/newAnime';
 const UPDATE_ANIME = 'anime/updateAnime';
     //! Character Association
 const ADD_CHARACTER_TO_ANIME = 'anime/addCharacterToAnime';
+const REMOVE_CHARACTER_FROM_ANIME = 'anime/removeCharacterFromAnime';
     //! Episodes
 const ADD_EPISODE = 'episode/addEpisode'
 const DELETE_EPISODE = 'episode/deleteEpisode'
@@ -53,6 +54,11 @@ const updateAnime = (listEle, catalogEle, newFirstInitial, oldTitle, oldFirstIni
     //! Character Association
 const addCharacterToAnime = (animeId, characterId) => ({
     type: ADD_CHARACTER_TO_ANIME,
+    animeId,
+    characterId,
+})
+const removeCharacterFromAnime = (animeId, characterId) => ({
+    type: REMOVE_CHARACTER_FROM_ANIME,
     animeId,
     characterId,
 })
@@ -180,6 +186,16 @@ export const thunkAddCharacterToAnime = (animeId, characterId, role) => async (d
         dispatch(addCharacterToAnime(animeId, characterId));
     }
 } 
+export const thunkRemoveCharacterFromAnime = (animeId, characterId) => async (dispatch) => {
+    const response = await fetch(`/api/anime/${animeId}/character/${characterId}/delete`);
+    if (response.ok) {
+        const data = await response.json()
+        if (data.errors) {
+            return;
+        }
+        dispatch(removeCharacterFromAnime(animeId, characterId));
+    }
+}
     //! Episodes
 export const thunkAddEpisode = (animeId, episodeData) => async (dispatch) => {
     const response = await fetch(`/api/anime/${animeId}/episode`, {
