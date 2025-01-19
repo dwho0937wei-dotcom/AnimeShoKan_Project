@@ -11,53 +11,22 @@ from sqlalchemy import func
 anime_routes = Blueprint('anime', __name__)
 
 
-@anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST', 'PUT'])
-def addCharacterToAnimeRouter(animeId, characterId):
-    role = request.data.decode("utf-8")
-    response = {}
-    # Does the character exist in the anime?
-    if db.session.query(func.count()).filter(
-        anime_character_table.c.animeId == animeId,
-        anime_character_table.c.characterId == characterId
-    ).scalar() > 0:
-        # If so, update the character's role
-        response["message"] = "Character's role updated in anime!"
-        updated_association = anime_character_table.update().where(
-            anime_character_table.c.animeId == animeId, 
-            anime_character_table.c.characterId == characterId
-        ).values(characterType=role)
-        db.session.execute(updated_association)
-    # If not, add the character in!
-    else :
-        response["message"] = "Character added to anime!"
-        new_association = anime_character_table.insert().values(
-            animeId=animeId,
-            characterId=characterId,
-            characterType=role
-        )
-        db.session.execute(new_association)
+#! Anime
+@anime_routes.route('/<int:animeId>', methods=['DELETE'])
+@login_required
+def deleteAnime(animeId):
+    animeToDelete = Anime.query.get(animeId)
+    firstInitial = animeToDelete.title[0].upper()
+    if animeToDelete.hostEditorId != current_user.id:
+        return {"error": "Current user has no right to delete this anime!"}, 500
+    
+    if animeToDelete.previewImage:
+        remove_file_from_s3(animeToDelete.previewImage)
+    db.session.delete(animeToDelete)
     db.session.commit()
-    return response
 
-
-
-@anime_routes.route('/<int:animeId>/character/<int:characterId>/delete', methods=['DELETE'])
-def removeCharacterFromAnimeRouter(animeId, characterId):
-    response = {}
-    if db.session.query(func.count()).filter(
-        anime_character_table.c.animeId == animeId,
-        anime_character_table.c.characterId == characterId
-    ).scalar() > 0:
-        response["message"] = "Character removed from anime!"
-        delete_association = anime_character_table.delete().where(
-            anime_character_table.c.animeId == animeId,
-            anime_character_table.c.characterId == characterId
-        )
-        db.execute(delete_association)
-    else:
-        response["message"] = "Character not found in anime!"
-    return response
-
+    return {"firstInitial": firstInitial, "message": "Anime successfully deleted!"}
+    
 
 # @anime_routes.route('')
 # def getAllAnime():
@@ -173,20 +142,52 @@ def updateAnime(animeId):
     return {"errors": animeUpdateForm.errors}, 400
 
 
-@anime_routes.route('/<int:animeId>', methods=['DELETE'])
-@login_required
-def deleteAnime(animeId):
-    animeToDelete = Anime.query.get(animeId)
-    firstInitial = animeToDelete.title[0].upper()
-    if animeToDelete.hostEditorId != current_user.id:
-        return {"error": "Current user has no right to delete this anime!"}, 500
-    
-    if animeToDelete.previewImage:
-        remove_file_from_s3(animeToDelete.previewImage)
-    db.session.delete(animeToDelete)
+#! Character Association
+@anime_routes.route('/<int:animeId>/character/<int:characterId>', methods=['POST', 'PUT'])
+def addCharacterToAnimeRouter(animeId, characterId):
+    role = request.data.decode("utf-8")
+    response = {}
+    # Does the character exist in the anime?
+    if db.session.query(func.count()).filter(
+        anime_character_table.c.animeId == animeId,
+        anime_character_table.c.characterId == characterId
+    ).scalar() > 0:
+        # If so, update the character's role
+        response["message"] = "Character's role updated in anime!"
+        updated_association = anime_character_table.update().where(
+            anime_character_table.c.animeId == animeId, 
+            anime_character_table.c.characterId == characterId
+        ).values(characterType=role)
+        db.session.execute(updated_association)
+    # If not, add the character in!
+    else :
+        response["message"] = "Character added to anime!"
+        new_association = anime_character_table.insert().values(
+            animeId=animeId,
+            characterId=characterId,
+            characterType=role
+        )
+        db.session.execute(new_association)
     db.session.commit()
+    return response
 
-    return {"firstInitial": firstInitial, "message": "Anime successfully deleted!"}
+
+@anime_routes.route('/<int:animeId>/character/<int:characterId>/delete', methods=['DELETE'])
+def removeCharacterFromAnimeRouter(animeId, characterId):
+    response = {}
+    if db.session.query(func.count()).filter(
+        anime_character_table.c.animeId == animeId,
+        anime_character_table.c.characterId == characterId
+    ).scalar() > 0:
+        response["message"] = "Character removed from anime!"
+        delete_association = anime_character_table.delete().where(
+            anime_character_table.c.animeId == animeId,
+            anime_character_table.c.characterId == characterId
+        )
+        db.execute(delete_association)
+    else:
+        response["message"] = "Character not found in anime!"
+    return response
 
 
 #! Episodes
@@ -229,6 +230,23 @@ def addNewEpisode(animeId):
     return {"errors": episodeForm.errors}, 400
 
 
+@anime_routes.route('/<int:animeId>/episode/<int:episodeId>', methods=['DELETE'])
+@login_required
+def deleteEpisode(animeId, episodeId):
+    animeToDeleteAnEpisodeFrom = Anime.query.get(animeId)
+    if animeToDeleteAnEpisodeFrom.hostEditorId != current_user.id:
+        return {"error": "Current user has no right to delete an episode from this anime!"}, 500
+    
+    episodeToDelete = Episode.query.get(episodeId)
+    if episodeToDelete.previewImage:
+        remove_file_from_s3(episodeToDelete.previewImage)
+    db.session.delete(episodeToDelete)
+    animeToDeleteAnEpisodeFrom.numOfEpisode -= 1
+    db.session.commit()
+
+    return {"message": "Episode successfully deleted from this anime!"}
+
+
 @anime_routes.route('/<int:animeId>/episode/<int:episodeId>', methods=['PUT'])
 @login_required
 def updateEpisode(animeId, episodeId):
@@ -265,20 +283,3 @@ def updateEpisode(animeId, episodeId):
         return episodeToUpdate.to_dict()
     
     return {"errors": episodeUpdateForm.errors}, 400
-
-
-@anime_routes.route('/<int:animeId>/episode/<int:episodeId>', methods=['DELETE'])
-@login_required
-def deleteEpisode(animeId, episodeId):
-    animeToDeleteAnEpisodeFrom = Anime.query.get(animeId)
-    if animeToDeleteAnEpisodeFrom.hostEditorId != current_user.id:
-        return {"error": "Current user has no right to delete an episode from this anime!"}, 500
-    
-    episodeToDelete = Episode.query.get(episodeId)
-    if episodeToDelete.previewImage:
-        remove_file_from_s3(episodeToDelete.previewImage)
-    db.session.delete(episodeToDelete)
-    animeToDeleteAnEpisodeFrom.numOfEpisode -= 1
-    db.session.commit()
-
-    return {"message": "Episode successfully deleted from this anime!"}
