@@ -22,3 +22,21 @@ anime_character_table = db.Table(
     ),
     schema=SCHEMA if environment == "production" else None,
 )
+
+
+anime_genres_table = db.Table(
+    "anime_genres",
+    db.Column(
+        "animeId",
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod("anime.id")),
+        primary_key=True,
+    ),
+    db.Column(
+        "genreId",
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod("genres.id")),
+        primary_key=True,
+    ),
+    schema=SCHEMA if environment == "production" else None,
+)
