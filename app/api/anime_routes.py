@@ -2,7 +2,7 @@ from app.api.s3_helper import (
     upload_file_to_s3, get_unique_filename, remove_file_from_s3
 )
 from app.forms import AnimeForm, AnimeUpdateForm, EpisodeForm, EpisodeUpdateForm
-from app.models import Anime, anime_character_table, db, Episode
+from app.models import Anime, anime_characters_table, db, Episode
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from sqlalchemy import func
@@ -149,20 +149,20 @@ def addCharacterToAnimeRouter(animeId, characterId):
     response = {}
     # Does the character exist in the anime?
     if db.session.query(func.count()).filter(
-        anime_character_table.c.animeId == animeId,
-        anime_character_table.c.characterId == characterId
+        anime_characters_table.c.animeId == animeId,
+        anime_characters_table.c.characterId == characterId
     ).scalar() > 0:
         # If so, update the character's role
         response["message"] = "Character's role updated in anime!"
-        updated_association = anime_character_table.update().where(
-            anime_character_table.c.animeId == animeId, 
-            anime_character_table.c.characterId == characterId
+        updated_association = anime_characters_table.update().where(
+            anime_characters_table.c.animeId == animeId, 
+            anime_characters_table.c.characterId == characterId
         ).values(characterType=role)
         db.session.execute(updated_association)
     # If not, add the character in!
     else :
         response["message"] = "Character added to anime!"
-        new_association = anime_character_table.insert().values(
+        new_association = anime_characters_table.insert().values(
             animeId=animeId,
             characterId=characterId,
             characterType=role
@@ -176,13 +176,13 @@ def addCharacterToAnimeRouter(animeId, characterId):
 def removeCharacterFromAnimeRouter(animeId, characterId):
     response = {}
     if db.session.query(func.count()).filter(
-        anime_character_table.c.animeId == animeId,
-        anime_character_table.c.characterId == characterId
+        anime_characters_table.c.animeId == animeId,
+        anime_characters_table.c.characterId == characterId
     ).scalar() > 0:
         response["message"] = "Character removed from anime!"
-        delete_association = anime_character_table.delete().where(
-            anime_character_table.c.animeId == animeId,
-            anime_character_table.c.characterId == characterId
+        delete_association = anime_characters_table.delete().where(
+            anime_characters_table.c.animeId == animeId,
+            anime_characters_table.c.characterId == characterId
         )
         db.session.execute(delete_association)
         db.session.commit()

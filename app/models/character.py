@@ -1,6 +1,6 @@
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .join_tables import anime_character_table
+from .join_tables import anime_characters_table
 from .anime import Anime
 from sqlalchemy import select
 from sqlalchemy.orm import aliased
@@ -28,7 +28,7 @@ class Character(db.Model):
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    anime = db.relationship("Anime", back_populates="characters", secondary=anime_character_table, cascade="none")
+    anime = db.relationship("Anime", back_populates="characters", secondary=anime_characters_table, cascade="none")
     user = db.relationship("User", back_populates="characters")
 
 
@@ -47,7 +47,7 @@ class Character(db.Model):
             "hostEditorId": self.hostEditorId,
         }
     def to_dict(self):
-        ac = aliased(anime_character_table)
+        ac = aliased(anime_characters_table)
         anime_data = db.session.execute(
             select(Anime, ac.c.characterType)
             .join(ac, Anime.id == ac.c.animeId)

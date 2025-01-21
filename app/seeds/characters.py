@@ -1,5 +1,5 @@
 from app.models import db, Character, environment, SCHEMA
-from app.models.join_tables import anime_character_table
+from app.models.join_tables import anime_characters_table
 from sqlalchemy.sql import text
 
 
@@ -77,7 +77,7 @@ def seed_characters():
     ]
     for animeId, characterId, characterType in anime_character_associations:
         db.session.execute(
-            anime_character_table.insert().values(animeId=animeId, characterId=characterId, characterType=characterType)
+            anime_characters_table.insert().values(animeId=animeId, characterId=characterId, characterType=characterType)
         )
     db.session.commit()
 

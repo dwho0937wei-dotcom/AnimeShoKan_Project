@@ -1,6 +1,6 @@
 from datetime import datetime
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .join_tables import anime_character_table, anime_genres_table
+from .join_tables import anime_characters_table, anime_genres_table
 
 
 class Anime(db.Model):
@@ -24,7 +24,7 @@ class Anime(db.Model):
     updatedAt = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    characters = db.relationship("Character", back_populates="anime", secondary=anime_character_table, cascade="none")
+    characters = db.relationship("Character", back_populates="anime", secondary=anime_characters_table, cascade="none")
     episodes = db.relationship("Episode", back_populates="anime", cascade="all, delete")
     genres = db.relationship("Genre", back_populates="anime", secondary=anime_genres_table, cascade="none")
     user = db.relationship("User", back_populates="anime")

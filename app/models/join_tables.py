@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
-anime_character_table = db.Table(
+anime_characters_table = db.Table(
     "anime_characters",
     db.Column(
         "animeId",
