@@ -1,0 +1,63 @@
+$title-color: #CBC3E3
+
+.welcome
+    display: flex
+    align-items: center
+    flex-direction: column
+    img
+        border-radius: 15px
+        max-width: 800px
+
+.catalogs
+    height: calc(100dvh - 259px)
+    display: flex
+    overflow-x: auto
+    overflow-y: auto
+    white-space: nowrap
+    flex-direction: row
+    column-gap: 50px
+
+.catalog
+    ul
+        list-style-type: none
+        display: flex
+        flex-direction: column
+        row-gap: 40px
+        li
+            display: flex
+            flex-direction: column
+            a
+                display: flex
+                flex-direction: column
+                align-items: center
+                text-decoration: none
+                color: $title-color
+                img
+                    border-radius: 15px
+                    min-height: 200px
+                    max-height: 400px
+                    min-width: 200px
+                    max-width: 400px
+            a:hover
+                color: white
+
+#navCatalogs
+    display: flex
+    flex-direction: row
+    column-gap: 40px
+    border: solid
+    border-radius: 15px
+    border-color: #5a2e98
+    padding: 0 20px
+
+.navCatalog
+    text-decoration: none
+    /* color: #5a2e98 */
+    /* color: #CBC3E3 */
+    color: rgb(138, 43, 226)
+
+.navCatalog:hover
+    color: white
+
+.navCatalog.active
+    color: $title-color
