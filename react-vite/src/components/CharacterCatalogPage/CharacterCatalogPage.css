@@ -1,4 +1,4 @@
-/* Already in the AnimeCatalogPage.css */
+/* Already in the Welcome.css */
 /* .welcome {
     display: flex;
     align-items: center;
@@ -13,8 +13,8 @@
 .characterCatalogs {
     height: calc(100dvh - 259px);
     display: flex;
-    overflow-x: auto;
-    overflow-y: auto;
+    /* overflow-x: auto; */
+    /* overflow-y: auto; */
     white-space: nowrap;
     flex-direction: row;
     column-gap: 50px;

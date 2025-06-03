@@ -1,4 +1,5 @@
-.welcome {
+/* Already in the Welcome.css */
+/* .welcome {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -7,13 +8,13 @@
         border-radius: 15px;
         max-width: 800px;
     }
-}
+} */
 
 .animeCatalogs {
     height: calc(100dvh - 259px);
     display: flex;
-    overflow-x: auto;
-    overflow-y: auto;
+    /* overflow-x: auto; */
+    /* overflow-y: auto; */
     white-space: nowrap;
     flex-direction: row;
     column-gap: 50px;
