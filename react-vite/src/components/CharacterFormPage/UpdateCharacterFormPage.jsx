@@ -103,7 +103,8 @@ const UpdateCharacterFormPage = () => {
 
     return (
         <div className="updateCharacterPage">
-            <h1>Post a new character!</h1>
+            <h1>Update your existing character</h1>
+            <h1>{fullName}!</h1>
             <form className="updateCharacterForm" onSubmit={handleSubmit}>
                 <label className="updateCharacterLabels">
                     Full Name
