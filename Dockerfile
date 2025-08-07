@@ -1,24 +1,41 @@
-FROM python:3.9.18-alpine3.18
+# Use lightweight Alpine Linux with Python 3.9
+FROM python:3.9.18-alpine3.18     
 
-RUN apk add build-base
+# Install build tools
+RUN apk add build-base                  
 
-RUN apk add postgresql-dev gcc python3-dev musl-dev
+# Install PostgreSQL dev libraries and compilers
+RUN apk add postgresql-dev gcc python3-dev musl-dev  
 
-ARG FLASK_APP
-ARG FLASK_ENV
-ARG DATABASE_URL
-ARG SCHEMA
-ARG SECRET_KEY
+# Set build-time variable for Flask app
+ARG FLASK_APP        
+# Set build-time variable for Flask environment                   
+ARG FLASK_ENV    
+# Set build-time variable for database URL                       
+ARG DATABASE_URL   
+# Set build-time variable for database schema                     
+ARG SCHEMA     
+# Set build-time variable for Flask secret key                         
+ARG SECRET_KEY                          
 
-WORKDIR /var/www
+# Set working directory
+WORKDIR /var/www                        
 
-COPY requirements.txt .
+# Copy Python dependencies file
+COPY requirements.txt .                 
 
-RUN pip install -r requirements.txt
-RUN pip install psycopg2
+# Install Python dependencies
+RUN pip install -r requirements.txt     
+# Install PostgreSQL adapter for Python
+RUN pip install psycopg2                
 
-COPY . .
+# Copy application code to container
+COPY . .                                
 
-RUN flask db upgrade
-RUN flask seed all
-CMD gunicorn app:app
+# Run database migrations
+RUN flask db upgrade    
+# Seed the database                
+RUN flask seed all                      
+
+# Start Flask app using Gunicorn
+CMD gunicorn app:app                    
