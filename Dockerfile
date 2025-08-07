@@ -1,3 +1,5 @@
+# This Dockerfile is for building a Docker image to run a Python Flask web application with a PostgreSQL database.
+
 # Use lightweight Alpine Linux with Python 3.9
 FROM python:3.9.18-alpine3.18     
 
